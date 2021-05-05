@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/Lijuet/2021_OSP_Stock_Insight/issues"
   },
-  "homepage": "https://github.com/Lijuet/2021_OSP_Stock_Insight#readme"
+  "homepage": "https://github.com/Lijuet/2021_OSP_Stock_Insight#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "*"
+  }
 }
