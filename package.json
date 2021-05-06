@@ -1,0 +1,23 @@
+{
+  "name": "osp_stock_insight",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lijuet/2021_OSP_Stock_Insight.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lijuet/2021_OSP_Stock_Insight/issues"
+  },
+  "homepage": "https://github.com/Lijuet/2021_OSP_Stock_Insight#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cheerio": "*"
+  }
+}
