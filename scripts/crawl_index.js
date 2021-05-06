@@ -1,6 +1,5 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const log = console.log;
 
 async function getHtml(url) {
     try {
@@ -10,34 +9,35 @@ async function getHtml(url) {
     }
 }
 
-const naverFinaceKoreaURL = "https://finance.naver.com/sise/";
-const naverFinaceWorldRootURL =
-    "https://finance.naver.com/world/sise.nhn?symbol=";
-const indexKoreaCategory = ["KOSPI", "KOSDAQ", "KPI200"];
-const indexWorldCategory = ["DJI@DJI", "NAS@IXIC", "SPI@SPX"];
-let indexWorld = {};
-
 async function getKoreaIndex() {
-    let indexKorea = {};
-    try {
-        let html = await getHtml(naverFinaceKoreaURL);
-        const $ = await cheerio.load(html.data);
+    const naverFinaceKoreaURL = "https://finance.naver.com/sise/";
+    const indexKoreaCategory = ["KOSPI", "KOSDAQ", "KPI200"];
+    let indexKorea = {
+        KOSPI: 0,
+        KOSDAQ: 0,
+        KPI200: 0,
+    };
 
-        indexKoreaCategory.forEach((index) => {
-            indexKorea[index] = $("#" + index + "_now").text();
-        });
-        log(indexKorea);
-        return indexKorea;
-    } catch {
-        return {
-            KOSPI: 0,
-            KOSDAQ: 0,
-            KPI200: 0,
-        };
-    }
+    let html = await getHtml(naverFinaceKoreaURL);
+    const $ = cheerio.load(html.data);
+
+    indexKoreaCategory.forEach((index) => {
+        indexKorea[index] = $("#" + index + "_now").text();
+    });
+
+    return indexKorea;
 }
 
 async function getWorldIndex() {
+    const naverFinaceWorldRootURL =
+        "https://finance.naver.com/world/sise.nhn?symbol=";
+    const indexWorldCategory = ["DJI@DJI", "NAS@IXIC", "SPI@SPX"];
+    let indexWorld = {
+        DJI: 0,
+        NAS: 0,
+        SPI: 0,
+    };
+
     await axios
         .all(
             indexWorldCategory.map((idx) => {
@@ -52,18 +52,19 @@ async function getWorldIndex() {
                     let value = $("p.no_today em").children("span").text();
                     indexWorld[name.substring(0, 3)] = value;
                 });
-                log(indexWorld);
             })
         );
     return indexWorld;
 }
-log(getKoreaIndex());
-log(getWorldIndex());
 
-/*
-RESULT : 
-Promise { <pending> }
-Promise { <pending> }
-{ DJI: '34,230.34', NAS: '13,582.43', SPI: '4,167.59' }
-{ KOSPI: '3,171.13', KOSDAQ: '969.76', KPI200: '425.29' }
+module.exports = { getKoreaIndex, getWorldIndex };
+
+/*How TO Use Modules
+getKoreaIndex().then((ret) => {
+    console.log(ret);
+});
+
+getWorldIndex().then((ret) => {
+    console.log(ret);
+});
 */
