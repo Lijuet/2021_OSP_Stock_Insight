@@ -1,11 +1,139 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
+<html>
+
+<head>
     <link href="./style/main_index.css" rel="stylesheet" />
 
-    <title>OSP Final Proj</title>
-  </head>
-  <body>
-    <p>Fighting!</p>
-  </body>
+    <title>easy_stock</title>
+</head>
+
+
+<body>
+    <!-- 상단의 stock_index 버튼 생성 -->
+    <div class="stock_index">
+        <button type="button" id="KOSPI" >KOSPI</button>
+        <button type="button" id="KOSDAG" >KOSDAG</button>
+        <button type="button" id="KOSP150" >KOSPI150</button>
+        <button type="button" id="NASDAQ" >NASDAQ</button>
+        <button type="button" id="DAJI" >DAJI</button>
+        <button type="button" id="NEKAI" >NEKAI</button>
+    </div>
+
+    <div class="search_bar">
+        <h3>기업정보검색</h3>
+        <input type="text" id = "company_input" placeholder="Enter a company here" onkeyup="if(event.keyCode===13){return enter(event)}">
+        <button type="button" id="search">Search</button> 
+    </div>
+
+    <div class="information">
+        <h3>오늘 stock_price하고 날짜</h3>
+        <table>
+            <tr>
+                <td>어제</td>
+                <td>stock price</td>
+                <td>rate of change</td>
+            </tr>
+
+            <tr>
+                <td>전주</td>
+                <td>stock price</td>
+                <td>rate of change</td>
+            </tr>
+
+            <tr>
+                <td>전월</td>
+                <td>stock price</td>
+                <td>rate of change</td>
+            </tr>
+
+            <tr>
+                <td>전년</td>
+                <td>stock price</td>
+                <td>rate of change</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="indicator">
+        <table>
+            <tr>
+                <td></td>
+                <td>20.1</td>
+                <td>20.2</td>
+                <td>20.3</td>
+                <td>20.4</td>
+                <td></td>
+            </tr>
+            
+            <!--  크롤링 값 가져오기 !! -->
+            <tr>
+                <td>ROE</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>얼굴</td>
+            </tr>
+
+            <tr>
+                <td>PER</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>얼굴</td>
+            </tr>
+
+            <tr>
+                <td>PBR</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>얼굴</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class = "news">
+        <!-- 나중에...-->
+    </div>
+
+    <script src = "./sripts/crawl_coinfo.js"></script>
+    <script src = "./sripts/crawl_index.js"></script>
+
+    <script>
+
+        let div = document.createElement("div");
+        div.className = "search_bar";
+
+        function enter(e){
+            if(e.keyCode === 13){
+                let input = document.querySelector("#company_input");
+                let text = input.value;
+
+                if(!text.length) return;
+
+                /*crawl 값 반환*/
+
+                input.value = "";
+            }
+        }
+
+        let button = document.querySelector("#search");
+        button.addEventListener("click", () => {
+            let input = document.querySelector("#company_input");
+            let text = input.value;
+            
+            if(!text.length) return;
+
+            /*crawl 값 반환*/
+            
+            input.value = "";
+
+        });
+    </script>
+</body>
 </html>
+
+
