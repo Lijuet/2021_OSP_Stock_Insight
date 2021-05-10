@@ -50,13 +50,15 @@ async function getPrice(code) {
         const $ = cheerio.load(html.data);
 
         // get price date in html
-        result.price = $(".rate_info", "#chart_area")
-            .children(".today")
-            .children(".no_today")
-            .children(".no_down")
-            .children(".blind")
-            .text();
 
+        if (result.price == "") {
+            result.price = $(".rate_info", "#chart_area")
+                .children(".today")
+                .children(".no_today")
+                .children(".no_up")
+                .children(".blind")
+                .text();
+        }
         // get real-time in html
         result.date = $(".date", "#time").text();
     });
@@ -121,7 +123,7 @@ async function getFinance(code) {
 
 // test functions
 getPrice("035420").then((ret) => {
-    console.log(ret.price);
+    console.log(ret);
 });
 getFinance("035420").then((ret) => {
     console.log(ret);
