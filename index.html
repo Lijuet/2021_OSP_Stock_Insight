@@ -16,6 +16,7 @@
         .stock_button{
             margin: 10px auto;
             border: 4px;
+            padding-top: 8px;
         }
         .stock_index{
             margin: 10px auto;
@@ -29,6 +30,11 @@
             border: 2px;
             border-color: lightgrey;
         }
+        .name{
+            margin: 10px auto;
+            font-size: 20px;
+            padding: 10px;
+        }
     </style>
 </head>
 
@@ -37,20 +43,19 @@
 
     <nav class="navbar navbar-light bg-light">
         <div class="container">
-            <span class="navbar-brand mb-0 h1"><i class="bi bi-graph-up"></i></i> easy_stock</span>
+            <div class="name">
+                <span class="navbar-brand mb-0 h1" style = "font-size: 40px;"><i class="bi bi-graph-up"></i></i> easy_stock</span>
+            </div>
         </div>
     </nav>
 
     <div class = "container">
         <!-- 상단의 stock_index 버튼 생성 -->
         <div class="stock_button">
-            <button type="button" id="KOSPI" class="btn btn-primary">KOSPI</button>
-            <button type="button" id="KOSDAG" class="btn btn-primary">KOSDAG</button>
-            <button type="button" id="KSP200" class="btn btn-primary">KSP200</button>
-            <button type="button" id="DJI" class="btn btn-primary">DJI</button>
-            <button type="button" id="NAS" class="btn btn-primary">NAS</button>
-            <button type="button" id="SPI" class="btn btn-primary">SPI</button>
-        <div>
+            <button type="button" id="KOREA" class="btn btn-primary">KOREA</button>
+            <button type="button" id="WORLD" class="btn btn-primary">WORLD</button>
+            <button type="button" id="refresh"><i class="bi bi-arrow-counterclockwise"></i></button>
+        </div>
            
             <!-- 버튼 클릭시 3가지 정보 나오는.. 크롤링 값 -->
         <div class="stock_index">
@@ -67,7 +72,8 @@
             <!-- 기업 검색바 -->
             <div class="search_bar">
                 <h3>Search company</h3>
-                <input type="text" id = "company_input" placeholder="Enter a company here" onkeyup="if(event.keyCode===13){return enter
+                <input type="text" id = "company_input" placeholder="Enter a company here" 
+                style = "width: 650px; height: 50px; font-size: 25px" onkeyup="if(event.keyCode===13){return enter(event);}">
                 <button type="button" id="search" class="btn btn-primary">Search</button>
                 <!-- 크롱링 값 -->
             </div>
@@ -163,33 +169,19 @@
 
     <script>
         /*위에 버튼 눌렸을때*/
-        let KOSPI = document.getElementById("KOSPI");
-        KOSPI.addEventListener("click", () => {
+        let KOREA = document.getElementById("KOREA");
+        KOREA.addEventListener("click", () => {
             /*크롤링 값 반환*/
         });
 
-        let KOSDAQ = document.getElementById("KOSDAQ");
-        KOSDAQ.addEventListener("click", () => {
+        let WORLD = document.getElementById("WORLD");
+        WORLD.addEventListener("click", () => {
             /*크롤링 값 반환*/
         });
 
-        let KSP200 = document.getElementById("KSP200");
-        KOSPI50.addEventListener("click", () => {
-            /*크롤링 값 반환*/
-        });
-
-        let DJI = document.getElementById("DJI");
-        DJI.addEventListener("click", () => {
-            /*크롤링 값 반환*/
-        });
-
-        let NAS = document.getElementById("NAS");
-        NAS.addEventListener("click", () => {
-            /*크롤링 값 반환*/
-        });
-
-        let SPI = document.getElementById("SPI");
-        PSI.addEventListener("click", () => {
+        /* 새로 고침 */
+        let refresh = document.getElementById("refresh");
+        refresh.addEventListener("click", () => {
             /*크롤링 값 반환*/
         });
 
@@ -227,5 +219,3 @@
     </script>
 </body>
 </html>
-
-
