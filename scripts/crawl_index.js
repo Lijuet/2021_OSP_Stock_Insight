@@ -5,7 +5,7 @@ async function getHtml(url) {
     try {
         return await axios.get(url);
     } catch (error) {
-        console.error(error);
+        console.log("Fail to get html");
     }
 }
 
@@ -19,6 +19,9 @@ async function getKoreaIndex() {
     };
 
     let html = await getHtml(naverFinaceKoreaURL);
+
+    if (html === undefined) return indexKorea;
+
     const $ = cheerio.load(html.data);
 
     indexKoreaCategory.forEach((index) => {
@@ -47,6 +50,8 @@ async function getWorldIndex() {
         .then(
             axios.spread((...responses) => {
                 responses.forEach((html) => {
+                    if (html === undefined) return indexWorld;
+
                     const $ = cheerio.load(html.data);
                     let name = $("div.h_area em").text();
                     let value = $("p.no_today em").children("span").text();
@@ -59,7 +64,6 @@ async function getWorldIndex() {
 
 module.exports = { getKoreaIndex, getWorldIndex };
 
-/*How TO Use Modules
 getKoreaIndex().then((ret) => {
     console.log(ret);
 });
@@ -67,4 +71,3 @@ getKoreaIndex().then((ret) => {
 getWorldIndex().then((ret) => {
     console.log(ret);
 });
-*/
