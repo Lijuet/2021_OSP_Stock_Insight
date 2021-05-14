@@ -70,7 +70,7 @@ async function getPrice(code) {
                 .text();
         }
         // get real-time in html
-        result.date = $(".date", "#time").text();
+        result.date = $(".date", "#time").text().slice(0, 10);
     });
 
     // return promise obj to process asyncronization
@@ -183,7 +183,7 @@ async function getPrevPrice(code) {
 }
 
 // test functions
-getPrice("035720").then((ret) => {
+getPrice("035420").then((ret) => {
     console.log(ret);
 });
 getFinance("035420").then((ret) => {
