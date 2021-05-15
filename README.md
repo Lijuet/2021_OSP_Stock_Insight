@@ -7,14 +7,7 @@ To solve these problems our service intuitively provides the basic information n
 
 --image--
 
-### The latest version - V2
-
-1. Show Index information
-    - Show major index information lively.
-    - KOSPI, KOSDAQ, NASDAQ, DAJ, SPI200
-2. Show major stock information
-    - Show stock price about entered code number or stock name.
-    - Show useful top 5 head news and links.
+### The latest version
 
 ### V1
 
