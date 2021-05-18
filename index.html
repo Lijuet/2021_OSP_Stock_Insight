@@ -162,77 +162,85 @@
             </div>
         </div>
     </div>
-
-    <script type = "module" src = "sripts/crawl_index.js">
     
-        import { getKoreaIndex, getWorldIndex } from "sripts/crawl_index.js";
-       
+    <script type = "module" src="./scripts/crawl_index.js">
+
+        import { getKoreaIndex, getWorldIndex} from "./scripts/crawl_index.js";
         /*위에 버튼 눌렸을때*/
-       
         let KOREA = document.querySelector("#KOREA");
         KOREA.addEventListener("click", () => {
-           /*크롤링 값 반환*/
-           let kIndex = getKoreaIndex();
-           
-           let first = document.querySelector("#first_info");
-           first.innerHTML = "KOPSI  " + kIndex["KOSPI"];
-           
-           let second = document.querySelector("#second_info");
-           second.innerHTML = "KOSDAQ  " + kIndex["KOSDAQ"];
-           
-           let third = document.querySelector("#third_info")
-           third.innerHTML = "KPI200  " + kIndex["KPI200"];
-       });
+            /*크롤링 값 반환*/
+            getKoreaIndex();
+            
+            let first = document.querySelector("#first_info");
+            first.innerHTML = "KOSDAQ  " + indexKorea.KOSDAQ;
+            
+            let second = document.querySelector("#second_info");
+            second.innerHTML = "KOSDAQ  " + indexKorea.KOSDAQ;
+
+            let third = document.querySelector("#third_info")
+            third.innerHTML = "KPI200  " + indexKorea.KPI200;
+            
+        });
+       
+        let WORLD = document.querySelector("#WORLD");
+        WORLD.addEventListener("click", () => {
+            /*크롤링 값 반환*/
+            
+            let windex = getWorldIndex();
+
+            let first = document.querySelector("#first_info");
+            first.innerHTML = "DJI  " + wIndex.DJI;
+
+            let second = document.querySelector("#second_info");
+            second.innerHTML = "NAS  " + wIndex.NAS;
+
+            let third = document.querySelector("#third_info");
+            third.innerHTML = "SPI  " + wIndex.SPI;
+
+        });
         
-       let WORLD = document.querySelector("#WORLD");
-       WORLD.addEventListener("click", () => {
-           /*크롤링 값 반환*/
-           let wIndex = getWorldIndex();
-          
-           let first = document.querySelector("#first_info");
-           first.innerHTML = "DJI  " + wIndex["DJI"];
-           
-           let second = document.querySelector("#second_info");
-           second.innerHTML = "NAS  " + wIndex["NAS"];
-           
-           let third = document.querySelector("#third_info");
-           third.innerHTML = "SPI  " + wIndex["SPI"];
-       });
-        
-       /* 새로 고침 */
-       let refresh = document.querySelector("#refresh");
-       refresh.addEventListener("click", () => {
-           /*크롤링 값 반환*/
-       });
-        
-   </script>
+        /* 새로 고침 */
+        let refresh = document.querySelector("#refresh");
+        refresh.addEventListener("click", () => {
+            /*크롤링 값 반환*/
+        });
+
+    </script>
     
-   <script type = "module" src = "scripts/crawl_coinfo.js" >
-       /*기업 검색 했을때*/
-       let div = document.createElement("div");
-       div.className = "search_bar";
-       
-       function enter(e){
-           if(e.keyCode === 13){
-               let input = document.querySelector("#company_input");
-               let text = input.value;
-               if(!text.length) return;
-               /*크롤링 값 반환*/
-               input.value = "";
-           }
-       }
-       
-       let button = document.querySelector("#search");
-       button.addEventListener("click", () => {
-           let input = document.querySelector("#company_input");
-           let text = input.value;
-           
-           if(!text.length) return;
-           /*크콜링 값 반환*/
-           
-           input.value = "";
-      });
-  
+    <script type = "module" src="./scripts/crawl_coinfo.js">
+
+        /*기업 검색 했을때*/
+        let div = document.createElement("div");
+        div.className = "search_bar";
+
+        function enter(e){
+            if(e.keyCode === 13){
+                let input = document.querySelector("#company_input");
+                let text = input.value;
+
+                if(!text.length) return;
+
+                /*크롤링 값 반환*/
+
+                input.value = "";
+            }
+        }
+
+        let button = document.querySelector("#search");
+        button.addEventListener("click", () => {
+            let input = document.querySelector("#company_input");
+            let text = input.value;
+            
+            if(!text.length) return;
+
+            /*크콜링 값 반환*/
+            
+            input.value = "";
+
+        });
+
+
     </script>
 </body>
 </html>
