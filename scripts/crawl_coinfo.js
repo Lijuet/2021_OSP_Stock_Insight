@@ -2,6 +2,7 @@
 
 const axios = require("axios");
 const cheerio = require("cheerio");
+const iconv = require("iconv-lite");
 
 async function getHTML(url) {
     try {
@@ -10,6 +11,7 @@ async function getHTML(url) {
                 "User-Agent":
                     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
             },
+            responseType: "arraybuffer",
         });
     } catch (error) {
         console.log(error);
@@ -182,6 +184,64 @@ async function getPrevPrice(code) {
     });
 }
 
+async function getOtherFinance(code) {
+    let url = "https://finance.naver.com/item/main.nhn?code=" + code;
+
+    // return valuce
+    let result = [];
+
+    await getHTML(url).then((html) => {
+        const content = iconv.decode(html.data, "EUC-KR").toString();
+        const $ = cheerio.load(content);
+
+        for (let i = 0; i < 4; ++i) {
+            let idx = String(i + 3);
+
+            let finance = {
+                name: "",
+                PER: "",
+                ROE: "",
+                PBR: "",
+            };
+            result.push(finance);
+
+            // need to encoding to Korean
+            tmp = $("div.section.trade_compare")
+                .children("table.tb_type1.tb_num")
+                .children("thead")
+                .children("tr")
+                .children("th:nth-child(" + idx + ")")
+                .text();
+            result[i].name = tmp.split("*")[0];
+
+            result[i].ROE = $("div.section.trade_compare")
+                .children("table.tb_type1.tb_num")
+                .children("tbody")
+                .children("tr:nth-child(12)")
+                .children("td:nth-child(" + idx + ")")
+                .text();
+
+            result[i].PER = $("div.section.trade_compare")
+                .children("table.tb_type1.tb_num")
+                .children("tbody")
+                .children("tr:nth-child(13)")
+                .children("td:nth-child(" + idx + ")")
+                .text();
+
+            result[i].PBR = $("div.section.trade_compare")
+                .children("table.tb_type1.tb_num")
+                .children("tbody")
+                .children("tr:nth-child(14)")
+                .children("td:nth-child(" + idx + ")")
+                .text();
+        }
+    });
+
+    return new Promise((resolve) => {
+        resolve(result);
+    });
+}
+
 // test functions
 getPrice("035420").then((ret) => {
     console.log(ret);
@@ -191,5 +251,9 @@ getFinance("035420").then((ret) => {
 });
 
 getPrevPrice("035420").then((ret) => {
+    console.log(ret);
+});
+
+getOtherFinance("035420").then((ret) => {
     console.log(ret);
 });

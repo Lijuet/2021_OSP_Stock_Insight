@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Lijuet/2021_OSP_Stock_Insight#readme",
   "dependencies": {
     "axios": "^0.21.1",
-    "cheerio": "*"
+    "cheerio": "*",
+    "iconv-lite": "^0.6.2"
   }
 }
