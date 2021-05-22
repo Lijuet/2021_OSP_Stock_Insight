@@ -39,5 +39,4 @@ Thumbs.db
 # npm generated source #
 ########################
 node_modules
-package.json
 package-lock.json
