@@ -75,9 +75,7 @@ button.addEventListener("click", () => {
 
     if (text.length === 0) return;
     else {
-        coinfo.parsingTable(text).then((ret) => {
-            let co_code = ret;
-        });
+        let co_code = "000";
 
         coinfo.getPrice(co_code).then((ret) => {
             let today_info = document.querySelector("#today_info");
