@@ -72,12 +72,12 @@
             <div class="search_bar">
                 <h3>Search company</h3>
                 <input type="text" id = "company_input" placeholder="Enter a company here" 
-                style = "width: 650px; height: 50px; font-size: 25px" onkeyup="if(event.keyCode===13){return enter(event);}">
+                style = "width: 650px; height: 50px; font-size: 25px">
                 <button type="button" id="search" class="btn btn-primary">Search</button>
                 <!-- 크롱링 값 -->
             </div>
             <div class="TodayInfo">
-                <a style = "font-size: x-large; font-weight: bold;" >Today's stockprice && day</a>
+                <a style = "font-size: x-large; font-weight: bold;" id = "today_info">Today's stockprice && day</a>
             </div>
             <div class="row">
 
@@ -87,23 +87,23 @@
                         <table class="table table-bordered">
                             <tr>
                                 <td class = "table-primary">yesterday</td>
-                                <td>stock price</td>
-                                <td class="text-primary">rate of change</td>
+                                <td id = "prev_day_sp">stock price</td>
+                                <td class="text-primary" id = "prev_day_ra">rate of change</td>
                             </tr>
                             <tr>
                                 <td class = "table-primary">last week</td>
-                                <td>stock price</td>
-                                <td class="text-primary">rate of change</td>
+                                <td id = "prev_week_sp">stock price</td>
+                                <td class="text-primary" id = "prev_week_ra">rate of change</td>
                             </tr>
                             <tr>
                                 <td class = "table-primary">last month</td>
-                                <td>stock price</td>
-                                <td class="text-primary">rate of change</td>
+                                <td id = "prev_mon_sp">stock price</td>
+                                <td class="text-primary" id = "prev_mon_ra">rate of change</td>
                             </tr>
                             <tr>
                                 <td class = "table-primary">last year</td>
-                                <td>stock price</td>
-                                <td class="text-primary">rate of change</td>
+                                <td id = "prev_year_sp">stock price</td>
+                                <td class="text-primary" id = "prev_year_ra">rate of change</td>
                             </tr>
                         </table>
                     </div>
@@ -115,7 +115,7 @@
                         <!-- 오른쪽 테이블 -->
                         <table class="table table-bordered">
                             <tr class = "table-primary">
-                                <td></td>
+                                <td>Year.quarter</td>
                                 <td>20.1</td>
                                 <td>20.2</td>
                                 <td>20.3</td>
@@ -126,27 +126,27 @@
                             <!--  크롤링 값 가져오기 !! -->
                             <tr>
                                 <td>ROE</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td id = "ROE_20.1">0</td>
+                                <td id = "ROE_20.2"></td>
+                                <td id = "ROE_20.3"></td>
+                                <td id = "ROE_20.4"></td>
+                                <td id = "ROE_21.1"></td>
                             </tr>
                             <tr>
                                 <td>PER</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td id = "PER_20.1"></td>
+                                <td id = "PER_20.2"></td>
+                                <td id = "PER_20.3"></td>
+                                <td id = "PER_20.4"></td>
+                                <td id = "PER_21.1"></td>
                             </tr>
                             <tr>
                                 <td>PBR</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td id = "PBR_20.1"></td>
+                                <td id = "PBR_20.2"></td>
+                                <td id = "PBR_20.3"></td>
+                                <td id = "PBR_20.4"></td>
+                                <td id = "PBR_21.1"></td>
                             </tr>
                         </table>
                     </div>
@@ -165,39 +165,5 @@
     
     <script type="module" src="./bundle.js"></script>
     
-    <script type = "module" src="./scripts/bundle.js">
-
-        /*기업 검색 했을때*/
-        let div = document.createElement("div");
-        div.className = "search_bar";
-
-        function enter(e){
-            if(e.keyCode === 13){
-                let input = document.querySelector("#company_input");
-                let text = input.value;
-
-                if(!text.length) return;
-
-                /*크롤링 값 반환*/
-
-                input.value = "";
-            }
-        }
-
-        let button = document.querySelector("#search");
-        button.addEventListener("click", () => {
-            let input = document.querySelector("#company_input");
-            let text = input.value;
-            
-            if(!text.length) return;
-
-            /*크콜링 값 반환*/
-            
-            input.value = "";
-
-        });
-
-
-    </script>
 </body>
 </html>
