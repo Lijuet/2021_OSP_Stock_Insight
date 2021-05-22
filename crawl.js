@@ -77,7 +77,7 @@ button.addEventListener("click", () => {
 
     if (text.length === 0) return;
     else {
-        co_code = coinfo.parsingTable(text);
+        let co_code = coinfo.parsingTable(text);
 
         let today_info = document.querySelector("#today_info");
         today_info.innerHTML =
