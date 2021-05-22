@@ -10,7 +10,7 @@
         "type": "git",
         "url": "git+https://github.com/Lijuet/2021_OSP_Stock_Insight.git"
     },
-    "author": "",
+    "author": "osp_group1",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/Lijuet/2021_OSP_Stock_Insight/issues"
@@ -18,6 +18,11 @@
     "homepage": "https://github.com/Lijuet/2021_OSP_Stock_Insight#readme",
     "dependencies": {
         "axios": "^0.21.1",
-        "cheerio": "*"
+        "cheerio": "*",
+        "cors": "^2.8.5",
+        "esm": "^3.2.25"
+    },
+    "devDependencies": {
+        "electron": "^12.0.9"
     }
 }
