@@ -68,8 +68,8 @@ refresh.addEventListener("click", () => {
 
 /* 2. 기업 검색 -> 정보 반환 */
 /*기업 검색 했을때*/
-let button = document.querySelector("#search");
-button.addEventListener("click", () => {
+let search = document.getElementById("search");
+search.addEventListener("click", () => {
     let input = document.querySelector("#company_input");
     let text = input.value;
 
