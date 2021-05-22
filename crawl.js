@@ -87,7 +87,7 @@ button.addEventListener("click", () => {
 
         /* 왼쪽 테이블 변경 */
         let prev_day_sp = document.querySelector("#prev_day_sp");
-        prev_day_sp.innerHTML = coinfo.getPrevPrice(co_code).result.prev_day;
+        prev_day_sp.innerHTML = "test";
 
         let prev_week_sp = document.querySelector("#prev_week_sp");
         prev_week_sp.innerHTML = coinfo.getPrevPrice(co_code).result.prev_week;
