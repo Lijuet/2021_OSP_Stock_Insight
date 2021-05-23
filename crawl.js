@@ -73,13 +73,13 @@ search.addEventListener("click", () => {
     let input = document.querySelector("#company_input");
     let text = input.value;
 
-    if (text.length === 0) return;
+    if (String(text).length === 0) return;
     else {
-        let co_code = "000";
+        let co_code = String(text);
 
         coinfo.getPrice(co_code).then((ret) => {
-            let today_info = document.querySelector("#today_info");
-            today_info.innerHTML = ret.price + " " + ret.date;
+            let today_info = document.getElementById("today_info");
+            today_info.innerHTML = ret.price + " - " + ret.date;
         });
 
         /* 왼쪽 테이블 변경 */
@@ -97,35 +97,35 @@ search.addEventListener("click", () => {
         /* 오른쪽 테이블 변경 */
 
         coinfo.getFinance(co_code).then((ret) => {
-            let ROE_201 = document.querySelector("#ROE_20.1");
+            let ROE_201 = document.getElementById("ROE_20.1");
             ROE_201.innerHTML = ret.ROE[5];
-            let ROE_202 = document.querySelector("#ROE_20.2");
+            let ROE_202 = document.getElementById("ROE_20.2");
             ROE_202.innerHTML = ret.ROE[6];
-            let ROE_203 = document.querySelector("#ROE_20.3");
+            let ROE_203 = document.getElementById("ROE_20.3");
             ROE_203.innerHTML = ret.ROE[7];
-            let ROE_204 = document.querySelector("#ROE_20.4");
+            let ROE_204 = document.getElementById("ROE_20.4");
             ROE_204.innerHTML = ret.ROE[8];
-            let ROE_211 = document.querySelector("#ROE_21.1");
+            let ROE_211 = document.getElementById("ROE_21.1");
             ROE_211.innerHTML = ret.ROE[9];
-            let PER_201 = document.querySelector("#PER_20.1");
+            let PER_201 = document.getElementById("PER_20.1");
             PER_201.innerHTML = ret.PER[5];
-            let PER_202 = document.querySelector("#PER_20.2");
+            let PER_202 = document.getElementById("PER_20.2");
             PER_202.innerHTML = ret.PER[6];
-            let PER_203 = document.querySelector("#PER_20.3");
+            let PER_203 = document.getElementById("PER_20.3");
             PER_203.innerHTML = ret.PER[7];
-            let PER_204 = document.querySelector("#PER_20.4");
+            let PER_204 = document.getElementById("PER_20.4");
             PER_204.innerHTML = ret.PER[8];
-            let PER_211 = document.querySelector("#PER_21.1");
+            let PER_211 = document.getElementById("PER_21.1");
             PER_211.innerHTML = ret.PER[9];
-            let PBR_201 = document.querySelector("#PBR_20.1");
+            let PBR_201 = document.getElementById("PBR_20.1");
             PBR_201.innerHTML = ret.PBR[5];
-            let PBR_202 = document.querySelector("#PBR_20.2");
+            let PBR_202 = document.getElementById("PBR_20.2");
             PBR_202.innerHTML = ret.PBR[6];
-            let PBR_203 = document.querySelector("#PBR_20.3");
+            let PBR_203 = document.getElementById("PBR_20.3");
             PBR_203.innerHTML = ret.PBR[7];
-            let PBR_204 = document.querySelector("#PBR_20.4");
+            let PBR_204 = document.getElementById("PBR_20.4");
             PBR_204.innerHTML = ret.PBR[8];
-            let PBR_211 = document.querySelector("#PBR_21.1");
+            let PBR_211 = document.getElementById("PBR_21.1");
             PBR_211.innerHTML = ret.PBR[9];
         });
     }

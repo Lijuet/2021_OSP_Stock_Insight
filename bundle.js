@@ -2206,10 +2206,16 @@ process.umask = function() { return 0; };
 
 },{}],5:[function(require,module,exports){
 const index = require("./scripts/crawl_index.js");
+const coinfo = require("./scripts/crawl_coinfo.js");
+
+/* 1. 버튼 클릭 -> index 값 반환 */
+/* 현재 클릭된 버튼 타입(KOREA/WORLD) */
+let button_type = true;
 
 let KOREA = document.getElementById("KOREA");
 KOREA.addEventListener("click", () => {
-    /*크롤링 값 반환*/
+    /*KOSPI/KOSDAQ/KPI200 값 반환*/
+    button_type = true;
     index.getKoreaIndex().then((indexKorea) => {
         console.log(indexKorea);
         let first = document.querySelector("#first_info");
@@ -2225,8 +2231,8 @@ KOREA.addEventListener("click", () => {
 
 let WORLD = document.getElementById("WORLD");
 WORLD.addEventListener("click", () => {
-    /*크롤링 값 반환*/
-
+    /*DJI/NAS/SPI 값 반환*/
+    button_type = false;
     index.getWorldIndex().then((ret) => {
         let first = document.querySelector("#first_info");
         first.innerHTML = "DJI  " + ret.DJI;
@@ -2243,9 +2249,97 @@ WORLD.addEventListener("click", () => {
 let refresh = document.getElementById("refresh");
 refresh.addEventListener("click", () => {
     /*크롤링 값 반환*/
+    if (button_type === true) {
+        /*KOREA 일때*/
+        index.getKoreaIndex().then((indexKorea) => {
+            console.log(indexKorea);
+            let first = document.querySelector("#first_info");
+            first.innerHTML = "KOSPI  " + indexKorea.KOSPI;
+            let second = document.querySelector("#second_info");
+            second.innerHTML = "KOSDAQ  " + indexKorea.KOSDAQ;
+            let third = document.querySelector("#third_info");
+            third.innerHTML = "KPI200  " + indexKorea.KPI200;
+        });
+    } else {
+        /*WORLD 일때*/
+        index.getWorldIndex().then((ret) => {
+            let first = document.querySelector("#first_info");
+            first.innerHTML = "DJI  " + ret.DJI;
+            let second = document.querySelector("#second_info");
+            second.innerHTML = "NAS  " + ret.NAS;
+            let third = document.querySelector("#third_info");
+            third.innerHTML = "SPI  " + ret.SPI;
+        });
+    }
 });
 
-},{"./scripts/crawl_index.js":119}],6:[function(require,module,exports){
+/* 2. 기업 검색 -> 정보 반환 */
+/*기업 검색 했을때*/
+let search = document.getElementById("search");
+search.addEventListener("click", () => {
+    let input = document.querySelector("#company_input");
+    let text = input.value;
+
+    if (String(text).length === 0) return;
+    else {
+        let co_code = String(text);
+
+        coinfo.getPrice(co_code).then((ret) => {
+            let today_info = document.getElementById("today_info");
+            today_info.innerHTML = ret.price + " - " + ret.date;
+        });
+
+        /* 왼쪽 테이블 변경 */
+
+        coinfo.getPrevPrice(co_code).then((ret) => {
+            let prev_day_sp = document.querySelector("#prev_day_sp");
+            prev_day_sp.innerHTML = ret.prev_day;
+            let prev_week_sp = document.querySelector("#prev_week_sp");
+            prev_week_sp.innerHTML = ret.prev_week;
+            let prev_mon_sp = document.querySelector("#prev_mon_sp");
+            prev_mon_sp.innerHTML = ret.prev_mon;
+            let prev_year_sp = document.querySelector("#prev_year_sp");
+            prev_year_sp.innerHTML = ret.prev_year;
+        });
+        /* 오른쪽 테이블 변경 */
+
+        coinfo.getFinance(co_code).then((ret) => {
+            let ROE_201 = document.getElementById("ROE_20.1");
+            ROE_201.innerHTML = ret.ROE[5];
+            let ROE_202 = document.getElementById("ROE_20.2");
+            ROE_202.innerHTML = ret.ROE[6];
+            let ROE_203 = document.getElementById("ROE_20.3");
+            ROE_203.innerHTML = ret.ROE[7];
+            let ROE_204 = document.getElementById("ROE_20.4");
+            ROE_204.innerHTML = ret.ROE[8];
+            let ROE_211 = document.getElementById("ROE_21.1");
+            ROE_211.innerHTML = ret.ROE[9];
+            let PER_201 = document.getElementById("PER_20.1");
+            PER_201.innerHTML = ret.PER[5];
+            let PER_202 = document.getElementById("PER_20.2");
+            PER_202.innerHTML = ret.PER[6];
+            let PER_203 = document.getElementById("PER_20.3");
+            PER_203.innerHTML = ret.PER[7];
+            let PER_204 = document.getElementById("PER_20.4");
+            PER_204.innerHTML = ret.PER[8];
+            let PER_211 = document.getElementById("PER_21.1");
+            PER_211.innerHTML = ret.PER[9];
+            let PBR_201 = document.getElementById("PBR_20.1");
+            PBR_201.innerHTML = ret.PBR[5];
+            let PBR_202 = document.getElementById("PBR_20.2");
+            PBR_202.innerHTML = ret.PBR[6];
+            let PBR_203 = document.getElementById("PBR_20.3");
+            PBR_203.innerHTML = ret.PBR[7];
+            let PBR_204 = document.getElementById("PBR_20.4");
+            PBR_204.innerHTML = ret.PBR[8];
+            let PBR_211 = document.getElementById("PBR_21.1");
+            PBR_211.innerHTML = ret.PBR[9];
+        });
+    }
+    input.value = "";
+});
+
+},{"./scripts/crawl_coinfo.js":119,"./scripts/crawl_index.js":120}],6:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":8}],7:[function(require,module,exports){
 'use strict';
@@ -21517,6 +21611,204 @@ var __createBinding;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],119:[function(require,module,exports){
+/* crawl_copinfo v1.0.0 */
+
+const axios = require("axios");
+const cheerio = require("cheerio");
+
+async function getHTML(url) {
+    try {
+        return await axios.get(url, {
+            headers: {
+                "User-Agent":
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+            },
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function parsingTable(str) {
+    let idx = 0;
+    let pos = 0;
+    let ret = [];
+
+    let element = "";
+    while (idx < 10) {
+        if (str[pos] == "\t" || str[pos] == "\n") {
+            if (element.length != 0) {
+                ret.push(element);
+                idx++;
+            }
+
+            element = "";
+            pos++;
+            continue;
+        }
+        element += str[pos];
+        pos++;
+    }
+
+    return ret;
+}
+
+// result.date 값 파싱해야 함!
+async function getPrice(code) {
+    // 'code' is cop stock code
+    let url = "https://finance.naver.com/item/main.nhn?code=" + code;
+    // return value
+    let result = {
+        price: "",
+        date: "",
+    };
+
+    await getHTML(url).then((html) => {
+        const $ = cheerio.load(html.data);
+
+        // get price date in html
+        result.price = $(".rate_info", "#chart_area")
+            .children(".today")
+            .children(".no_today")
+            .children(".no_down")
+            .children(".blind")
+            .text();
+
+        if (result.price == "") {
+            result.price = $(".rate_info", "#chart_area")
+                .children(".today")
+                .children(".no_today")
+                .children(".no_up")
+                .children(".blind")
+                .text();
+        }
+        // get real-time in html
+        result.date = $(".date", "#time").text().slice(0, 10);
+    });
+
+    // return promise obj to process asyncronization
+    return new Promise((resolve) => {
+        resolve(result);
+    });
+}
+
+async function getFinance(code) {
+    // 'code' is cop stock code
+    let url = "https://finance.naver.com/item/main.nhn?code=" + code;
+
+    // return value
+    let result = {
+        PER: [],
+        PBR: [],
+        ROE: [],
+    };
+
+    await getHTML(url).then((html) => {
+        const $ = cheerio.load(html.data);
+
+        // crawlling ROE
+        let tmp1 = $("div.section.cop_analysis")
+            .children("div.sub_section")
+            .children("table.tb_type1")
+            .children("tbody")
+            .children("tr:nth-child(6)")
+            .children("td")
+            .text();
+
+        // crawlling PER
+        let tmp2 = $("div.section.cop_analysis")
+            .children("div.sub_section")
+            .children("table.tb_type1")
+            .children("tbody")
+            .children("tr:nth-child(11)")
+            .children("td")
+            .text();
+
+        // crawlling PBR
+        let tmp3 = $("div.section.cop_analysis")
+            .children("div.sub_section")
+            .children("table.tb_type1")
+            .children("tbody")
+            .children("tr:nth-child(13)")
+            .children("td")
+            .text();
+
+        // parsing tmp to make array
+        result.ROE = parsingTable(tmp1);
+        result.PER = parsingTable(tmp2);
+        result.PBR = parsingTable(tmp3);
+    });
+
+    return new Promise((resolve) => {
+        resolve(result);
+    });
+}
+
+async function getPrevPrice(code) {
+    let url =
+        "https://finance.naver.com/item/sise_day.nhn?code=" + code + "&page=";
+
+    // return value
+    let result = {
+        prev_day: "",
+        prev_week: "",
+        prev_mon: "",
+        prev_year: "",
+    };
+
+    // prev day and week
+    await getHTML(url + "1").then((html) => {
+        const $ = cheerio.load(html.data);
+        result.prev_day = $("table.type2")
+            .children("tbody")
+            .children("tr:nth-child(4)")
+            .children("td:nth-child(2)")
+            .text();
+
+        result.prev_week = $("table.type2")
+            .children("tbody")
+            .children("tr:nth-child(11)")
+            .children("td:nth-child(2)")
+            .text();
+    });
+
+    await getHTML(url + "3").then((html) => {
+        const $ = cheerio.load(html.data);
+        result.prev_mon = $("table.type2")
+            .children("tbody")
+            .children("tr:nth-child(4)")
+            .children("td:nth-child(2)")
+            .text();
+    });
+
+    await getHTML(url + "27").then((html) => {
+        const $ = cheerio.load(html.data);
+        result.prev_year = $("table.type2")
+            .children("tbody")
+            .children("tr:nth-child(4)")
+            .children("td:nth-child(2)")
+            .text();
+    });
+
+    return new Promise((resolve) => {
+        resolve(result);
+    });
+}
+
+module.exports = { getPrice, getFinance, getPrevPrice };
+// test functions
+getPrice().then((ret) => {
+    console.log(ret);
+});
+getFinance("035420").then((ret) => {
+    console.log(ret);
+});
+
+getPrevPrice("035420").then((ret) => {
+    console.log(ret);
+});
+
+},{"axios":6,"cheerio":43}],120:[function(require,module,exports){
 const axios = require("axios");
 const cheerio = require("cheerio");
 

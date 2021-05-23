@@ -182,8 +182,9 @@ async function getPrevPrice(code) {
     });
 }
 
+module.exports = { getPrice, getFinance, getPrevPrice };
 // test functions
-getPrice("035420").then((ret) => {
+getPrice().then((ret) => {
     console.log(ret);
 });
 getFinance("035420").then((ret) => {
