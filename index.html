@@ -5,8 +5,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet"
 	integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">  
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    
     <title>easy_stock</title>
     <style>
+        * {
+            
+            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
         .container{
             width: 800px;
             background-color: white;
@@ -59,7 +68,7 @@
             <!-- 버튼 클릭시 3가지 정보 나오는.. 크롤링 값 -->
         <div class="stock_index">
             <table class = "table table-bordered" id = "index_info">
-                <tr>
+                <tr style="text-align: center">
                     <td id="first_info" >first</td>
                     <td id="second_info" >second</td>
                     <td id="third_info">third</td>
@@ -72,38 +81,39 @@
             <div class="search_bar">
                 <h3>Search company</h3>
                 <input type="text" id = "company_input" placeholder="Enter a company here" 
-                style = "width: 650px; height: 50px; font-size: 25px">
+                style = "width: 650px; height: 40px; font-size: 20px">
                 <button type="button" id="search" class="btn btn-primary">Search</button>
                 <!-- 크롱링 값 -->
             </div>
             <div class="TodayInfo">
-                <a style = "font-size: x-large; font-weight: bold;" id = "today_info">Today's stockprice && day</a>
+                <a style = "font-size: xx-large; font-weight: bold;" id = "today_price">Today's stockprice</a>
+                <a sytle = "font-size: x-large" id = "today_date">real-time</a>
             </div>
             <div class="row">
 
                 <div class="col">
                     <div class="information">
                         <!-- 왼쪽 테이블 -->
-                        <table class="table table-bordered">
+                        <table class="table table-bordered" style="text-align: right;">
                             <tr>
-                                <td class = "table-primary">yesterday</td>
+                                <td class = "table-primary" style="text-align: center;">yesterday</td>
                                 <td id = "prev_day_sp">stock price</td>
-                                <td class="text-primary" id = "prev_day_ra">rate of change</td>
+                                <td id = "prev_day_ra" style="text-align: center; color: blue;">rate of change</td>
                             </tr>
                             <tr>
-                                <td class = "table-primary">last week</td>
+                                <td class = "table-primary" style="text-align: center;">last week</td>
                                 <td id = "prev_week_sp">stock price</td>
-                                <td class="text-primary" id = "prev_week_ra">rate of change</td>
+                                <td id = "prev_week_ra" style="text-align: center; color: blue;">rate of change</td>
                             </tr>
                             <tr>
-                                <td class = "table-primary">last month</td>
+                                <td class = "table-primary" style="text-align: center;">last month</td>
                                 <td id = "prev_mon_sp">stock price</td>
-                                <td class="text-primary" id = "prev_mon_ra">rate of change</td>
+                                <td id = "prev_mon_ra" style="text-align: center; color: blue;">rate of change</td>
                             </tr>
                             <tr>
-                                <td class = "table-primary">last year</td>
+                                <td class = "table-primary" style="text-align: center;">last year</td>
                                 <td id = "prev_year_sp">stock price</td>
-                                <td class="text-primary" id = "prev_year_ra">rate of change</td>
+                                <td id = "prev_year_ra" style="text-align: center; color: blue;">rate of change</td>
                             </tr>
                         </table>
                     </div>
@@ -114,8 +124,8 @@
                     <div class="information">
                         <!-- 오른쪽 테이블 -->
                         <table class="table table-bordered">
-                            <tr class = "table-primary">
-                                <td>Year.quarter</td>
+                            <tr class = "table-primary" style="text-align: center;">
+                                <td></td>
                                 <td>20.1</td>
                                 <td>20.2</td>
                                 <td>20.3</td>
@@ -124,24 +134,24 @@
                             </tr>
                         
                             <!--  크롤링 값 가져오기 !! -->
-                            <tr>
-                                <td>ROE</td>
-                                <td id = "ROE_20.1">0</td>
+                            <tr style="text-align: right;">
+                                <td style="text-align: center;">ROE</td>
+                                <td id = "ROE_20.1"></td>
                                 <td id = "ROE_20.2"></td>
                                 <td id = "ROE_20.3"></td>
                                 <td id = "ROE_20.4"></td>
                                 <td id = "ROE_21.1"></td>
                             </tr>
-                            <tr>
-                                <td>PER</td>
+                            <tr style="text-align: right;">
+                                <td style="text-align: center;">PER</td>
                                 <td id = "PER_20.1"></td>
                                 <td id = "PER_20.2"></td>
                                 <td id = "PER_20.3"></td>
                                 <td id = "PER_20.4"></td>
                                 <td id = "PER_21.1"></td>
                             </tr>
-                            <tr>
-                                <td>PBR</td>
+                            <tr style="text-align: right;">
+                                <td style="text-align: center;">PBR</td>
                                 <td id = "PBR_20.1"></td>
                                 <td id = "PBR_20.2"></td>
                                 <td id = "PBR_20.3"></td>
