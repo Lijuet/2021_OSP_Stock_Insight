@@ -16,8 +16,18 @@ To solve these problems our service intuitively provides the basic information n
     - KOSPI, KOSDAQ, NASDAQ, DAJ, SPI200
 2. Show major stock information
     - Show stock price about entered code number.
-    - Show financial indicators and head news.
+    - Show financial indicators.
+    - ROE, PER, PBR
 
+### V2
+
+1. Show Head News
+    - Show news with title, summary and link.
+2. Update search company
+    - Can choose to search company name or code.
+3. Show financial indicators about related company
+    - Show financial indicators 
+    - ROE, PER, PBR
 ---
 
 ## How to Install
