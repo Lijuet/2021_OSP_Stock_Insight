@@ -8,11 +8,8 @@ async function getHTML(url) {
     try {
         return await axios.get(url, {
             headers: {
-                "User-Agent":
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-            },
-            responseType: "arraybuffer",
-        });
+                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"    },
+    });
     } catch (error) {
         console.log(error);
     }
@@ -42,12 +39,33 @@ function parsingTable(str) {
     return ret;
 }
 
+function getRate(today, prev)
+{
+    let today_split = today.split(',');
+    let prev_split = prev.split(',');
+
+    let today_num = "";
+    let prev_num = "";
+
+    for (let i=0; i<today_split.length; ++i)
+    {
+        today_num = today_num + today_split[i];
+    }
+
+    for (let i=0; i<prev_split.length; ++i)
+    {
+        prev_num = prev_num + prev_split[i];
+    }
+
+    return Number(today_num) - Number(prev_num);
+}
 // result.date 값 파싱해야 함!
 async function getPrice(code) {
     // 'code' is cop stock code
     let url = "https://finance.naver.com/item/main.nhn?code=" + code;
     // return value
     let result = {
+        name: "",
         price: "",
         date: "",
     };
@@ -56,6 +74,12 @@ async function getPrice(code) {
         const $ = cheerio.load(html.data);
 
         // get price date in html
+        result.name = $(".new_totalinfo")
+            .children(".h_company")
+            .children(".wrap_company")
+            .children("h2")
+            .text();
+
         result.price = $(".rate_info", "#chart_area")
             .children(".today")
             .children(".no_today")
@@ -63,11 +87,21 @@ async function getPrice(code) {
             .children(".blind")
             .text();
 
-        if (result.price == "") {
+        if (result.price === "") {
             result.price = $(".rate_info", "#chart_area")
                 .children(".today")
                 .children(".no_today")
                 .children(".no_up")
+                .children(".blind")
+                .text();
+        }
+
+        if (result.price === "")
+        {
+            result.price = $(".rate_info", "#chart_area")
+                .children(".today")
+                .children(".no_today")
+                .children(".X")
                 .children(".blind")
                 .text();
         }
@@ -123,9 +157,13 @@ async function getFinance(code) {
             .text();
 
         // parsing tmp to make array
-        result.ROE = parsingTable(tmp1);
-        result.PER = parsingTable(tmp2);
-        result.PBR = parsingTable(tmp3);
+        if (tmp1 != "")
+        {
+            result.ROE = parsingTable(tmp1);
+            result.PER = parsingTable(tmp2);
+            result.PBR = parsingTable(tmp3);
+        }
+ 
     });
 
     return new Promise((resolve) => {
@@ -139,23 +177,33 @@ async function getPrevPrice(code) {
 
     // return value
     let result = {
+        today: "",
         prev_day: "",
         prev_week: "",
         prev_mon: "",
         prev_year: "",
+
+        day_rate: 0,
+        week_rate: 0,
+        mon_rate: 0,
+        year_rate: 0,
     };
 
     // prev day and week
     await getHTML(url + "1").then((html) => {
         const $ = cheerio.load(html.data);
+
+        result.today = $("table.type2")
+            .children("tr:nth-child(3)")
+            .children("td:nth-child(2)")
+            .text();
+
         result.prev_day = $("table.type2")
-            .children("tbody")
             .children("tr:nth-child(4)")
             .children("td:nth-child(2)")
             .text();
 
         result.prev_week = $("table.type2")
-            .children("tbody")
             .children("tr:nth-child(11)")
             .children("td:nth-child(2)")
             .text();
@@ -164,7 +212,6 @@ async function getPrevPrice(code) {
     await getHTML(url + "3").then((html) => {
         const $ = cheerio.load(html.data);
         result.prev_mon = $("table.type2")
-            .children("tbody")
             .children("tr:nth-child(4)")
             .children("td:nth-child(2)")
             .text();
@@ -173,13 +220,19 @@ async function getPrevPrice(code) {
     await getHTML(url + "27").then((html) => {
         const $ = cheerio.load(html.data);
         result.prev_year = $("table.type2")
-            .children("tbody")
             .children("tr:nth-child(4)")
             .children("td:nth-child(2)")
             .text();
+        
     });
 
     return new Promise((resolve) => {
+
+        result.day_rate = getRate(result.today, result.prev_day);
+        result.week_rate = getRate(result.today, result.prev_week);
+        result.mon_rate = getRate(result.today, result.prev_mon);
+        result.year_rate = getRate(result.today, result.prev_year);
+        
         resolve(result);
     });
 }
@@ -242,15 +295,16 @@ async function getOtherFinance(code) {
     });
 }
 
+module.exports = { getPrice, getFinance, getPrevPrice };
 // test functions
-getPrice("035420").then((ret) => {
+getPrice("000").then((ret) => {
     console.log(ret);
 });
-getFinance("035420").then((ret) => {
+getFinance("000").then((ret) => {
     console.log(ret);
 });
 
-getPrevPrice("035420").then((ret) => {
+getPrevPrice("000").then((ret) => {
     console.log(ret);
 });
 
