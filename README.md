@@ -13,10 +13,10 @@ To solve these problems our service intuitively provides the basic information n
 
 1. Show Index information
     - Show major index information with refresh button
-    - KOSPI, KOSDAQ, NASDAQ, DAJ, SPI200
+    - KOSPI, KOSDAQ, KPI200, NAS, DAJ, SPI
 2. Show major stock information
     - Show stock price about entered code number.
-    - Show financial indicators.
+    - Show financial indicators quarterly.
     - ROE, PER, PBR
 
 ### V2
@@ -25,11 +25,32 @@ To solve these problems our service intuitively provides the basic information n
     - Show news with title, summary and link.
 2. Update search company
     - Can choose to search company name or code.
-3. Show financial indicators about related company
+3. Show financial indicators of the same industry
     - Show financial indicators 
     - ROE, PER, PBR
 ---
 
 ## How to Install
 
+---
+
 ## How to Use
+
+1. Watch the index information
+    - if you click the button 'KOREA', you can see the information of KOSPI, KOSDAQ, KPI200.
+    - if you click the button 'WORLD', you can see the information of NAS, DAJ, SPI.
+    - if you click the refresh button, you can see the recent information.
+
+2. Watch the stock information
+    1. Choose the search method
+        - if you want to search company name, click the radio button 'company name'.
+        - if you want to search company code, click the radio button 'company code'. 
+        
+    2. Type the company name or code exactly and click search button
+
+    3. You can see the stock information of searched company
+        - stock price and date of today
+        - stock price of the past and the figure compared to today
+        - financial indicators organized quarterly
+        - head news with title, summary and link
+        - financial indicators of the same industry
