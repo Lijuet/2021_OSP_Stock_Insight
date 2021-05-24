@@ -79,11 +79,9 @@
         <div class="p-3 mb-2 bg-light text-dark">
             <!-- 기업 검색바 -->
             <div class="search_bar">
-                <h3>Search company</h3>
-                <input type="radio" name="search_type" checked = "checked" value = "co_name" onclick = "changeBar(true)">company name
-                <input type="radio" name="search_type" value = "co_code" onclick = "changeBar(false)">company code
-                <input type="text" id = "company_input" placeholder="Enter a company name here" 
-                style = "width: 650px; height: 40px; font-size: 20px">
+                <h3>Search company(Name or Code)</h3>
+                <input type="text" id = "company_input" placeholder="기업명은 한글 또는 영어 대문자로 입력해주세요" 
+                style = "width: 650px; height: 40px; font-size: 20px; font-weight: bold;">
                 <button type="button" id="search" class="btn btn-primary">Search</button>
             </div>
             <div class="TodayInfo">
@@ -223,16 +221,6 @@
     </div>
     
     <script type="module" src="./bundle.js"></script>
-
-    <script>
-        /* name / code 선택했을때 search bar 안에 변경 */
-        function changeBar(bool){
-            if(bool === true)
-                document.querySelector("#company_input").placeholder = "Enter a company name here";
-            else
-                document.querySelector("#company_input").placeholder = "Enter a company code here";
-        }
-    </script>
     
 </body>
 </html>

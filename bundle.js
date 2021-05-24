@@ -1,6 +1,4 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-
-},{}],2:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -152,9 +150,9 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
+},{}],2:[function(require,module,exports){
+
 },{}],3:[function(require,module,exports){
-arguments[4][1][0].apply(exports,arguments)
-},{"dup":1}],4:[function(require,module,exports){
 (function (Buffer){(function (){
 /*!
  * The buffer module from node.js, for the browser.
@@ -1935,7 +1933,7 @@ function numberIsNaN (obj) {
 }
 
 }).call(this)}).call(this,require("buffer").Buffer)
-},{"base64-js":2,"buffer":4,"ieee754":6}],5:[function(require,module,exports){
+},{"base64-js":1,"buffer":3,"ieee754":5}],4:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2434,7 +2432,7 @@ function eventTargetAgnosticAddListener(emitter, name, listener, flags) {
   }
 }
 
-},{}],6:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
@@ -2521,7 +2519,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -2544,7 +2542,7 @@ function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
 
-},{}],8:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -2730,7 +2728,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],9:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 /* eslint-disable node/no-deprecated-api */
 var buffer = require('buffer')
@@ -2797,7 +2795,7 @@ SafeBuffer.allocUnsafeSlow = function (size) {
   return buffer.SlowBuffer(size)
 }
 
-},{"buffer":4}],10:[function(require,module,exports){
+},{"buffer":3}],9:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3094,11 +3092,12 @@ function simpleWrite(buf) {
 function simpleEnd(buf) {
   return buf && buf.length ? this.write(buf) : '';
 }
-},{"safe-buffer":9}],11:[function(require,module,exports){
+},{"safe-buffer":8}],10:[function(require,module,exports){
 const index = require("./scripts/crawl_index.js");
 const coinfo = require("./scripts/crawl_coinfo.js");
-const code = require("./scripts/stock_code.js");
+const code = require("./scripts/crawl_code.js");
 const news = require("./scripts/crawl_news.js");
+//console.log(code.getCodeWithName("삼성전자"));
 
 /* 1. 버튼 클릭 -> index 값 반환 */
 /* 현재 클릭된 버튼 타입(KOREA/WORLD) */
@@ -3174,7 +3173,12 @@ search.addEventListener("click", () => {
 
     if (String(text).length === 0) return;
 
-    let co_code = String(text);
+    let co_code = "";
+
+    co_code = code.getCode(text);
+    if (co_code.length < 6) {
+        co_code = text;
+    }
 
     coinfo.getPrice(co_code).then((ret) => {
         if (ret.name === "") {
@@ -3348,9 +3352,9 @@ search.addEventListener("click", () => {
     input.value = "";
 });
 
-},{"./scripts/crawl_coinfo.js":103,"./scripts/crawl_index.js":104,"./scripts/crawl_news.js":105,"./scripts/stock_code.js":106}],12:[function(require,module,exports){
+},{"./scripts/crawl_code.js":102,"./scripts/crawl_coinfo.js":103,"./scripts/crawl_index.js":104,"./scripts/crawl_news.js":105}],11:[function(require,module,exports){
 module.exports = require('./lib/axios');
-},{"./lib/axios":14}],13:[function(require,module,exports){
+},{"./lib/axios":13}],12:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -3531,7 +3535,7 @@ module.exports = function xhrAdapter(config) {
   });
 };
 
-},{"../core/buildFullPath":20,"../core/createError":21,"./../core/settle":25,"./../helpers/buildURL":29,"./../helpers/cookies":31,"./../helpers/isURLSameOrigin":34,"./../helpers/parseHeaders":36,"./../utils":38}],14:[function(require,module,exports){
+},{"../core/buildFullPath":19,"../core/createError":20,"./../core/settle":24,"./../helpers/buildURL":28,"./../helpers/cookies":30,"./../helpers/isURLSameOrigin":33,"./../helpers/parseHeaders":35,"./../utils":37}],13:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -3589,7 +3593,7 @@ module.exports = axios;
 // Allow use of default import syntax in TypeScript
 module.exports.default = axios;
 
-},{"./cancel/Cancel":15,"./cancel/CancelToken":16,"./cancel/isCancel":17,"./core/Axios":18,"./core/mergeConfig":24,"./defaults":27,"./helpers/bind":28,"./helpers/isAxiosError":33,"./helpers/spread":37,"./utils":38}],15:[function(require,module,exports){
+},{"./cancel/Cancel":14,"./cancel/CancelToken":15,"./cancel/isCancel":16,"./core/Axios":17,"./core/mergeConfig":23,"./defaults":26,"./helpers/bind":27,"./helpers/isAxiosError":32,"./helpers/spread":36,"./utils":37}],14:[function(require,module,exports){
 'use strict';
 
 /**
@@ -3610,7 +3614,7 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 var Cancel = require('./Cancel');
@@ -3669,14 +3673,14 @@ CancelToken.source = function source() {
 
 module.exports = CancelToken;
 
-},{"./Cancel":15}],17:[function(require,module,exports){
+},{"./Cancel":14}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -3773,7 +3777,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = Axios;
 
-},{"../helpers/buildURL":29,"./../utils":38,"./InterceptorManager":19,"./dispatchRequest":22,"./mergeConfig":24}],19:[function(require,module,exports){
+},{"../helpers/buildURL":28,"./../utils":37,"./InterceptorManager":18,"./dispatchRequest":21,"./mergeConfig":23}],18:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -3827,7 +3831,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
-},{"./../utils":38}],20:[function(require,module,exports){
+},{"./../utils":37}],19:[function(require,module,exports){
 'use strict';
 
 var isAbsoluteURL = require('../helpers/isAbsoluteURL');
@@ -3849,7 +3853,7 @@ module.exports = function buildFullPath(baseURL, requestedURL) {
   return requestedURL;
 };
 
-},{"../helpers/combineURLs":30,"../helpers/isAbsoluteURL":32}],21:[function(require,module,exports){
+},{"../helpers/combineURLs":29,"../helpers/isAbsoluteURL":31}],20:[function(require,module,exports){
 'use strict';
 
 var enhanceError = require('./enhanceError');
@@ -3869,7 +3873,7 @@ module.exports = function createError(message, config, code, request, response) 
   return enhanceError(error, config, code, request, response);
 };
 
-},{"./enhanceError":23}],22:[function(require,module,exports){
+},{"./enhanceError":22}],21:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -3950,7 +3954,7 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
-},{"../cancel/isCancel":17,"../defaults":27,"./../utils":38,"./transformData":26}],23:[function(require,module,exports){
+},{"../cancel/isCancel":16,"../defaults":26,"./../utils":37,"./transformData":25}],22:[function(require,module,exports){
 'use strict';
 
 /**
@@ -3994,7 +3998,7 @@ module.exports = function enhanceError(error, config, code, request, response) {
   return error;
 };
 
-},{}],24:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -4083,7 +4087,7 @@ module.exports = function mergeConfig(config1, config2) {
   return config;
 };
 
-},{"../utils":38}],25:[function(require,module,exports){
+},{"../utils":37}],24:[function(require,module,exports){
 'use strict';
 
 var createError = require('./createError');
@@ -4110,7 +4114,7 @@ module.exports = function settle(resolve, reject, response) {
   }
 };
 
-},{"./createError":21}],26:[function(require,module,exports){
+},{"./createError":20}],25:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -4132,7 +4136,7 @@ module.exports = function transformData(data, headers, fns) {
   return data;
 };
 
-},{"./../utils":38}],27:[function(require,module,exports){
+},{"./../utils":37}],26:[function(require,module,exports){
 (function (process){(function (){
 'use strict';
 
@@ -4234,7 +4238,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 module.exports = defaults;
 
 }).call(this)}).call(this,require('_process'))
-},{"./adapters/http":13,"./adapters/xhr":13,"./helpers/normalizeHeaderName":35,"./utils":38,"_process":8}],28:[function(require,module,exports){
+},{"./adapters/http":12,"./adapters/xhr":12,"./helpers/normalizeHeaderName":34,"./utils":37,"_process":7}],27:[function(require,module,exports){
 'use strict';
 
 module.exports = function bind(fn, thisArg) {
@@ -4247,7 +4251,7 @@ module.exports = function bind(fn, thisArg) {
   };
 };
 
-},{}],29:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -4319,7 +4323,7 @@ module.exports = function buildURL(url, params, paramsSerializer) {
   return url;
 };
 
-},{"./../utils":38}],30:[function(require,module,exports){
+},{"./../utils":37}],29:[function(require,module,exports){
 'use strict';
 
 /**
@@ -4335,7 +4339,7 @@ module.exports = function combineURLs(baseURL, relativeURL) {
     : baseURL;
 };
 
-},{}],31:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -4390,7 +4394,7 @@ module.exports = (
     })()
 );
 
-},{"./../utils":38}],32:[function(require,module,exports){
+},{"./../utils":37}],31:[function(require,module,exports){
 'use strict';
 
 /**
@@ -4406,7 +4410,7 @@ module.exports = function isAbsoluteURL(url) {
   return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
 };
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 'use strict';
 
 /**
@@ -4419,7 +4423,7 @@ module.exports = function isAxiosError(payload) {
   return (typeof payload === 'object') && (payload.isAxiosError === true);
 };
 
-},{}],34:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -4489,7 +4493,7 @@ module.exports = (
     })()
 );
 
-},{"./../utils":38}],35:[function(require,module,exports){
+},{"./../utils":37}],34:[function(require,module,exports){
 'use strict';
 
 var utils = require('../utils');
@@ -4503,7 +4507,7 @@ module.exports = function normalizeHeaderName(headers, normalizedName) {
   });
 };
 
-},{"../utils":38}],36:[function(require,module,exports){
+},{"../utils":37}],35:[function(require,module,exports){
 'use strict';
 
 var utils = require('./../utils');
@@ -4558,7 +4562,7 @@ module.exports = function parseHeaders(headers) {
   return parsed;
 };
 
-},{"./../utils":38}],37:[function(require,module,exports){
+},{"./../utils":37}],36:[function(require,module,exports){
 'use strict';
 
 /**
@@ -4587,7 +4591,7 @@ module.exports = function spread(callback) {
   };
 };
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 'use strict';
 
 var bind = require('./helpers/bind');
@@ -4940,7 +4944,7 @@ module.exports = {
   stripBOM: stripBOM
 };
 
-},{"./helpers/bind":28}],39:[function(require,module,exports){
+},{"./helpers/bind":27}],38:[function(require,module,exports){
 module.exports = {
 	trueFunc: function trueFunc(){
 		return true;
@@ -4949,7 +4953,7 @@ module.exports = {
 		return false;
 	}
 };
-},{}],40:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 /**
  * Export cheerio (with )
  */
@@ -4962,7 +4966,7 @@ exports = module.exports = require('./lib/cheerio');
 
 exports.version = require('./package.json').version;
 
-},{"./lib/cheerio":46,"./package.json":50}],41:[function(require,module,exports){
+},{"./lib/cheerio":45,"./package.json":49}],40:[function(require,module,exports){
 var $ = require('../static'),
     utils = require('../utils'),
     isTag = utils.isTag,
@@ -5459,7 +5463,7 @@ exports.is = function (selector) {
 };
 
 
-},{"../static":48,"../utils":49,"lodash.assignin":88,"lodash.foreach":93,"lodash.some":99}],42:[function(require,module,exports){
+},{"../static":47,"../utils":48,"lodash.assignin":87,"lodash.foreach":92,"lodash.some":98}],41:[function(require,module,exports){
 var domEach = require('../utils').domEach,
     _ = {
       pick: require('lodash.pick'),
@@ -5582,7 +5586,7 @@ function parse(styles) {
     }, {});
 }
 
-},{"../utils":49,"lodash.pick":96}],43:[function(require,module,exports){
+},{"../utils":48,"lodash.pick":95}],42:[function(require,module,exports){
 // https://github.com/jquery/jquery/blob/2.1.3/src/manipulation/var/rcheckableType.js
 // https://github.com/jquery/jquery/blob/2.1.3/src/serialize.js
 var submittableSelector = 'input,select,textarea,keygen',
@@ -5649,7 +5653,7 @@ exports.serializeArray = function() {
     }).get();
 };
 
-},{"lodash.map":94}],44:[function(require,module,exports){
+},{"lodash.map":93}],43:[function(require,module,exports){
 var parse = require('../parse'),
     $ = require('../static'),
     updateDOM = parse.update,
@@ -6076,7 +6080,7 @@ exports.clone = function() {
   return this._make(cloneDom(this.get(), this.options));
 };
 
-},{"../parse":47,"../static":48,"../utils":49,"lodash.bind":89,"lodash.flatten":92,"lodash.foreach":93}],45:[function(require,module,exports){
+},{"../parse":46,"../static":47,"../utils":48,"lodash.bind":88,"lodash.flatten":91,"lodash.foreach":92}],44:[function(require,module,exports){
 var select = require('css-select'),
     utils = require('../utils'),
     domEach = utils.domEach,
@@ -6507,7 +6511,7 @@ exports.addBack = function(selector) {
   );
 };
 
-},{"../utils":49,"css-select":51,"htmlparser2":86,"lodash.bind":89,"lodash.filter":91,"lodash.foreach":93,"lodash.reduce":97,"lodash.reject":98}],46:[function(require,module,exports){
+},{"../utils":48,"css-select":50,"htmlparser2":85,"lodash.bind":88,"lodash.filter":90,"lodash.foreach":92,"lodash.reduce":96,"lodash.reject":97}],45:[function(require,module,exports){
 /*
   Module dependencies
 */
@@ -6657,7 +6661,7 @@ var isNode = function(obj) {
   return obj.name || obj.type === 'text' || obj.type === 'comment';
 };
 
-},{"./api/attributes":41,"./api/css":42,"./api/forms":43,"./api/manipulation":44,"./api/traversing":45,"./parse":47,"./static":48,"./utils":49,"lodash.assignin":88,"lodash.bind":89,"lodash.defaults":90,"lodash.foreach":93}],47:[function(require,module,exports){
+},{"./api/attributes":40,"./api/css":41,"./api/forms":42,"./api/manipulation":43,"./api/traversing":44,"./parse":46,"./static":47,"./utils":48,"lodash.assignin":87,"lodash.bind":88,"lodash.defaults":89,"lodash.foreach":92}],46:[function(require,module,exports){
 (function (Buffer){(function (){
 /*
   Module Dependencies
@@ -6747,7 +6751,7 @@ exports.update = function(arr, parent) {
 // module.exports = $.extend(exports);
 
 }).call(this)}).call(this,{"isBuffer":require("../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":7,"htmlparser2":86}],48:[function(require,module,exports){
+},{"../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":6,"htmlparser2":85}],47:[function(require,module,exports){
 /**
  * Module dependencies
  */
@@ -6936,7 +6940,7 @@ exports.contains = function(container, contained) {
   return false;
 };
 
-},{"./cheerio":46,"./parse":47,"css-select":51,"dom-serializer":59,"lodash.defaults":90,"lodash.merge":95}],49:[function(require,module,exports){
+},{"./cheerio":45,"./parse":46,"css-select":50,"dom-serializer":58,"lodash.defaults":89,"lodash.merge":94}],48:[function(require,module,exports){
 var parse = require('./parse'),
     render = require('dom-serializer');
 
@@ -7021,7 +7025,7 @@ exports.isHtml = function(str) {
   return !!(match && match[1]);
 };
 
-},{"./parse":47,"dom-serializer":59}],50:[function(require,module,exports){
+},{"./parse":46,"dom-serializer":58}],49:[function(require,module,exports){
 module.exports={
   "name": "cheerio",
   "version": "0.22.0",
@@ -7082,7 +7086,7 @@ module.exports={
   }
 }
 
-},{}],51:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 
 module.exports = CSSselect;
@@ -7143,7 +7147,7 @@ CSSselect.iterate = selectAll;
 CSSselect._compileUnsafe = compileUnsafe;
 CSSselect._compileToken = compileToken;
 
-},{"./lib/compile.js":53,"./lib/pseudos.js":56,"boolbase":39,"domutils":64}],52:[function(require,module,exports){
+},{"./lib/compile.js":52,"./lib/pseudos.js":55,"boolbase":38,"domutils":63}],51:[function(require,module,exports){
 var DomUtils  = require("domutils"),
     hasAttrib = DomUtils.hasAttrib,
     getAttributeValue = DomUtils.getAttributeValue,
@@ -7326,7 +7330,7 @@ module.exports = {
 	rules: attributeRules
 };
 
-},{"boolbase":39,"domutils":64}],53:[function(require,module,exports){
+},{"boolbase":38,"domutils":63}],52:[function(require,module,exports){
 /*
 	compiles a selector to an executable function
 */
@@ -7520,7 +7524,7 @@ filters.matches = function(next, token, options, context){
 	return compileToken(token, opts, context);
 };
 
-},{"./general.js":54,"./procedure.json":55,"./pseudos.js":56,"./sort.js":57,"boolbase":39,"css-what":58,"domutils":64}],54:[function(require,module,exports){
+},{"./general.js":53,"./procedure.json":54,"./pseudos.js":55,"./sort.js":56,"boolbase":38,"css-what":57,"domutils":63}],53:[function(require,module,exports){
 var DomUtils    = require("domutils"),
     isTag       = DomUtils.isTag,
     getParent   = DomUtils.getParent,
@@ -7610,7 +7614,7 @@ module.exports = {
 		return next;
 	}
 };
-},{"./attributes.js":52,"./pseudos.js":56,"domutils":64}],55:[function(require,module,exports){
+},{"./attributes.js":51,"./pseudos.js":55,"domutils":63}],54:[function(require,module,exports){
 module.exports={
   "universal": 50,
   "tag": 30,
@@ -7623,7 +7627,7 @@ module.exports={
   "adjacent": -1
 }
 
-},{}],56:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 /*
 	pseudo selectors
 
@@ -8018,7 +8022,7 @@ module.exports = {
 	pseudos: pseudos
 };
 
-},{"./attributes.js":52,"boolbase":39,"domutils":64,"nth-check":101}],57:[function(require,module,exports){
+},{"./attributes.js":51,"boolbase":38,"domutils":63,"nth-check":100}],56:[function(require,module,exports){
 module.exports = sortByProcedure;
 
 /*
@@ -8100,7 +8104,7 @@ function getProcedure(token){
 	return proc;
 }
 
-},{"./procedure.json":55}],58:[function(require,module,exports){
+},{"./procedure.json":54}],57:[function(require,module,exports){
 "use strict";
 
 module.exports = parse;
@@ -8376,7 +8380,7 @@ function addToken(subselects, tokens){
 	subselects.push(tokens);
 }
 
-},{}],59:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 /*
   Module dependencies
 */
@@ -8526,7 +8530,7 @@ function renderComment(elem) {
   return '<!--' + elem.data + '-->';
 }
 
-},{"domelementtype":60,"entities":71}],60:[function(require,module,exports){
+},{"domelementtype":59,"entities":70}],59:[function(require,module,exports){
 //Types of elements found in the DOM
 module.exports = {
 	Text: "text", //Text
@@ -8543,7 +8547,7 @@ module.exports = {
 	}
 };
 
-},{}],61:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 var ElementType = require("domelementtype");
 
 var re_whitespace = /\s+/g;
@@ -8762,7 +8766,7 @@ DomHandler.prototype.onprocessinginstruction = function(name, data){
 
 module.exports = DomHandler;
 
-},{"./lib/element":62,"./lib/node":63,"domelementtype":60}],62:[function(require,module,exports){
+},{"./lib/element":61,"./lib/node":62,"domelementtype":59}],61:[function(require,module,exports){
 // DOM-Level-1-compliant structure
 var NodePrototype = require('./node');
 var ElementPrototype = module.exports = Object.create(NodePrototype);
@@ -8784,7 +8788,7 @@ Object.keys(domLvl1).forEach(function(key) {
 	});
 });
 
-},{"./node":63}],63:[function(require,module,exports){
+},{"./node":62}],62:[function(require,module,exports){
 // This object will be used as the prototype for Nodes when creating a
 // DOM-Level-1-compliant structure.
 var NodePrototype = module.exports = {
@@ -8830,7 +8834,7 @@ Object.keys(domLvl1).forEach(function(key) {
 	});
 });
 
-},{}],64:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 var DomUtils = module.exports;
 
 [
@@ -8846,7 +8850,7 @@ var DomUtils = module.exports;
 	});
 });
 
-},{"./lib/helpers":65,"./lib/legacy":66,"./lib/manipulation":67,"./lib/querying":68,"./lib/stringify":69,"./lib/traversal":70}],65:[function(require,module,exports){
+},{"./lib/helpers":64,"./lib/legacy":65,"./lib/manipulation":66,"./lib/querying":67,"./lib/stringify":68,"./lib/traversal":69}],64:[function(require,module,exports){
 // removeSubsets
 // Given an array of nodes, remove any member that is contained by another.
 exports.removeSubsets = function(nodes) {
@@ -8989,7 +8993,7 @@ exports.uniqueSort = function(nodes) {
 	return nodes;
 };
 
-},{}],66:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 var ElementType = require("domelementtype");
 var isTag = exports.isTag = ElementType.isTag;
 
@@ -9078,7 +9082,7 @@ exports.getElementsByTagType = function(type, element, recurse, limit){
 	return this.filter(Checks.tag_type(type), element, recurse, limit);
 };
 
-},{"domelementtype":60}],67:[function(require,module,exports){
+},{"domelementtype":59}],66:[function(require,module,exports){
 exports.removeElement = function(elem){
 	if(elem.prev) elem.prev.next = elem.next;
 	if(elem.next) elem.next.prev = elem.prev;
@@ -9157,7 +9161,7 @@ exports.prepend = function(elem, prev){
 
 
 
-},{}],68:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 var isTag = require("domelementtype").isTag;
 
 module.exports = {
@@ -9253,7 +9257,7 @@ function findAll(test, elems){
 	return result;
 }
 
-},{"domelementtype":60}],69:[function(require,module,exports){
+},{"domelementtype":59}],68:[function(require,module,exports){
 var ElementType = require("domelementtype"),
     getOuterHTML = require("dom-serializer"),
     isTag = ElementType.isTag;
@@ -9277,7 +9281,7 @@ function getText(elem){
 	return "";
 }
 
-},{"dom-serializer":59,"domelementtype":60}],70:[function(require,module,exports){
+},{"dom-serializer":58,"domelementtype":59}],69:[function(require,module,exports){
 var getChildren = exports.getChildren = function(elem){
 	return elem.children;
 };
@@ -9303,7 +9307,7 @@ exports.getName = function(elem){
 	return elem.name;
 };
 
-},{}],71:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 var encode = require("./lib/encode.js"),
     decode = require("./lib/decode.js");
 
@@ -9331,7 +9335,7 @@ exports.decodeHTML4Strict = exports.decodeHTML5Strict = exports.decodeHTMLStrict
 
 exports.escape = encode.escape;
 
-},{"./lib/decode.js":72,"./lib/encode.js":74}],72:[function(require,module,exports){
+},{"./lib/decode.js":71,"./lib/encode.js":73}],71:[function(require,module,exports){
 var entityMap = require("../maps/entities.json"),
     legacyMap = require("../maps/legacy.json"),
     xmlMap = require("../maps/xml.json"),
@@ -9403,7 +9407,7 @@ module.exports = {
     HTMLStrict: decodeHTMLStrict
 };
 
-},{"../maps/entities.json":76,"../maps/legacy.json":77,"../maps/xml.json":78,"./decode_codepoint.js":73}],73:[function(require,module,exports){
+},{"../maps/entities.json":75,"../maps/legacy.json":76,"../maps/xml.json":77,"./decode_codepoint.js":72}],72:[function(require,module,exports){
 var decodeMap = require("../maps/decode.json");
 
 module.exports = decodeCodePoint;
@@ -9430,7 +9434,7 @@ function decodeCodePoint(codePoint) {
     return output;
 }
 
-},{"../maps/decode.json":75}],74:[function(require,module,exports){
+},{"../maps/decode.json":74}],73:[function(require,module,exports){
 var inverseXML = getInverseObj(require("../maps/xml.json")),
     xmlReplacer = getInverseReplacer(inverseXML);
 
@@ -9514,16 +9518,16 @@ function escapeXML(data) {
 
 exports.escape = escapeXML;
 
-},{"../maps/entities.json":76,"../maps/xml.json":78}],75:[function(require,module,exports){
+},{"../maps/entities.json":75,"../maps/xml.json":77}],74:[function(require,module,exports){
 module.exports={"0":65533,"128":8364,"130":8218,"131":402,"132":8222,"133":8230,"134":8224,"135":8225,"136":710,"137":8240,"138":352,"139":8249,"140":338,"142":381,"145":8216,"146":8217,"147":8220,"148":8221,"149":8226,"150":8211,"151":8212,"152":732,"153":8482,"154":353,"155":8250,"156":339,"158":382,"159":376}
-},{}],76:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 module.exports={"Aacute":"\u00C1","aacute":"\u00E1","Abreve":"\u0102","abreve":"\u0103","ac":"\u223E","acd":"\u223F","acE":"\u223E\u0333","Acirc":"\u00C2","acirc":"\u00E2","acute":"\u00B4","Acy":"\u0410","acy":"\u0430","AElig":"\u00C6","aelig":"\u00E6","af":"\u2061","Afr":"\uD835\uDD04","afr":"\uD835\uDD1E","Agrave":"\u00C0","agrave":"\u00E0","alefsym":"\u2135","aleph":"\u2135","Alpha":"\u0391","alpha":"\u03B1","Amacr":"\u0100","amacr":"\u0101","amalg":"\u2A3F","amp":"&","AMP":"&","andand":"\u2A55","And":"\u2A53","and":"\u2227","andd":"\u2A5C","andslope":"\u2A58","andv":"\u2A5A","ang":"\u2220","ange":"\u29A4","angle":"\u2220","angmsdaa":"\u29A8","angmsdab":"\u29A9","angmsdac":"\u29AA","angmsdad":"\u29AB","angmsdae":"\u29AC","angmsdaf":"\u29AD","angmsdag":"\u29AE","angmsdah":"\u29AF","angmsd":"\u2221","angrt":"\u221F","angrtvb":"\u22BE","angrtvbd":"\u299D","angsph":"\u2222","angst":"\u00C5","angzarr":"\u237C","Aogon":"\u0104","aogon":"\u0105","Aopf":"\uD835\uDD38","aopf":"\uD835\uDD52","apacir":"\u2A6F","ap":"\u2248","apE":"\u2A70","ape":"\u224A","apid":"\u224B","apos":"'","ApplyFunction":"\u2061","approx":"\u2248","approxeq":"\u224A","Aring":"\u00C5","aring":"\u00E5","Ascr":"\uD835\uDC9C","ascr":"\uD835\uDCB6","Assign":"\u2254","ast":"*","asymp":"\u2248","asympeq":"\u224D","Atilde":"\u00C3","atilde":"\u00E3","Auml":"\u00C4","auml":"\u00E4","awconint":"\u2233","awint":"\u2A11","backcong":"\u224C","backepsilon":"\u03F6","backprime":"\u2035","backsim":"\u223D","backsimeq":"\u22CD","Backslash":"\u2216","Barv":"\u2AE7","barvee":"\u22BD","barwed":"\u2305","Barwed":"\u2306","barwedge":"\u2305","bbrk":"\u23B5","bbrktbrk":"\u23B6","bcong":"\u224C","Bcy":"\u0411","bcy":"\u0431","bdquo":"\u201E","becaus":"\u2235","because":"\u2235","Because":"\u2235","bemptyv":"\u29B0","bepsi":"\u03F6","bernou":"\u212C","Bernoullis":"\u212C","Beta":"\u0392","beta":"\u03B2","beth":"\u2136","between":"\u226C","Bfr":"\uD835\uDD05","bfr":"\uD835\uDD1F","bigcap":"\u22C2","bigcirc":"\u25EF","bigcup":"\u22C3","bigodot":"\u2A00","bigoplus":"\u2A01","bigotimes":"\u2A02","bigsqcup":"\u2A06","bigstar":"\u2605","bigtriangledown":"\u25BD","bigtriangleup":"\u25B3","biguplus":"\u2A04","bigvee":"\u22C1","bigwedge":"\u22C0","bkarow":"\u290D","blacklozenge":"\u29EB","blacksquare":"\u25AA","blacktriangle":"\u25B4","blacktriangledown":"\u25BE","blacktriangleleft":"\u25C2","blacktriangleright":"\u25B8","blank":"\u2423","blk12":"\u2592","blk14":"\u2591","blk34":"\u2593","block":"\u2588","bne":"=\u20E5","bnequiv":"\u2261\u20E5","bNot":"\u2AED","bnot":"\u2310","Bopf":"\uD835\uDD39","bopf":"\uD835\uDD53","bot":"\u22A5","bottom":"\u22A5","bowtie":"\u22C8","boxbox":"\u29C9","boxdl":"\u2510","boxdL":"\u2555","boxDl":"\u2556","boxDL":"\u2557","boxdr":"\u250C","boxdR":"\u2552","boxDr":"\u2553","boxDR":"\u2554","boxh":"\u2500","boxH":"\u2550","boxhd":"\u252C","boxHd":"\u2564","boxhD":"\u2565","boxHD":"\u2566","boxhu":"\u2534","boxHu":"\u2567","boxhU":"\u2568","boxHU":"\u2569","boxminus":"\u229F","boxplus":"\u229E","boxtimes":"\u22A0","boxul":"\u2518","boxuL":"\u255B","boxUl":"\u255C","boxUL":"\u255D","boxur":"\u2514","boxuR":"\u2558","boxUr":"\u2559","boxUR":"\u255A","boxv":"\u2502","boxV":"\u2551","boxvh":"\u253C","boxvH":"\u256A","boxVh":"\u256B","boxVH":"\u256C","boxvl":"\u2524","boxvL":"\u2561","boxVl":"\u2562","boxVL":"\u2563","boxvr":"\u251C","boxvR":"\u255E","boxVr":"\u255F","boxVR":"\u2560","bprime":"\u2035","breve":"\u02D8","Breve":"\u02D8","brvbar":"\u00A6","bscr":"\uD835\uDCB7","Bscr":"\u212C","bsemi":"\u204F","bsim":"\u223D","bsime":"\u22CD","bsolb":"\u29C5","bsol":"\\","bsolhsub":"\u27C8","bull":"\u2022","bullet":"\u2022","bump":"\u224E","bumpE":"\u2AAE","bumpe":"\u224F","Bumpeq":"\u224E","bumpeq":"\u224F","Cacute":"\u0106","cacute":"\u0107","capand":"\u2A44","capbrcup":"\u2A49","capcap":"\u2A4B","cap":"\u2229","Cap":"\u22D2","capcup":"\u2A47","capdot":"\u2A40","CapitalDifferentialD":"\u2145","caps":"\u2229\uFE00","caret":"\u2041","caron":"\u02C7","Cayleys":"\u212D","ccaps":"\u2A4D","Ccaron":"\u010C","ccaron":"\u010D","Ccedil":"\u00C7","ccedil":"\u00E7","Ccirc":"\u0108","ccirc":"\u0109","Cconint":"\u2230","ccups":"\u2A4C","ccupssm":"\u2A50","Cdot":"\u010A","cdot":"\u010B","cedil":"\u00B8","Cedilla":"\u00B8","cemptyv":"\u29B2","cent":"\u00A2","centerdot":"\u00B7","CenterDot":"\u00B7","cfr":"\uD835\uDD20","Cfr":"\u212D","CHcy":"\u0427","chcy":"\u0447","check":"\u2713","checkmark":"\u2713","Chi":"\u03A7","chi":"\u03C7","circ":"\u02C6","circeq":"\u2257","circlearrowleft":"\u21BA","circlearrowright":"\u21BB","circledast":"\u229B","circledcirc":"\u229A","circleddash":"\u229D","CircleDot":"\u2299","circledR":"\u00AE","circledS":"\u24C8","CircleMinus":"\u2296","CirclePlus":"\u2295","CircleTimes":"\u2297","cir":"\u25CB","cirE":"\u29C3","cire":"\u2257","cirfnint":"\u2A10","cirmid":"\u2AEF","cirscir":"\u29C2","ClockwiseContourIntegral":"\u2232","CloseCurlyDoubleQuote":"\u201D","CloseCurlyQuote":"\u2019","clubs":"\u2663","clubsuit":"\u2663","colon":":","Colon":"\u2237","Colone":"\u2A74","colone":"\u2254","coloneq":"\u2254","comma":",","commat":"@","comp":"\u2201","compfn":"\u2218","complement":"\u2201","complexes":"\u2102","cong":"\u2245","congdot":"\u2A6D","Congruent":"\u2261","conint":"\u222E","Conint":"\u222F","ContourIntegral":"\u222E","copf":"\uD835\uDD54","Copf":"\u2102","coprod":"\u2210","Coproduct":"\u2210","copy":"\u00A9","COPY":"\u00A9","copysr":"\u2117","CounterClockwiseContourIntegral":"\u2233","crarr":"\u21B5","cross":"\u2717","Cross":"\u2A2F","Cscr":"\uD835\uDC9E","cscr":"\uD835\uDCB8","csub":"\u2ACF","csube":"\u2AD1","csup":"\u2AD0","csupe":"\u2AD2","ctdot":"\u22EF","cudarrl":"\u2938","cudarrr":"\u2935","cuepr":"\u22DE","cuesc":"\u22DF","cularr":"\u21B6","cularrp":"\u293D","cupbrcap":"\u2A48","cupcap":"\u2A46","CupCap":"\u224D","cup":"\u222A","Cup":"\u22D3","cupcup":"\u2A4A","cupdot":"\u228D","cupor":"\u2A45","cups":"\u222A\uFE00","curarr":"\u21B7","curarrm":"\u293C","curlyeqprec":"\u22DE","curlyeqsucc":"\u22DF","curlyvee":"\u22CE","curlywedge":"\u22CF","curren":"\u00A4","curvearrowleft":"\u21B6","curvearrowright":"\u21B7","cuvee":"\u22CE","cuwed":"\u22CF","cwconint":"\u2232","cwint":"\u2231","cylcty":"\u232D","dagger":"\u2020","Dagger":"\u2021","daleth":"\u2138","darr":"\u2193","Darr":"\u21A1","dArr":"\u21D3","dash":"\u2010","Dashv":"\u2AE4","dashv":"\u22A3","dbkarow":"\u290F","dblac":"\u02DD","Dcaron":"\u010E","dcaron":"\u010F","Dcy":"\u0414","dcy":"\u0434","ddagger":"\u2021","ddarr":"\u21CA","DD":"\u2145","dd":"\u2146","DDotrahd":"\u2911","ddotseq":"\u2A77","deg":"\u00B0","Del":"\u2207","Delta":"\u0394","delta":"\u03B4","demptyv":"\u29B1","dfisht":"\u297F","Dfr":"\uD835\uDD07","dfr":"\uD835\uDD21","dHar":"\u2965","dharl":"\u21C3","dharr":"\u21C2","DiacriticalAcute":"\u00B4","DiacriticalDot":"\u02D9","DiacriticalDoubleAcute":"\u02DD","DiacriticalGrave":"`","DiacriticalTilde":"\u02DC","diam":"\u22C4","diamond":"\u22C4","Diamond":"\u22C4","diamondsuit":"\u2666","diams":"\u2666","die":"\u00A8","DifferentialD":"\u2146","digamma":"\u03DD","disin":"\u22F2","div":"\u00F7","divide":"\u00F7","divideontimes":"\u22C7","divonx":"\u22C7","DJcy":"\u0402","djcy":"\u0452","dlcorn":"\u231E","dlcrop":"\u230D","dollar":"$","Dopf":"\uD835\uDD3B","dopf":"\uD835\uDD55","Dot":"\u00A8","dot":"\u02D9","DotDot":"\u20DC","doteq":"\u2250","doteqdot":"\u2251","DotEqual":"\u2250","dotminus":"\u2238","dotplus":"\u2214","dotsquare":"\u22A1","doublebarwedge":"\u2306","DoubleContourIntegral":"\u222F","DoubleDot":"\u00A8","DoubleDownArrow":"\u21D3","DoubleLeftArrow":"\u21D0","DoubleLeftRightArrow":"\u21D4","DoubleLeftTee":"\u2AE4","DoubleLongLeftArrow":"\u27F8","DoubleLongLeftRightArrow":"\u27FA","DoubleLongRightArrow":"\u27F9","DoubleRightArrow":"\u21D2","DoubleRightTee":"\u22A8","DoubleUpArrow":"\u21D1","DoubleUpDownArrow":"\u21D5","DoubleVerticalBar":"\u2225","DownArrowBar":"\u2913","downarrow":"\u2193","DownArrow":"\u2193","Downarrow":"\u21D3","DownArrowUpArrow":"\u21F5","DownBreve":"\u0311","downdownarrows":"\u21CA","downharpoonleft":"\u21C3","downharpoonright":"\u21C2","DownLeftRightVector":"\u2950","DownLeftTeeVector":"\u295E","DownLeftVectorBar":"\u2956","DownLeftVector":"\u21BD","DownRightTeeVector":"\u295F","DownRightVectorBar":"\u2957","DownRightVector":"\u21C1","DownTeeArrow":"\u21A7","DownTee":"\u22A4","drbkarow":"\u2910","drcorn":"\u231F","drcrop":"\u230C","Dscr":"\uD835\uDC9F","dscr":"\uD835\uDCB9","DScy":"\u0405","dscy":"\u0455","dsol":"\u29F6","Dstrok":"\u0110","dstrok":"\u0111","dtdot":"\u22F1","dtri":"\u25BF","dtrif":"\u25BE","duarr":"\u21F5","duhar":"\u296F","dwangle":"\u29A6","DZcy":"\u040F","dzcy":"\u045F","dzigrarr":"\u27FF","Eacute":"\u00C9","eacute":"\u00E9","easter":"\u2A6E","Ecaron":"\u011A","ecaron":"\u011B","Ecirc":"\u00CA","ecirc":"\u00EA","ecir":"\u2256","ecolon":"\u2255","Ecy":"\u042D","ecy":"\u044D","eDDot":"\u2A77","Edot":"\u0116","edot":"\u0117","eDot":"\u2251","ee":"\u2147","efDot":"\u2252","Efr":"\uD835\uDD08","efr":"\uD835\uDD22","eg":"\u2A9A","Egrave":"\u00C8","egrave":"\u00E8","egs":"\u2A96","egsdot":"\u2A98","el":"\u2A99","Element":"\u2208","elinters":"\u23E7","ell":"\u2113","els":"\u2A95","elsdot":"\u2A97","Emacr":"\u0112","emacr":"\u0113","empty":"\u2205","emptyset":"\u2205","EmptySmallSquare":"\u25FB","emptyv":"\u2205","EmptyVerySmallSquare":"\u25AB","emsp13":"\u2004","emsp14":"\u2005","emsp":"\u2003","ENG":"\u014A","eng":"\u014B","ensp":"\u2002","Eogon":"\u0118","eogon":"\u0119","Eopf":"\uD835\uDD3C","eopf":"\uD835\uDD56","epar":"\u22D5","eparsl":"\u29E3","eplus":"\u2A71","epsi":"\u03B5","Epsilon":"\u0395","epsilon":"\u03B5","epsiv":"\u03F5","eqcirc":"\u2256","eqcolon":"\u2255","eqsim":"\u2242","eqslantgtr":"\u2A96","eqslantless":"\u2A95","Equal":"\u2A75","equals":"=","EqualTilde":"\u2242","equest":"\u225F","Equilibrium":"\u21CC","equiv":"\u2261","equivDD":"\u2A78","eqvparsl":"\u29E5","erarr":"\u2971","erDot":"\u2253","escr":"\u212F","Escr":"\u2130","esdot":"\u2250","Esim":"\u2A73","esim":"\u2242","Eta":"\u0397","eta":"\u03B7","ETH":"\u00D0","eth":"\u00F0","Euml":"\u00CB","euml":"\u00EB","euro":"\u20AC","excl":"!","exist":"\u2203","Exists":"\u2203","expectation":"\u2130","exponentiale":"\u2147","ExponentialE":"\u2147","fallingdotseq":"\u2252","Fcy":"\u0424","fcy":"\u0444","female":"\u2640","ffilig":"\uFB03","fflig":"\uFB00","ffllig":"\uFB04","Ffr":"\uD835\uDD09","ffr":"\uD835\uDD23","filig":"\uFB01","FilledSmallSquare":"\u25FC","FilledVerySmallSquare":"\u25AA","fjlig":"fj","flat":"\u266D","fllig":"\uFB02","fltns":"\u25B1","fnof":"\u0192","Fopf":"\uD835\uDD3D","fopf":"\uD835\uDD57","forall":"\u2200","ForAll":"\u2200","fork":"\u22D4","forkv":"\u2AD9","Fouriertrf":"\u2131","fpartint":"\u2A0D","frac12":"\u00BD","frac13":"\u2153","frac14":"\u00BC","frac15":"\u2155","frac16":"\u2159","frac18":"\u215B","frac23":"\u2154","frac25":"\u2156","frac34":"\u00BE","frac35":"\u2157","frac38":"\u215C","frac45":"\u2158","frac56":"\u215A","frac58":"\u215D","frac78":"\u215E","frasl":"\u2044","frown":"\u2322","fscr":"\uD835\uDCBB","Fscr":"\u2131","gacute":"\u01F5","Gamma":"\u0393","gamma":"\u03B3","Gammad":"\u03DC","gammad":"\u03DD","gap":"\u2A86","Gbreve":"\u011E","gbreve":"\u011F","Gcedil":"\u0122","Gcirc":"\u011C","gcirc":"\u011D","Gcy":"\u0413","gcy":"\u0433","Gdot":"\u0120","gdot":"\u0121","ge":"\u2265","gE":"\u2267","gEl":"\u2A8C","gel":"\u22DB","geq":"\u2265","geqq":"\u2267","geqslant":"\u2A7E","gescc":"\u2AA9","ges":"\u2A7E","gesdot":"\u2A80","gesdoto":"\u2A82","gesdotol":"\u2A84","gesl":"\u22DB\uFE00","gesles":"\u2A94","Gfr":"\uD835\uDD0A","gfr":"\uD835\uDD24","gg":"\u226B","Gg":"\u22D9","ggg":"\u22D9","gimel":"\u2137","GJcy":"\u0403","gjcy":"\u0453","gla":"\u2AA5","gl":"\u2277","glE":"\u2A92","glj":"\u2AA4","gnap":"\u2A8A","gnapprox":"\u2A8A","gne":"\u2A88","gnE":"\u2269","gneq":"\u2A88","gneqq":"\u2269","gnsim":"\u22E7","Gopf":"\uD835\uDD3E","gopf":"\uD835\uDD58","grave":"`","GreaterEqual":"\u2265","GreaterEqualLess":"\u22DB","GreaterFullEqual":"\u2267","GreaterGreater":"\u2AA2","GreaterLess":"\u2277","GreaterSlantEqual":"\u2A7E","GreaterTilde":"\u2273","Gscr":"\uD835\uDCA2","gscr":"\u210A","gsim":"\u2273","gsime":"\u2A8E","gsiml":"\u2A90","gtcc":"\u2AA7","gtcir":"\u2A7A","gt":">","GT":">","Gt":"\u226B","gtdot":"\u22D7","gtlPar":"\u2995","gtquest":"\u2A7C","gtrapprox":"\u2A86","gtrarr":"\u2978","gtrdot":"\u22D7","gtreqless":"\u22DB","gtreqqless":"\u2A8C","gtrless":"\u2277","gtrsim":"\u2273","gvertneqq":"\u2269\uFE00","gvnE":"\u2269\uFE00","Hacek":"\u02C7","hairsp":"\u200A","half":"\u00BD","hamilt":"\u210B","HARDcy":"\u042A","hardcy":"\u044A","harrcir":"\u2948","harr":"\u2194","hArr":"\u21D4","harrw":"\u21AD","Hat":"^","hbar":"\u210F","Hcirc":"\u0124","hcirc":"\u0125","hearts":"\u2665","heartsuit":"\u2665","hellip":"\u2026","hercon":"\u22B9","hfr":"\uD835\uDD25","Hfr":"\u210C","HilbertSpace":"\u210B","hksearow":"\u2925","hkswarow":"\u2926","hoarr":"\u21FF","homtht":"\u223B","hookleftarrow":"\u21A9","hookrightarrow":"\u21AA","hopf":"\uD835\uDD59","Hopf":"\u210D","horbar":"\u2015","HorizontalLine":"\u2500","hscr":"\uD835\uDCBD","Hscr":"\u210B","hslash":"\u210F","Hstrok":"\u0126","hstrok":"\u0127","HumpDownHump":"\u224E","HumpEqual":"\u224F","hybull":"\u2043","hyphen":"\u2010","Iacute":"\u00CD","iacute":"\u00ED","ic":"\u2063","Icirc":"\u00CE","icirc":"\u00EE","Icy":"\u0418","icy":"\u0438","Idot":"\u0130","IEcy":"\u0415","iecy":"\u0435","iexcl":"\u00A1","iff":"\u21D4","ifr":"\uD835\uDD26","Ifr":"\u2111","Igrave":"\u00CC","igrave":"\u00EC","ii":"\u2148","iiiint":"\u2A0C","iiint":"\u222D","iinfin":"\u29DC","iiota":"\u2129","IJlig":"\u0132","ijlig":"\u0133","Imacr":"\u012A","imacr":"\u012B","image":"\u2111","ImaginaryI":"\u2148","imagline":"\u2110","imagpart":"\u2111","imath":"\u0131","Im":"\u2111","imof":"\u22B7","imped":"\u01B5","Implies":"\u21D2","incare":"\u2105","in":"\u2208","infin":"\u221E","infintie":"\u29DD","inodot":"\u0131","intcal":"\u22BA","int":"\u222B","Int":"\u222C","integers":"\u2124","Integral":"\u222B","intercal":"\u22BA","Intersection":"\u22C2","intlarhk":"\u2A17","intprod":"\u2A3C","InvisibleComma":"\u2063","InvisibleTimes":"\u2062","IOcy":"\u0401","iocy":"\u0451","Iogon":"\u012E","iogon":"\u012F","Iopf":"\uD835\uDD40","iopf":"\uD835\uDD5A","Iota":"\u0399","iota":"\u03B9","iprod":"\u2A3C","iquest":"\u00BF","iscr":"\uD835\uDCBE","Iscr":"\u2110","isin":"\u2208","isindot":"\u22F5","isinE":"\u22F9","isins":"\u22F4","isinsv":"\u22F3","isinv":"\u2208","it":"\u2062","Itilde":"\u0128","itilde":"\u0129","Iukcy":"\u0406","iukcy":"\u0456","Iuml":"\u00CF","iuml":"\u00EF","Jcirc":"\u0134","jcirc":"\u0135","Jcy":"\u0419","jcy":"\u0439","Jfr":"\uD835\uDD0D","jfr":"\uD835\uDD27","jmath":"\u0237","Jopf":"\uD835\uDD41","jopf":"\uD835\uDD5B","Jscr":"\uD835\uDCA5","jscr":"\uD835\uDCBF","Jsercy":"\u0408","jsercy":"\u0458","Jukcy":"\u0404","jukcy":"\u0454","Kappa":"\u039A","kappa":"\u03BA","kappav":"\u03F0","Kcedil":"\u0136","kcedil":"\u0137","Kcy":"\u041A","kcy":"\u043A","Kfr":"\uD835\uDD0E","kfr":"\uD835\uDD28","kgreen":"\u0138","KHcy":"\u0425","khcy":"\u0445","KJcy":"\u040C","kjcy":"\u045C","Kopf":"\uD835\uDD42","kopf":"\uD835\uDD5C","Kscr":"\uD835\uDCA6","kscr":"\uD835\uDCC0","lAarr":"\u21DA","Lacute":"\u0139","lacute":"\u013A","laemptyv":"\u29B4","lagran":"\u2112","Lambda":"\u039B","lambda":"\u03BB","lang":"\u27E8","Lang":"\u27EA","langd":"\u2991","langle":"\u27E8","lap":"\u2A85","Laplacetrf":"\u2112","laquo":"\u00AB","larrb":"\u21E4","larrbfs":"\u291F","larr":"\u2190","Larr":"\u219E","lArr":"\u21D0","larrfs":"\u291D","larrhk":"\u21A9","larrlp":"\u21AB","larrpl":"\u2939","larrsim":"\u2973","larrtl":"\u21A2","latail":"\u2919","lAtail":"\u291B","lat":"\u2AAB","late":"\u2AAD","lates":"\u2AAD\uFE00","lbarr":"\u290C","lBarr":"\u290E","lbbrk":"\u2772","lbrace":"{","lbrack":"[","lbrke":"\u298B","lbrksld":"\u298F","lbrkslu":"\u298D","Lcaron":"\u013D","lcaron":"\u013E","Lcedil":"\u013B","lcedil":"\u013C","lceil":"\u2308","lcub":"{","Lcy":"\u041B","lcy":"\u043B","ldca":"\u2936","ldquo":"\u201C","ldquor":"\u201E","ldrdhar":"\u2967","ldrushar":"\u294B","ldsh":"\u21B2","le":"\u2264","lE":"\u2266","LeftAngleBracket":"\u27E8","LeftArrowBar":"\u21E4","leftarrow":"\u2190","LeftArrow":"\u2190","Leftarrow":"\u21D0","LeftArrowRightArrow":"\u21C6","leftarrowtail":"\u21A2","LeftCeiling":"\u2308","LeftDoubleBracket":"\u27E6","LeftDownTeeVector":"\u2961","LeftDownVectorBar":"\u2959","LeftDownVector":"\u21C3","LeftFloor":"\u230A","leftharpoondown":"\u21BD","leftharpoonup":"\u21BC","leftleftarrows":"\u21C7","leftrightarrow":"\u2194","LeftRightArrow":"\u2194","Leftrightarrow":"\u21D4","leftrightarrows":"\u21C6","leftrightharpoons":"\u21CB","leftrightsquigarrow":"\u21AD","LeftRightVector":"\u294E","LeftTeeArrow":"\u21A4","LeftTee":"\u22A3","LeftTeeVector":"\u295A","leftthreetimes":"\u22CB","LeftTriangleBar":"\u29CF","LeftTriangle":"\u22B2","LeftTriangleEqual":"\u22B4","LeftUpDownVector":"\u2951","LeftUpTeeVector":"\u2960","LeftUpVectorBar":"\u2958","LeftUpVector":"\u21BF","LeftVectorBar":"\u2952","LeftVector":"\u21BC","lEg":"\u2A8B","leg":"\u22DA","leq":"\u2264","leqq":"\u2266","leqslant":"\u2A7D","lescc":"\u2AA8","les":"\u2A7D","lesdot":"\u2A7F","lesdoto":"\u2A81","lesdotor":"\u2A83","lesg":"\u22DA\uFE00","lesges":"\u2A93","lessapprox":"\u2A85","lessdot":"\u22D6","lesseqgtr":"\u22DA","lesseqqgtr":"\u2A8B","LessEqualGreater":"\u22DA","LessFullEqual":"\u2266","LessGreater":"\u2276","lessgtr":"\u2276","LessLess":"\u2AA1","lesssim":"\u2272","LessSlantEqual":"\u2A7D","LessTilde":"\u2272","lfisht":"\u297C","lfloor":"\u230A","Lfr":"\uD835\uDD0F","lfr":"\uD835\uDD29","lg":"\u2276","lgE":"\u2A91","lHar":"\u2962","lhard":"\u21BD","lharu":"\u21BC","lharul":"\u296A","lhblk":"\u2584","LJcy":"\u0409","ljcy":"\u0459","llarr":"\u21C7","ll":"\u226A","Ll":"\u22D8","llcorner":"\u231E","Lleftarrow":"\u21DA","llhard":"\u296B","lltri":"\u25FA","Lmidot":"\u013F","lmidot":"\u0140","lmoustache":"\u23B0","lmoust":"\u23B0","lnap":"\u2A89","lnapprox":"\u2A89","lne":"\u2A87","lnE":"\u2268","lneq":"\u2A87","lneqq":"\u2268","lnsim":"\u22E6","loang":"\u27EC","loarr":"\u21FD","lobrk":"\u27E6","longleftarrow":"\u27F5","LongLeftArrow":"\u27F5","Longleftarrow":"\u27F8","longleftrightarrow":"\u27F7","LongLeftRightArrow":"\u27F7","Longleftrightarrow":"\u27FA","longmapsto":"\u27FC","longrightarrow":"\u27F6","LongRightArrow":"\u27F6","Longrightarrow":"\u27F9","looparrowleft":"\u21AB","looparrowright":"\u21AC","lopar":"\u2985","Lopf":"\uD835\uDD43","lopf":"\uD835\uDD5D","loplus":"\u2A2D","lotimes":"\u2A34","lowast":"\u2217","lowbar":"_","LowerLeftArrow":"\u2199","LowerRightArrow":"\u2198","loz":"\u25CA","lozenge":"\u25CA","lozf":"\u29EB","lpar":"(","lparlt":"\u2993","lrarr":"\u21C6","lrcorner":"\u231F","lrhar":"\u21CB","lrhard":"\u296D","lrm":"\u200E","lrtri":"\u22BF","lsaquo":"\u2039","lscr":"\uD835\uDCC1","Lscr":"\u2112","lsh":"\u21B0","Lsh":"\u21B0","lsim":"\u2272","lsime":"\u2A8D","lsimg":"\u2A8F","lsqb":"[","lsquo":"\u2018","lsquor":"\u201A","Lstrok":"\u0141","lstrok":"\u0142","ltcc":"\u2AA6","ltcir":"\u2A79","lt":"<","LT":"<","Lt":"\u226A","ltdot":"\u22D6","lthree":"\u22CB","ltimes":"\u22C9","ltlarr":"\u2976","ltquest":"\u2A7B","ltri":"\u25C3","ltrie":"\u22B4","ltrif":"\u25C2","ltrPar":"\u2996","lurdshar":"\u294A","luruhar":"\u2966","lvertneqq":"\u2268\uFE00","lvnE":"\u2268\uFE00","macr":"\u00AF","male":"\u2642","malt":"\u2720","maltese":"\u2720","Map":"\u2905","map":"\u21A6","mapsto":"\u21A6","mapstodown":"\u21A7","mapstoleft":"\u21A4","mapstoup":"\u21A5","marker":"\u25AE","mcomma":"\u2A29","Mcy":"\u041C","mcy":"\u043C","mdash":"\u2014","mDDot":"\u223A","measuredangle":"\u2221","MediumSpace":"\u205F","Mellintrf":"\u2133","Mfr":"\uD835\uDD10","mfr":"\uD835\uDD2A","mho":"\u2127","micro":"\u00B5","midast":"*","midcir":"\u2AF0","mid":"\u2223","middot":"\u00B7","minusb":"\u229F","minus":"\u2212","minusd":"\u2238","minusdu":"\u2A2A","MinusPlus":"\u2213","mlcp":"\u2ADB","mldr":"\u2026","mnplus":"\u2213","models":"\u22A7","Mopf":"\uD835\uDD44","mopf":"\uD835\uDD5E","mp":"\u2213","mscr":"\uD835\uDCC2","Mscr":"\u2133","mstpos":"\u223E","Mu":"\u039C","mu":"\u03BC","multimap":"\u22B8","mumap":"\u22B8","nabla":"\u2207","Nacute":"\u0143","nacute":"\u0144","nang":"\u2220\u20D2","nap":"\u2249","napE":"\u2A70\u0338","napid":"\u224B\u0338","napos":"\u0149","napprox":"\u2249","natural":"\u266E","naturals":"\u2115","natur":"\u266E","nbsp":"\u00A0","nbump":"\u224E\u0338","nbumpe":"\u224F\u0338","ncap":"\u2A43","Ncaron":"\u0147","ncaron":"\u0148","Ncedil":"\u0145","ncedil":"\u0146","ncong":"\u2247","ncongdot":"\u2A6D\u0338","ncup":"\u2A42","Ncy":"\u041D","ncy":"\u043D","ndash":"\u2013","nearhk":"\u2924","nearr":"\u2197","neArr":"\u21D7","nearrow":"\u2197","ne":"\u2260","nedot":"\u2250\u0338","NegativeMediumSpace":"\u200B","NegativeThickSpace":"\u200B","NegativeThinSpace":"\u200B","NegativeVeryThinSpace":"\u200B","nequiv":"\u2262","nesear":"\u2928","nesim":"\u2242\u0338","NestedGreaterGreater":"\u226B","NestedLessLess":"\u226A","NewLine":"\n","nexist":"\u2204","nexists":"\u2204","Nfr":"\uD835\uDD11","nfr":"\uD835\uDD2B","ngE":"\u2267\u0338","nge":"\u2271","ngeq":"\u2271","ngeqq":"\u2267\u0338","ngeqslant":"\u2A7E\u0338","nges":"\u2A7E\u0338","nGg":"\u22D9\u0338","ngsim":"\u2275","nGt":"\u226B\u20D2","ngt":"\u226F","ngtr":"\u226F","nGtv":"\u226B\u0338","nharr":"\u21AE","nhArr":"\u21CE","nhpar":"\u2AF2","ni":"\u220B","nis":"\u22FC","nisd":"\u22FA","niv":"\u220B","NJcy":"\u040A","njcy":"\u045A","nlarr":"\u219A","nlArr":"\u21CD","nldr":"\u2025","nlE":"\u2266\u0338","nle":"\u2270","nleftarrow":"\u219A","nLeftarrow":"\u21CD","nleftrightarrow":"\u21AE","nLeftrightarrow":"\u21CE","nleq":"\u2270","nleqq":"\u2266\u0338","nleqslant":"\u2A7D\u0338","nles":"\u2A7D\u0338","nless":"\u226E","nLl":"\u22D8\u0338","nlsim":"\u2274","nLt":"\u226A\u20D2","nlt":"\u226E","nltri":"\u22EA","nltrie":"\u22EC","nLtv":"\u226A\u0338","nmid":"\u2224","NoBreak":"\u2060","NonBreakingSpace":"\u00A0","nopf":"\uD835\uDD5F","Nopf":"\u2115","Not":"\u2AEC","not":"\u00AC","NotCongruent":"\u2262","NotCupCap":"\u226D","NotDoubleVerticalBar":"\u2226","NotElement":"\u2209","NotEqual":"\u2260","NotEqualTilde":"\u2242\u0338","NotExists":"\u2204","NotGreater":"\u226F","NotGreaterEqual":"\u2271","NotGreaterFullEqual":"\u2267\u0338","NotGreaterGreater":"\u226B\u0338","NotGreaterLess":"\u2279","NotGreaterSlantEqual":"\u2A7E\u0338","NotGreaterTilde":"\u2275","NotHumpDownHump":"\u224E\u0338","NotHumpEqual":"\u224F\u0338","notin":"\u2209","notindot":"\u22F5\u0338","notinE":"\u22F9\u0338","notinva":"\u2209","notinvb":"\u22F7","notinvc":"\u22F6","NotLeftTriangleBar":"\u29CF\u0338","NotLeftTriangle":"\u22EA","NotLeftTriangleEqual":"\u22EC","NotLess":"\u226E","NotLessEqual":"\u2270","NotLessGreater":"\u2278","NotLessLess":"\u226A\u0338","NotLessSlantEqual":"\u2A7D\u0338","NotLessTilde":"\u2274","NotNestedGreaterGreater":"\u2AA2\u0338","NotNestedLessLess":"\u2AA1\u0338","notni":"\u220C","notniva":"\u220C","notnivb":"\u22FE","notnivc":"\u22FD","NotPrecedes":"\u2280","NotPrecedesEqual":"\u2AAF\u0338","NotPrecedesSlantEqual":"\u22E0","NotReverseElement":"\u220C","NotRightTriangleBar":"\u29D0\u0338","NotRightTriangle":"\u22EB","NotRightTriangleEqual":"\u22ED","NotSquareSubset":"\u228F\u0338","NotSquareSubsetEqual":"\u22E2","NotSquareSuperset":"\u2290\u0338","NotSquareSupersetEqual":"\u22E3","NotSubset":"\u2282\u20D2","NotSubsetEqual":"\u2288","NotSucceeds":"\u2281","NotSucceedsEqual":"\u2AB0\u0338","NotSucceedsSlantEqual":"\u22E1","NotSucceedsTilde":"\u227F\u0338","NotSuperset":"\u2283\u20D2","NotSupersetEqual":"\u2289","NotTilde":"\u2241","NotTildeEqual":"\u2244","NotTildeFullEqual":"\u2247","NotTildeTilde":"\u2249","NotVerticalBar":"\u2224","nparallel":"\u2226","npar":"\u2226","nparsl":"\u2AFD\u20E5","npart":"\u2202\u0338","npolint":"\u2A14","npr":"\u2280","nprcue":"\u22E0","nprec":"\u2280","npreceq":"\u2AAF\u0338","npre":"\u2AAF\u0338","nrarrc":"\u2933\u0338","nrarr":"\u219B","nrArr":"\u21CF","nrarrw":"\u219D\u0338","nrightarrow":"\u219B","nRightarrow":"\u21CF","nrtri":"\u22EB","nrtrie":"\u22ED","nsc":"\u2281","nsccue":"\u22E1","nsce":"\u2AB0\u0338","Nscr":"\uD835\uDCA9","nscr":"\uD835\uDCC3","nshortmid":"\u2224","nshortparallel":"\u2226","nsim":"\u2241","nsime":"\u2244","nsimeq":"\u2244","nsmid":"\u2224","nspar":"\u2226","nsqsube":"\u22E2","nsqsupe":"\u22E3","nsub":"\u2284","nsubE":"\u2AC5\u0338","nsube":"\u2288","nsubset":"\u2282\u20D2","nsubseteq":"\u2288","nsubseteqq":"\u2AC5\u0338","nsucc":"\u2281","nsucceq":"\u2AB0\u0338","nsup":"\u2285","nsupE":"\u2AC6\u0338","nsupe":"\u2289","nsupset":"\u2283\u20D2","nsupseteq":"\u2289","nsupseteqq":"\u2AC6\u0338","ntgl":"\u2279","Ntilde":"\u00D1","ntilde":"\u00F1","ntlg":"\u2278","ntriangleleft":"\u22EA","ntrianglelefteq":"\u22EC","ntriangleright":"\u22EB","ntrianglerighteq":"\u22ED","Nu":"\u039D","nu":"\u03BD","num":"#","numero":"\u2116","numsp":"\u2007","nvap":"\u224D\u20D2","nvdash":"\u22AC","nvDash":"\u22AD","nVdash":"\u22AE","nVDash":"\u22AF","nvge":"\u2265\u20D2","nvgt":">\u20D2","nvHarr":"\u2904","nvinfin":"\u29DE","nvlArr":"\u2902","nvle":"\u2264\u20D2","nvlt":"<\u20D2","nvltrie":"\u22B4\u20D2","nvrArr":"\u2903","nvrtrie":"\u22B5\u20D2","nvsim":"\u223C\u20D2","nwarhk":"\u2923","nwarr":"\u2196","nwArr":"\u21D6","nwarrow":"\u2196","nwnear":"\u2927","Oacute":"\u00D3","oacute":"\u00F3","oast":"\u229B","Ocirc":"\u00D4","ocirc":"\u00F4","ocir":"\u229A","Ocy":"\u041E","ocy":"\u043E","odash":"\u229D","Odblac":"\u0150","odblac":"\u0151","odiv":"\u2A38","odot":"\u2299","odsold":"\u29BC","OElig":"\u0152","oelig":"\u0153","ofcir":"\u29BF","Ofr":"\uD835\uDD12","ofr":"\uD835\uDD2C","ogon":"\u02DB","Ograve":"\u00D2","ograve":"\u00F2","ogt":"\u29C1","ohbar":"\u29B5","ohm":"\u03A9","oint":"\u222E","olarr":"\u21BA","olcir":"\u29BE","olcross":"\u29BB","oline":"\u203E","olt":"\u29C0","Omacr":"\u014C","omacr":"\u014D","Omega":"\u03A9","omega":"\u03C9","Omicron":"\u039F","omicron":"\u03BF","omid":"\u29B6","ominus":"\u2296","Oopf":"\uD835\uDD46","oopf":"\uD835\uDD60","opar":"\u29B7","OpenCurlyDoubleQuote":"\u201C","OpenCurlyQuote":"\u2018","operp":"\u29B9","oplus":"\u2295","orarr":"\u21BB","Or":"\u2A54","or":"\u2228","ord":"\u2A5D","order":"\u2134","orderof":"\u2134","ordf":"\u00AA","ordm":"\u00BA","origof":"\u22B6","oror":"\u2A56","orslope":"\u2A57","orv":"\u2A5B","oS":"\u24C8","Oscr":"\uD835\uDCAA","oscr":"\u2134","Oslash":"\u00D8","oslash":"\u00F8","osol":"\u2298","Otilde":"\u00D5","otilde":"\u00F5","otimesas":"\u2A36","Otimes":"\u2A37","otimes":"\u2297","Ouml":"\u00D6","ouml":"\u00F6","ovbar":"\u233D","OverBar":"\u203E","OverBrace":"\u23DE","OverBracket":"\u23B4","OverParenthesis":"\u23DC","para":"\u00B6","parallel":"\u2225","par":"\u2225","parsim":"\u2AF3","parsl":"\u2AFD","part":"\u2202","PartialD":"\u2202","Pcy":"\u041F","pcy":"\u043F","percnt":"%","period":".","permil":"\u2030","perp":"\u22A5","pertenk":"\u2031","Pfr":"\uD835\uDD13","pfr":"\uD835\uDD2D","Phi":"\u03A6","phi":"\u03C6","phiv":"\u03D5","phmmat":"\u2133","phone":"\u260E","Pi":"\u03A0","pi":"\u03C0","pitchfork":"\u22D4","piv":"\u03D6","planck":"\u210F","planckh":"\u210E","plankv":"\u210F","plusacir":"\u2A23","plusb":"\u229E","pluscir":"\u2A22","plus":"+","plusdo":"\u2214","plusdu":"\u2A25","pluse":"\u2A72","PlusMinus":"\u00B1","plusmn":"\u00B1","plussim":"\u2A26","plustwo":"\u2A27","pm":"\u00B1","Poincareplane":"\u210C","pointint":"\u2A15","popf":"\uD835\uDD61","Popf":"\u2119","pound":"\u00A3","prap":"\u2AB7","Pr":"\u2ABB","pr":"\u227A","prcue":"\u227C","precapprox":"\u2AB7","prec":"\u227A","preccurlyeq":"\u227C","Precedes":"\u227A","PrecedesEqual":"\u2AAF","PrecedesSlantEqual":"\u227C","PrecedesTilde":"\u227E","preceq":"\u2AAF","precnapprox":"\u2AB9","precneqq":"\u2AB5","precnsim":"\u22E8","pre":"\u2AAF","prE":"\u2AB3","precsim":"\u227E","prime":"\u2032","Prime":"\u2033","primes":"\u2119","prnap":"\u2AB9","prnE":"\u2AB5","prnsim":"\u22E8","prod":"\u220F","Product":"\u220F","profalar":"\u232E","profline":"\u2312","profsurf":"\u2313","prop":"\u221D","Proportional":"\u221D","Proportion":"\u2237","propto":"\u221D","prsim":"\u227E","prurel":"\u22B0","Pscr":"\uD835\uDCAB","pscr":"\uD835\uDCC5","Psi":"\u03A8","psi":"\u03C8","puncsp":"\u2008","Qfr":"\uD835\uDD14","qfr":"\uD835\uDD2E","qint":"\u2A0C","qopf":"\uD835\uDD62","Qopf":"\u211A","qprime":"\u2057","Qscr":"\uD835\uDCAC","qscr":"\uD835\uDCC6","quaternions":"\u210D","quatint":"\u2A16","quest":"?","questeq":"\u225F","quot":"\"","QUOT":"\"","rAarr":"\u21DB","race":"\u223D\u0331","Racute":"\u0154","racute":"\u0155","radic":"\u221A","raemptyv":"\u29B3","rang":"\u27E9","Rang":"\u27EB","rangd":"\u2992","range":"\u29A5","rangle":"\u27E9","raquo":"\u00BB","rarrap":"\u2975","rarrb":"\u21E5","rarrbfs":"\u2920","rarrc":"\u2933","rarr":"\u2192","Rarr":"\u21A0","rArr":"\u21D2","rarrfs":"\u291E","rarrhk":"\u21AA","rarrlp":"\u21AC","rarrpl":"\u2945","rarrsim":"\u2974","Rarrtl":"\u2916","rarrtl":"\u21A3","rarrw":"\u219D","ratail":"\u291A","rAtail":"\u291C","ratio":"\u2236","rationals":"\u211A","rbarr":"\u290D","rBarr":"\u290F","RBarr":"\u2910","rbbrk":"\u2773","rbrace":"}","rbrack":"]","rbrke":"\u298C","rbrksld":"\u298E","rbrkslu":"\u2990","Rcaron":"\u0158","rcaron":"\u0159","Rcedil":"\u0156","rcedil":"\u0157","rceil":"\u2309","rcub":"}","Rcy":"\u0420","rcy":"\u0440","rdca":"\u2937","rdldhar":"\u2969","rdquo":"\u201D","rdquor":"\u201D","rdsh":"\u21B3","real":"\u211C","realine":"\u211B","realpart":"\u211C","reals":"\u211D","Re":"\u211C","rect":"\u25AD","reg":"\u00AE","REG":"\u00AE","ReverseElement":"\u220B","ReverseEquilibrium":"\u21CB","ReverseUpEquilibrium":"\u296F","rfisht":"\u297D","rfloor":"\u230B","rfr":"\uD835\uDD2F","Rfr":"\u211C","rHar":"\u2964","rhard":"\u21C1","rharu":"\u21C0","rharul":"\u296C","Rho":"\u03A1","rho":"\u03C1","rhov":"\u03F1","RightAngleBracket":"\u27E9","RightArrowBar":"\u21E5","rightarrow":"\u2192","RightArrow":"\u2192","Rightarrow":"\u21D2","RightArrowLeftArrow":"\u21C4","rightarrowtail":"\u21A3","RightCeiling":"\u2309","RightDoubleBracket":"\u27E7","RightDownTeeVector":"\u295D","RightDownVectorBar":"\u2955","RightDownVector":"\u21C2","RightFloor":"\u230B","rightharpoondown":"\u21C1","rightharpoonup":"\u21C0","rightleftarrows":"\u21C4","rightleftharpoons":"\u21CC","rightrightarrows":"\u21C9","rightsquigarrow":"\u219D","RightTeeArrow":"\u21A6","RightTee":"\u22A2","RightTeeVector":"\u295B","rightthreetimes":"\u22CC","RightTriangleBar":"\u29D0","RightTriangle":"\u22B3","RightTriangleEqual":"\u22B5","RightUpDownVector":"\u294F","RightUpTeeVector":"\u295C","RightUpVectorBar":"\u2954","RightUpVector":"\u21BE","RightVectorBar":"\u2953","RightVector":"\u21C0","ring":"\u02DA","risingdotseq":"\u2253","rlarr":"\u21C4","rlhar":"\u21CC","rlm":"\u200F","rmoustache":"\u23B1","rmoust":"\u23B1","rnmid":"\u2AEE","roang":"\u27ED","roarr":"\u21FE","robrk":"\u27E7","ropar":"\u2986","ropf":"\uD835\uDD63","Ropf":"\u211D","roplus":"\u2A2E","rotimes":"\u2A35","RoundImplies":"\u2970","rpar":")","rpargt":"\u2994","rppolint":"\u2A12","rrarr":"\u21C9","Rrightarrow":"\u21DB","rsaquo":"\u203A","rscr":"\uD835\uDCC7","Rscr":"\u211B","rsh":"\u21B1","Rsh":"\u21B1","rsqb":"]","rsquo":"\u2019","rsquor":"\u2019","rthree":"\u22CC","rtimes":"\u22CA","rtri":"\u25B9","rtrie":"\u22B5","rtrif":"\u25B8","rtriltri":"\u29CE","RuleDelayed":"\u29F4","ruluhar":"\u2968","rx":"\u211E","Sacute":"\u015A","sacute":"\u015B","sbquo":"\u201A","scap":"\u2AB8","Scaron":"\u0160","scaron":"\u0161","Sc":"\u2ABC","sc":"\u227B","sccue":"\u227D","sce":"\u2AB0","scE":"\u2AB4","Scedil":"\u015E","scedil":"\u015F","Scirc":"\u015C","scirc":"\u015D","scnap":"\u2ABA","scnE":"\u2AB6","scnsim":"\u22E9","scpolint":"\u2A13","scsim":"\u227F","Scy":"\u0421","scy":"\u0441","sdotb":"\u22A1","sdot":"\u22C5","sdote":"\u2A66","searhk":"\u2925","searr":"\u2198","seArr":"\u21D8","searrow":"\u2198","sect":"\u00A7","semi":";","seswar":"\u2929","setminus":"\u2216","setmn":"\u2216","sext":"\u2736","Sfr":"\uD835\uDD16","sfr":"\uD835\uDD30","sfrown":"\u2322","sharp":"\u266F","SHCHcy":"\u0429","shchcy":"\u0449","SHcy":"\u0428","shcy":"\u0448","ShortDownArrow":"\u2193","ShortLeftArrow":"\u2190","shortmid":"\u2223","shortparallel":"\u2225","ShortRightArrow":"\u2192","ShortUpArrow":"\u2191","shy":"\u00AD","Sigma":"\u03A3","sigma":"\u03C3","sigmaf":"\u03C2","sigmav":"\u03C2","sim":"\u223C","simdot":"\u2A6A","sime":"\u2243","simeq":"\u2243","simg":"\u2A9E","simgE":"\u2AA0","siml":"\u2A9D","simlE":"\u2A9F","simne":"\u2246","simplus":"\u2A24","simrarr":"\u2972","slarr":"\u2190","SmallCircle":"\u2218","smallsetminus":"\u2216","smashp":"\u2A33","smeparsl":"\u29E4","smid":"\u2223","smile":"\u2323","smt":"\u2AAA","smte":"\u2AAC","smtes":"\u2AAC\uFE00","SOFTcy":"\u042C","softcy":"\u044C","solbar":"\u233F","solb":"\u29C4","sol":"/","Sopf":"\uD835\uDD4A","sopf":"\uD835\uDD64","spades":"\u2660","spadesuit":"\u2660","spar":"\u2225","sqcap":"\u2293","sqcaps":"\u2293\uFE00","sqcup":"\u2294","sqcups":"\u2294\uFE00","Sqrt":"\u221A","sqsub":"\u228F","sqsube":"\u2291","sqsubset":"\u228F","sqsubseteq":"\u2291","sqsup":"\u2290","sqsupe":"\u2292","sqsupset":"\u2290","sqsupseteq":"\u2292","square":"\u25A1","Square":"\u25A1","SquareIntersection":"\u2293","SquareSubset":"\u228F","SquareSubsetEqual":"\u2291","SquareSuperset":"\u2290","SquareSupersetEqual":"\u2292","SquareUnion":"\u2294","squarf":"\u25AA","squ":"\u25A1","squf":"\u25AA","srarr":"\u2192","Sscr":"\uD835\uDCAE","sscr":"\uD835\uDCC8","ssetmn":"\u2216","ssmile":"\u2323","sstarf":"\u22C6","Star":"\u22C6","star":"\u2606","starf":"\u2605","straightepsilon":"\u03F5","straightphi":"\u03D5","strns":"\u00AF","sub":"\u2282","Sub":"\u22D0","subdot":"\u2ABD","subE":"\u2AC5","sube":"\u2286","subedot":"\u2AC3","submult":"\u2AC1","subnE":"\u2ACB","subne":"\u228A","subplus":"\u2ABF","subrarr":"\u2979","subset":"\u2282","Subset":"\u22D0","subseteq":"\u2286","subseteqq":"\u2AC5","SubsetEqual":"\u2286","subsetneq":"\u228A","subsetneqq":"\u2ACB","subsim":"\u2AC7","subsub":"\u2AD5","subsup":"\u2AD3","succapprox":"\u2AB8","succ":"\u227B","succcurlyeq":"\u227D","Succeeds":"\u227B","SucceedsEqual":"\u2AB0","SucceedsSlantEqual":"\u227D","SucceedsTilde":"\u227F","succeq":"\u2AB0","succnapprox":"\u2ABA","succneqq":"\u2AB6","succnsim":"\u22E9","succsim":"\u227F","SuchThat":"\u220B","sum":"\u2211","Sum":"\u2211","sung":"\u266A","sup1":"\u00B9","sup2":"\u00B2","sup3":"\u00B3","sup":"\u2283","Sup":"\u22D1","supdot":"\u2ABE","supdsub":"\u2AD8","supE":"\u2AC6","supe":"\u2287","supedot":"\u2AC4","Superset":"\u2283","SupersetEqual":"\u2287","suphsol":"\u27C9","suphsub":"\u2AD7","suplarr":"\u297B","supmult":"\u2AC2","supnE":"\u2ACC","supne":"\u228B","supplus":"\u2AC0","supset":"\u2283","Supset":"\u22D1","supseteq":"\u2287","supseteqq":"\u2AC6","supsetneq":"\u228B","supsetneqq":"\u2ACC","supsim":"\u2AC8","supsub":"\u2AD4","supsup":"\u2AD6","swarhk":"\u2926","swarr":"\u2199","swArr":"\u21D9","swarrow":"\u2199","swnwar":"\u292A","szlig":"\u00DF","Tab":"\t","target":"\u2316","Tau":"\u03A4","tau":"\u03C4","tbrk":"\u23B4","Tcaron":"\u0164","tcaron":"\u0165","Tcedil":"\u0162","tcedil":"\u0163","Tcy":"\u0422","tcy":"\u0442","tdot":"\u20DB","telrec":"\u2315","Tfr":"\uD835\uDD17","tfr":"\uD835\uDD31","there4":"\u2234","therefore":"\u2234","Therefore":"\u2234","Theta":"\u0398","theta":"\u03B8","thetasym":"\u03D1","thetav":"\u03D1","thickapprox":"\u2248","thicksim":"\u223C","ThickSpace":"\u205F\u200A","ThinSpace":"\u2009","thinsp":"\u2009","thkap":"\u2248","thksim":"\u223C","THORN":"\u00DE","thorn":"\u00FE","tilde":"\u02DC","Tilde":"\u223C","TildeEqual":"\u2243","TildeFullEqual":"\u2245","TildeTilde":"\u2248","timesbar":"\u2A31","timesb":"\u22A0","times":"\u00D7","timesd":"\u2A30","tint":"\u222D","toea":"\u2928","topbot":"\u2336","topcir":"\u2AF1","top":"\u22A4","Topf":"\uD835\uDD4B","topf":"\uD835\uDD65","topfork":"\u2ADA","tosa":"\u2929","tprime":"\u2034","trade":"\u2122","TRADE":"\u2122","triangle":"\u25B5","triangledown":"\u25BF","triangleleft":"\u25C3","trianglelefteq":"\u22B4","triangleq":"\u225C","triangleright":"\u25B9","trianglerighteq":"\u22B5","tridot":"\u25EC","trie":"\u225C","triminus":"\u2A3A","TripleDot":"\u20DB","triplus":"\u2A39","trisb":"\u29CD","tritime":"\u2A3B","trpezium":"\u23E2","Tscr":"\uD835\uDCAF","tscr":"\uD835\uDCC9","TScy":"\u0426","tscy":"\u0446","TSHcy":"\u040B","tshcy":"\u045B","Tstrok":"\u0166","tstrok":"\u0167","twixt":"\u226C","twoheadleftarrow":"\u219E","twoheadrightarrow":"\u21A0","Uacute":"\u00DA","uacute":"\u00FA","uarr":"\u2191","Uarr":"\u219F","uArr":"\u21D1","Uarrocir":"\u2949","Ubrcy":"\u040E","ubrcy":"\u045E","Ubreve":"\u016C","ubreve":"\u016D","Ucirc":"\u00DB","ucirc":"\u00FB","Ucy":"\u0423","ucy":"\u0443","udarr":"\u21C5","Udblac":"\u0170","udblac":"\u0171","udhar":"\u296E","ufisht":"\u297E","Ufr":"\uD835\uDD18","ufr":"\uD835\uDD32","Ugrave":"\u00D9","ugrave":"\u00F9","uHar":"\u2963","uharl":"\u21BF","uharr":"\u21BE","uhblk":"\u2580","ulcorn":"\u231C","ulcorner":"\u231C","ulcrop":"\u230F","ultri":"\u25F8","Umacr":"\u016A","umacr":"\u016B","uml":"\u00A8","UnderBar":"_","UnderBrace":"\u23DF","UnderBracket":"\u23B5","UnderParenthesis":"\u23DD","Union":"\u22C3","UnionPlus":"\u228E","Uogon":"\u0172","uogon":"\u0173","Uopf":"\uD835\uDD4C","uopf":"\uD835\uDD66","UpArrowBar":"\u2912","uparrow":"\u2191","UpArrow":"\u2191","Uparrow":"\u21D1","UpArrowDownArrow":"\u21C5","updownarrow":"\u2195","UpDownArrow":"\u2195","Updownarrow":"\u21D5","UpEquilibrium":"\u296E","upharpoonleft":"\u21BF","upharpoonright":"\u21BE","uplus":"\u228E","UpperLeftArrow":"\u2196","UpperRightArrow":"\u2197","upsi":"\u03C5","Upsi":"\u03D2","upsih":"\u03D2","Upsilon":"\u03A5","upsilon":"\u03C5","UpTeeArrow":"\u21A5","UpTee":"\u22A5","upuparrows":"\u21C8","urcorn":"\u231D","urcorner":"\u231D","urcrop":"\u230E","Uring":"\u016E","uring":"\u016F","urtri":"\u25F9","Uscr":"\uD835\uDCB0","uscr":"\uD835\uDCCA","utdot":"\u22F0","Utilde":"\u0168","utilde":"\u0169","utri":"\u25B5","utrif":"\u25B4","uuarr":"\u21C8","Uuml":"\u00DC","uuml":"\u00FC","uwangle":"\u29A7","vangrt":"\u299C","varepsilon":"\u03F5","varkappa":"\u03F0","varnothing":"\u2205","varphi":"\u03D5","varpi":"\u03D6","varpropto":"\u221D","varr":"\u2195","vArr":"\u21D5","varrho":"\u03F1","varsigma":"\u03C2","varsubsetneq":"\u228A\uFE00","varsubsetneqq":"\u2ACB\uFE00","varsupsetneq":"\u228B\uFE00","varsupsetneqq":"\u2ACC\uFE00","vartheta":"\u03D1","vartriangleleft":"\u22B2","vartriangleright":"\u22B3","vBar":"\u2AE8","Vbar":"\u2AEB","vBarv":"\u2AE9","Vcy":"\u0412","vcy":"\u0432","vdash":"\u22A2","vDash":"\u22A8","Vdash":"\u22A9","VDash":"\u22AB","Vdashl":"\u2AE6","veebar":"\u22BB","vee":"\u2228","Vee":"\u22C1","veeeq":"\u225A","vellip":"\u22EE","verbar":"|","Verbar":"\u2016","vert":"|","Vert":"\u2016","VerticalBar":"\u2223","VerticalLine":"|","VerticalSeparator":"\u2758","VerticalTilde":"\u2240","VeryThinSpace":"\u200A","Vfr":"\uD835\uDD19","vfr":"\uD835\uDD33","vltri":"\u22B2","vnsub":"\u2282\u20D2","vnsup":"\u2283\u20D2","Vopf":"\uD835\uDD4D","vopf":"\uD835\uDD67","vprop":"\u221D","vrtri":"\u22B3","Vscr":"\uD835\uDCB1","vscr":"\uD835\uDCCB","vsubnE":"\u2ACB\uFE00","vsubne":"\u228A\uFE00","vsupnE":"\u2ACC\uFE00","vsupne":"\u228B\uFE00","Vvdash":"\u22AA","vzigzag":"\u299A","Wcirc":"\u0174","wcirc":"\u0175","wedbar":"\u2A5F","wedge":"\u2227","Wedge":"\u22C0","wedgeq":"\u2259","weierp":"\u2118","Wfr":"\uD835\uDD1A","wfr":"\uD835\uDD34","Wopf":"\uD835\uDD4E","wopf":"\uD835\uDD68","wp":"\u2118","wr":"\u2240","wreath":"\u2240","Wscr":"\uD835\uDCB2","wscr":"\uD835\uDCCC","xcap":"\u22C2","xcirc":"\u25EF","xcup":"\u22C3","xdtri":"\u25BD","Xfr":"\uD835\uDD1B","xfr":"\uD835\uDD35","xharr":"\u27F7","xhArr":"\u27FA","Xi":"\u039E","xi":"\u03BE","xlarr":"\u27F5","xlArr":"\u27F8","xmap":"\u27FC","xnis":"\u22FB","xodot":"\u2A00","Xopf":"\uD835\uDD4F","xopf":"\uD835\uDD69","xoplus":"\u2A01","xotime":"\u2A02","xrarr":"\u27F6","xrArr":"\u27F9","Xscr":"\uD835\uDCB3","xscr":"\uD835\uDCCD","xsqcup":"\u2A06","xuplus":"\u2A04","xutri":"\u25B3","xvee":"\u22C1","xwedge":"\u22C0","Yacute":"\u00DD","yacute":"\u00FD","YAcy":"\u042F","yacy":"\u044F","Ycirc":"\u0176","ycirc":"\u0177","Ycy":"\u042B","ycy":"\u044B","yen":"\u00A5","Yfr":"\uD835\uDD1C","yfr":"\uD835\uDD36","YIcy":"\u0407","yicy":"\u0457","Yopf":"\uD835\uDD50","yopf":"\uD835\uDD6A","Yscr":"\uD835\uDCB4","yscr":"\uD835\uDCCE","YUcy":"\u042E","yucy":"\u044E","yuml":"\u00FF","Yuml":"\u0178","Zacute":"\u0179","zacute":"\u017A","Zcaron":"\u017D","zcaron":"\u017E","Zcy":"\u0417","zcy":"\u0437","Zdot":"\u017B","zdot":"\u017C","zeetrf":"\u2128","ZeroWidthSpace":"\u200B","Zeta":"\u0396","zeta":"\u03B6","zfr":"\uD835\uDD37","Zfr":"\u2128","ZHcy":"\u0416","zhcy":"\u0436","zigrarr":"\u21DD","zopf":"\uD835\uDD6B","Zopf":"\u2124","Zscr":"\uD835\uDCB5","zscr":"\uD835\uDCCF","zwj":"\u200D","zwnj":"\u200C"}
-},{}],77:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 module.exports={"Aacute":"\u00C1","aacute":"\u00E1","Acirc":"\u00C2","acirc":"\u00E2","acute":"\u00B4","AElig":"\u00C6","aelig":"\u00E6","Agrave":"\u00C0","agrave":"\u00E0","amp":"&","AMP":"&","Aring":"\u00C5","aring":"\u00E5","Atilde":"\u00C3","atilde":"\u00E3","Auml":"\u00C4","auml":"\u00E4","brvbar":"\u00A6","Ccedil":"\u00C7","ccedil":"\u00E7","cedil":"\u00B8","cent":"\u00A2","copy":"\u00A9","COPY":"\u00A9","curren":"\u00A4","deg":"\u00B0","divide":"\u00F7","Eacute":"\u00C9","eacute":"\u00E9","Ecirc":"\u00CA","ecirc":"\u00EA","Egrave":"\u00C8","egrave":"\u00E8","ETH":"\u00D0","eth":"\u00F0","Euml":"\u00CB","euml":"\u00EB","frac12":"\u00BD","frac14":"\u00BC","frac34":"\u00BE","gt":">","GT":">","Iacute":"\u00CD","iacute":"\u00ED","Icirc":"\u00CE","icirc":"\u00EE","iexcl":"\u00A1","Igrave":"\u00CC","igrave":"\u00EC","iquest":"\u00BF","Iuml":"\u00CF","iuml":"\u00EF","laquo":"\u00AB","lt":"<","LT":"<","macr":"\u00AF","micro":"\u00B5","middot":"\u00B7","nbsp":"\u00A0","not":"\u00AC","Ntilde":"\u00D1","ntilde":"\u00F1","Oacute":"\u00D3","oacute":"\u00F3","Ocirc":"\u00D4","ocirc":"\u00F4","Ograve":"\u00D2","ograve":"\u00F2","ordf":"\u00AA","ordm":"\u00BA","Oslash":"\u00D8","oslash":"\u00F8","Otilde":"\u00D5","otilde":"\u00F5","Ouml":"\u00D6","ouml":"\u00F6","para":"\u00B6","plusmn":"\u00B1","pound":"\u00A3","quot":"\"","QUOT":"\"","raquo":"\u00BB","reg":"\u00AE","REG":"\u00AE","sect":"\u00A7","shy":"\u00AD","sup1":"\u00B9","sup2":"\u00B2","sup3":"\u00B3","szlig":"\u00DF","THORN":"\u00DE","thorn":"\u00FE","times":"\u00D7","Uacute":"\u00DA","uacute":"\u00FA","Ucirc":"\u00DB","ucirc":"\u00FB","Ugrave":"\u00D9","ugrave":"\u00F9","uml":"\u00A8","Uuml":"\u00DC","uuml":"\u00FC","Yacute":"\u00DD","yacute":"\u00FD","yen":"\u00A5","yuml":"\u00FF"}
-},{}],78:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 module.exports={"amp":"&","apos":"'","gt":">","lt":"<","quot":"\""}
 
-},{}],79:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 module.exports = CollectingHandler;
 
 function CollectingHandler(cbs) {
@@ -9582,7 +9586,7 @@ CollectingHandler.prototype.restart = function() {
     }
 };
 
-},{"./":86}],80:[function(require,module,exports){
+},{"./":85}],79:[function(require,module,exports){
 var DomHandler = require("domhandler");
 var DomUtils = require("domutils");
 
@@ -9698,7 +9702,7 @@ FeedHandler.prototype.onend = function() {
 
 module.exports = FeedHandler;
 
-},{"domhandler":61,"domutils":64,"inherits":87}],81:[function(require,module,exports){
+},{"domhandler":60,"domutils":63,"inherits":86}],80:[function(require,module,exports){
 var Tokenizer = require("./Tokenizer.js");
 
 /*
@@ -10082,7 +10086,7 @@ Parser.prototype.done = Parser.prototype.end;
 
 module.exports = Parser;
 
-},{"./Tokenizer.js":84,"events":5,"inherits":87}],82:[function(require,module,exports){
+},{"./Tokenizer.js":83,"events":4,"inherits":86}],81:[function(require,module,exports){
 module.exports = ProxyHandler;
 
 function ProxyHandler(cbs) {
@@ -10111,7 +10115,7 @@ Object.keys(EVENTS).forEach(function(name) {
     }
 });
 
-},{"./":86}],83:[function(require,module,exports){
+},{"./":85}],82:[function(require,module,exports){
 module.exports = Stream;
 
 var Parser = require("./WritableStream.js");
@@ -10148,7 +10152,7 @@ Object.keys(EVENTS).forEach(function(name) {
     }
 });
 
-},{"../":86,"./WritableStream.js":85,"inherits":87}],84:[function(require,module,exports){
+},{"../":85,"./WritableStream.js":84,"inherits":86}],83:[function(require,module,exports){
 module.exports = Tokenizer;
 
 var decodeCodePoint = require("entities/lib/decode_codepoint.js");
@@ -11120,7 +11124,7 @@ Tokenizer.prototype._emitPartial = function(value) {
     }
 };
 
-},{"entities/lib/decode_codepoint.js":73,"entities/maps/entities.json":76,"entities/maps/legacy.json":77,"entities/maps/xml.json":78}],85:[function(require,module,exports){
+},{"entities/lib/decode_codepoint.js":72,"entities/maps/entities.json":75,"entities/maps/legacy.json":76,"entities/maps/xml.json":77}],84:[function(require,module,exports){
 module.exports = Stream;
 
 var Parser = require("./Parser.js");
@@ -11147,7 +11151,7 @@ Stream.prototype._write = function(chunk, encoding, cb) {
     cb();
 };
 
-},{"./Parser.js":81,"buffer":4,"inherits":87,"readable-stream":3,"string_decoder":10}],86:[function(require,module,exports){
+},{"./Parser.js":80,"buffer":3,"inherits":86,"readable-stream":2,"string_decoder":9}],85:[function(require,module,exports){
 var Parser = require("./Parser.js");
 var DomHandler = require("domhandler");
 
@@ -11221,7 +11225,7 @@ module.exports = {
     }
 };
 
-},{"./CollectingHandler.js":79,"./FeedHandler.js":80,"./Parser.js":81,"./ProxyHandler.js":82,"./Stream.js":83,"./Tokenizer.js":84,"./WritableStream.js":85,"domelementtype":60,"domhandler":61,"domutils":64}],87:[function(require,module,exports){
+},{"./CollectingHandler.js":78,"./FeedHandler.js":79,"./Parser.js":80,"./ProxyHandler.js":81,"./Stream.js":82,"./Tokenizer.js":83,"./WritableStream.js":84,"domelementtype":59,"domhandler":60,"domutils":63}],86:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -11250,7 +11254,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],88:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -11878,7 +11882,7 @@ function keysIn(object) {
 
 module.exports = assignIn;
 
-},{}],89:[function(require,module,exports){
+},{}],88:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -13136,7 +13140,7 @@ bind.placeholder = {};
 module.exports = bind;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],90:[function(require,module,exports){
+},{}],89:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -13806,7 +13810,7 @@ function keysIn(object) {
 
 module.exports = defaults;
 
-},{}],91:[function(require,module,exports){
+},{}],90:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -16176,7 +16180,7 @@ function property(path) {
 module.exports = filter;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],92:[function(require,module,exports){
+},{}],91:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -16529,7 +16533,7 @@ function isObjectLike(value) {
 module.exports = flatten;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],93:[function(require,module,exports){
+},{}],92:[function(require,module,exports){
 /**
  * lodash (Custom Build) <https://lodash.com/>
  * Build: `lodash modularize exports="npm" -o ./`
@@ -17096,7 +17100,7 @@ function identity(value) {
 
 module.exports = forEach;
 
-},{}],94:[function(require,module,exports){
+},{}],93:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -19466,7 +19470,7 @@ function property(path) {
 module.exports = map;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],95:[function(require,module,exports){
+},{}],94:[function(require,module,exports){
 (function (global){(function (){
 /**
  * Lodash (Custom Build) <https://lodash.com/>
@@ -21447,7 +21451,7 @@ function stubFalse() {
 module.exports = merge;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],96:[function(require,module,exports){
+},{}],95:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -21954,7 +21958,7 @@ var pick = baseRest(function(object, props) {
 module.exports = pick;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],97:[function(require,module,exports){
+},{}],96:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -24330,7 +24334,7 @@ function property(path) {
 module.exports = reduce;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],98:[function(require,module,exports){
+},{}],97:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -26732,7 +26736,7 @@ function property(path) {
 module.exports = reject;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],99:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 (function (global){(function (){
 /**
  * lodash (Custom Build) <https://lodash.com/>
@@ -29104,7 +29108,7 @@ function property(path) {
 module.exports = some;
 
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],100:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 module.exports = compile;
 
 var BaseFuncs = require("boolbase"),
@@ -29145,7 +29149,7 @@ function compile(parsed){
 		return pos <= b && pos % a === bMod;
 	};
 }
-},{"boolbase":39}],101:[function(require,module,exports){
+},{"boolbase":38}],100:[function(require,module,exports){
 var parse = require("./parse.js"),
     compile = require("./compile.js");
 
@@ -29155,7 +29159,7 @@ module.exports = function nthCheck(formula){
 
 module.exports.parse = parse;
 module.exports.compile = compile;
-},{"./compile.js":100,"./parse.js":102}],102:[function(require,module,exports){
+},{"./compile.js":99,"./parse.js":101}],101:[function(require,module,exports){
 module.exports = parse;
 
 //following http://www.w3.org/TR/css3-selectors/#nth-child-pseudo
@@ -29197,9 +29201,2327 @@ function parse(formula){
 	}
 }
 
+},{}],102:[function(require,module,exports){
+let kosdaq = {
+    "": "",
+    DB금융스팩9호: "367360",
+    EDGC: "245620",
+    ES큐브: "050120",
+    GS홈쇼핑: "028150",
+    IBKS제13호스팩: "351340",
+    JW신약: "067290",
+    KB오토시스: "024120",
+    KH바텍: "060720",
+    SK5호스팩: "337450",
+    SK6호스팩: "340350",
+    YW: "051390",
+    강스템바이오텍: "217730",
+    경창산업: "024910",
+    골프존: "215000",
+    국순당: "043650",
+    국일제지: "078130",
+    그리티: "204020",
+    나노브릭: "286750",
+    나노스: "151910",
+    네오리진: "094860",
+    네오위즈: "095660",
+    네오티스: "085910",
+    네이처셀: "007390",
+    녹십자셀: "031390",
+    농우바이오: "054050",
+    뉴인텍: "012340",
+    대봉엘에스: "078140",
+    대신밸런스제9호스팩: "369370",
+    대유: "290380",
+    대유에이피: "290120",
+    대주산업: "003310",
+    대한그린파워: "060900",
+    대한약품: "023910",
+    동구바이오제약: "006620",
+    디에이테크놀로지: "196490",
+    디에이피: "066900",
+    디엔에프: "092070",
+    디지틀조선: "033130",
+    룽투코리아: "060240",
+    링크제니시스: "219420",
+    메디톡스: "086900",
+    모두투어: "080160",
+    모비스: "250060",
+    모트렉스: "118990",
+    미스터블루: "207760",
+    미코바이오메드: "214610",
+    바디텍메드: "206640",
+    바이넥스: "053030",
+    브랜드엑스코퍼레이션: "337930",
+    삼보판지: "023600",
+    삼아제약: "009300",
+    상지카일룸: "042940",
+    샘씨엔에스: "252990",
+    서암기계공업: "100660",
+    선진뷰티사이언스: "086710",
+    성창오토텍: "080470",
+    세보엠이씨: "011560",
+    세종메디칼: "258830",
+    셀바스헬스케어: "208370",
+    셀트리온제약: "068760",
+    스타모빌리티: "158310",
+    스튜디오산타클로스: "204630",
+    스페코: "013810",
+    승일: "049830",
+    시티랩스: "139050",
+    심텍: "222800",
+    쌍용정보통신: "010280",
+    썸에이지: "208640",
+    씨이랩: "189330",
+    씨케이에이치: "900120",
+    아나패스: "123860",
+    아이비김영: "339950",
+    아이센스: "099190",
+    아이씨디: "040910",
+    아이씨케이: "068940",
+    아이오케이: "078860",
+    아이원스: "114810",
+    아이즈비전: "031310",
+    아이진: "185490",
+    아이티센: "124500",
+    알에프세미: "096610",
+    알에프텍: "061040",
+    애니플러스: "310200",
+    어보브반도체: "102120",
+    에스앤더블류: "103230",
+    에스앤에스텍: "101490",
+    에스에너지: "095910",
+    에쎈테크: "043340",
+    에이루트: "096690",
+    에이스토리: "241840",
+    에이치엘비파워: "043220",
+    에이티넘인베스트: "021080",
+    엑세스바이오: "950130",
+    엑시콘: "092870",
+    엔시트론: "101400",
+    엘아이에스: "138690",
+    엠게임: "058630",
+    엠벤처투자: "019590",
+    엠씨넥스: "097520",
+    영화테크: "265560",
+    예스티: "122640",
+    오공: "045060",
+    오스템임플란트: "048260",
+    오픈베이스: "049480",
+    옵티시스: "109080",
+    원방테크: "053080",
+    원익QnC: "074600",
+    웰크론: "065950",
+    위지트: "036090",
+    유니온커뮤니티: "203450",
+    유니테크노: "241690",
+    유비쿼스홀딩스: "078070",
+    유신: "054930",
+    유안타제5호스팩: "336060",
+    유안타제7호스팩: "367460",
+    유진스팩5호: "331380",
+    유테크: "178780",
+    유티아이: "179900",
+    이스트소프트: "047560",
+    이스트아시아홀딩스: "900110",
+    이엠넷: "123570",
+    이지바이오: "353810",
+    인베니아: "079950",
+    인텍플러스: "064290",
+    자비스: "254120",
+    자이글: "234920",
+    정상제이엘에스: "040420",
+    제우스: "079370",
+    제이씨현시스템: "033320",
+    제이엘케이: "322510",
+    제이엠티: "094970",
+    제주반도체: "080220",
+    조아제약: "034940",
+    주성엔지니어링: "036930",
+    지엔씨에너지: "119850",
+    지엔코: "065060",
+    초록뱀컴퍼니: "052300",
+    캐스텍코리아: "071850",
+    케이비제20호스팩: "342550",
+    케이프이에스제4호: "347140",
+    케이피엠테크: "042040",
+    케이피티유: "054410",
+    켄코아에어로스페이스: "274090",
+    코스나인: "082660",
+    코스온: "069110",
+    코오롱생명과학: "102940",
+    코프라: "126600",
+    크로바하이텍: "043590",
+    키네마스터: "139670",
+    토탈소프트: "045340",
+    트루윈: "105550",
+    특수건설: "026150",
+    티앤알바이오팹: "246710",
+    티에스이: "131290",
+    파라텍: "033540",
+    파세코: "037070",
+    파워로직스: "047310",
+    파커스: "065690",
+    패션플랫폼: "225590",
+    포인트엔지니어링: "256630",
+    푸드웰: "005670",
+    프로스테믹스: "203690",
+    피델릭스: "032580",
+    피에스엠씨: "024850",
+    피제이전자: "006140",
+    하나금융15호스팩: "341160",
+    하나기술: "299030",
+    하이즈항공: "221840",
+    한국경제TV: "039340",
+    한국맥널티: "222980",
+    한국선재: "025550",
+    한국테크놀로지: "053590",
+    한솔인티큐브: "070590",
+    한양디지텍: "078350",
+    현대무벡스: "319400",
+    현대바이오: "048410",
+    현대바이오랜드: "052260",
+    화성밸브: "039610",
+    휴맥스: "115160",
+    희림: "037440",
+    APS홀딩스: "054620",
+    CS: "065770",
+    "CSA 코스믹": "083660",
+    DB금융스팩8호: "367340",
+    HRS: "036640",
+    KTH: "036030",
+    NHN벅스: "104200",
+    NICE평가정보: "030190",
+    PN풍년: "024940",
+    RF머트리얼즈: "327260",
+    "SM C&C": "048550",
+    THQ: "192410",
+    TS트릴리온: "317240",
+    갤럭시아머니트리: "094480",
+    경남제약헬스케어: "223310",
+    고영: "098460",
+    국영지앤엠: "006050",
+    나노엔텍: "039860",
+    나이벡: "138610",
+    남화토건: "091590",
+    네오팜: "092730",
+    넥스틴: "348210",
+    넵튠: "217270",
+    뉴로스: "126870",
+    뉴파워프라즈마: "144960",
+    대성파인텍: "104040",
+    대아티아이: "045390",
+    대양제지: "006580",
+    대주전자재료: "078600",
+    대창솔루션: "096350",
+    덕산네오룩스: "213420",
+    데브시스터즈: "194480",
+    "동국S&C": "100130",
+    동국산업: "005160",
+    동아엘텍: "088130",
+    디딤: "217620",
+    디알텍: "214680",
+    디엠티: "134580",
+    디오: "039840",
+    딜리: "131180",
+    럭슬: "033600",
+    레드캡투어: "038390",
+    레이언스: "228850",
+    로보로보: "215100",
+    루트로닉: "085370",
+    리더스코스메틱: "016100",
+    릭스솔루션: "029480",
+    매일홀딩스: "005990",
+    머큐리: "100590",
+    메디앙스: "014100",
+    메디프론: "065650",
+    메타바이오메드: "059210",
+    멕아이씨에스: "058110",
+    멜파스: "096640",
+    무림SP: "001810",
+    미래에셋대우스팩3호: "328380",
+    미래에셋벤처투자: "100790",
+    바이오로그디바이스: "208710",
+    부스타: "008470",
+    비트컴퓨터: "032850",
+    사람인에이치알: "143240",
+    삼륭물산: "014970",
+    삼양옵틱스: "225190",
+    삼일: "032280",
+    삼일기업공사: "002290",
+    삼지전자: "037460",
+    삼진: "032750",
+    삼표시멘트: "038500",
+    삼화네트웍스: "046390",
+    상보: "027580",
+    상신이디피: "091580",
+    서호전기: "065710",
+    세경하이테크: "148150",
+    세명전기: "017510",
+    셀바스AI: "108860",
+    손오공: "066910",
+    솔루에타: "154040",
+    솔브레인: "357780",
+    슈프리마: "236200",
+    스튜디오드래곤: "253450",
+    스포츠서울: "039670",
+    시스웍: "269620",
+    신라에스지: "025870",
+    신영스팩5호: "323280",
+    신한제6호스팩: "333050",
+    씨앤투스성진: "352700",
+    아가방컴퍼니: "013990",
+    아래스: "050320",
+    아리온: "058220",
+    아모텍: "052710",
+    아미코젠: "092040",
+    아이에이: "038880",
+    아이퀘스트: "262840",
+    액트로: "290740",
+    앱코: "129890",
+    에스에스알: "275630",
+    에스엘바이오닉스: "214310",
+    에스티팜: "237690",
+    에이씨티: "138360",
+    에프알텍: "073540",
+    에프에스티: "036810",
+    엠에프엠코리아: "323230",
+    영신금속: "007530",
+    예림당: "036000",
+    오성첨단소재: "052420",
+    오션브릿지: "241790",
+    와이더플래닛: "321820",
+    "와이지-원": "019210",
+    우리로: "046970",
+    우리손에프앤지: "073560",
+    우림기계: "101170",
+    우수AMS: "066590",
+    원익큐브: "014190",
+    원일특강: "012620",
+    윈하이텍: "192390",
+    윌링스: "313760",
+    유니테스트: "086390",
+    유바이오로직스: "206650",
+    유안타제8호스팩: "367480",
+    육일씨엔에쓰: "191410",
+    이글루시큐리티: "067920",
+    이글벳: "044960",
+    이녹스: "088390",
+    이랜시스: "264850",
+    이베스트스팩5호: "349720",
+    이삭엔지니어링: "351330",
+    이엔코퍼레이션: "066980",
+    이지케어텍: "099750",
+    인바디: "041830",
+    인선이엔티: "060150",
+    인포바인: "115310",
+    인포뱅크: "039290",
+    잉크테크: "049550",
+    전진바이오팜: "110020",
+    정다운: "208140",
+    제놀루션: "225220",
+    제일바이오: "052670",
+    제일제강: "023440",
+    젬백스지오: "041590",
+    조이시티: "067000",
+    지니뮤직: "043610",
+    지니언스: "263860",
+    지니틱스: "303030",
+    지란지교시큐리티: "208350",
+    지유온: "111820",
+    지티지웰니스: "219750",
+    참좋은여행: "094850",
+    천보: "278280",
+    케이비제19호스팩: "330990",
+    케이씨피드: "025880",
+    케이엔더블유: "105330",
+    코데즈컴바인: "047770",
+    코드네이처: "078940",
+    코리아센터: "290510",
+    코메론: "049430",
+    코미팜: "041960",
+    코아시아: "045970",
+    코웰패션: "033290",
+    코위버: "056360",
+    큐브앤컴퍼니: "043090",
+    큐브엔터: "182360",
+    크루셜텍: "114120",
+    크리스탈지노믹스: "083790",
+    클리노믹스: "352770",
+    클리오: "237880",
+    키움제5호스팩: "311270",
+    테고사이언스: "191420",
+    테라사이언스: "073640",
+    테라셈: "182690",
+    테라젠이텍스: "066700",
+    테스나: "131970",
+    티에스아이: "277880",
+    파멥신: "208340",
+    파수: "150900",
+    파인디지털: "038950",
+    팍스넷: "038160",
+    팬엔터테인먼트: "068050",
+    펌텍코리아: "251970",
+    풍강: "093380",
+    플레이디: "237820",
+    피에스텍: "002230",
+    피엔티: "137400",
+    픽셀플러스: "087600",
+    핌스: "347770",
+    핑거: "163730",
+    하나금융17호스팩: "363260",
+    하나마이크론: "067310",
+    한국기업평가: "034950",
+    한국바이오젠: "318000",
+    한국비엔씨: "256840",
+    한국정보인증: "053300",
+    한국정보통신: "025770",
+    한국코퍼레이션: "050540",
+    한글과컴퓨터: "030520",
+    한일단조: "024740",
+    한일화학: "007770",
+    한컴MDS: "086960",
+    한컴위드: "054920",
+    현진소재: "053660",
+    "형지I&C": "011080",
+    휴네시온: "290270",
+    휴맥스홀딩스: "028080",
+    흥국에프엔비: "189980",
+    EMW: "079190",
+    JTC: "950170",
+    KCC건설: "021320",
+    KCI: "036670",
+    "KG ETS": "151860",
+    NEW: "160550",
+    SBI핀테크솔루션즈: "950110",
+    SGA솔루션즈: "184230",
+    "SM Life Design": "063440",
+    WI: "073570",
+    고려시멘트: "198440",
+    골드앤에스: "035290",
+    교보9호스팩: "331520",
+    국일신동: "060480",
+    국전약품: "307750",
+    나노신소재: "121600",
+    나무가: "190510",
+    나인테크: "267320",
+    넥스트아이: "137940",
+    넥슨지티: "041140",
+    노터스: "278650",
+    다산네트웍스: "039560",
+    다원시스: "068240",
+    대명소노시즌: "007720",
+    대성미생물: "036480",
+    대원산업: "005710",
+    대한광통신: "010170",
+    더블유에스아이: "299170",
+    덕신하우징: "090410",
+    덴티스: "261200",
+    동국알앤에스: "075970",
+    동신건설: "025950",
+    동일기연: "032960",
+    듀오백: "073190",
+    디지아이: "043360",
+    디지털대성: "068930",
+    디티앤씨: "187220",
+    라이트론: "069540",
+    램테크놀러지: "171010",
+    레고켐바이오: "141080",
+    레몬: "294140",
+    로보스타: "090360",
+    "리더스 기술투자": "019570",
+    리드코프: "012700",
+    맥스로텍: "141070",
+    메디콕스: "054180",
+    메디포스트: "078160",
+    미래컴퍼니: "049950",
+    바이오니아: "064550",
+    베셀: "177350",
+    보라티알: "250000",
+    부방: "014470",
+    브리지텍: "064480",
+    블러썸엠앤씨: "263920",
+    비디아이: "148140",
+    비즈니스온: "138580",
+    삼영에스앤씨: "361670",
+    삼진엘앤디: "054090",
+    삼천리자전거: "024950",
+    삼현철강: "017480",
+    서산: "079650",
+    성우테크론: "045300",
+    성우하이텍: "015750",
+    세운메디칼: "100700",
+    세종텔레콤: "036630",
+    세코닉스: "053450",
+    셀루메드: "049180",
+    소리바다: "053110",
+    솔고바이오: "043100",
+    솔본: "035610",
+    솔브레인홀딩스: "036830",
+    수산아이앤티: "050960",
+    슈펙스비앤피: "058530",
+    슈피겐코리아: "192440",
+    스카이이앤엠: "131100",
+    시공테크: "020710",
+    시큐브: "131090",
+    신도기연: "290520",
+    신테카바이오: "226330",
+    실리콘웍스: "108320",
+    쎄노텍: "222420",
+    쎄미시스코: "136510",
+    쎄트렉아이: "099320",
+    씨엠에스에듀: "225330",
+    씨큐브: "101240",
+    아비코전자: "036010",
+    아스타: "246720",
+    아이디피: "332370",
+    아이톡시: "052770",
+    아진산업: "013310",
+    아프리카TV: "067160",
+    알체라: "347860",
+    알티캐스트: "085810",
+    애니젠: "196300",
+    앤디포스: "238090",
+    앱클론: "174900",
+    에스제이그룹: "306040",
+    에스트래픽: "234300",
+    에스퓨얼셀: "288620",
+    에이디칩스: "054630",
+    에이비엘바이오: "298380",
+    에이스침대: "003800",
+    에이치피오: "357230",
+    에이텍티앤: "224110",
+    에이팸: "073070",
+    에코플라스틱: "038110",
+    엑셈: "205100",
+    엔브이에이치코리아: "067570",
+    엔지스테크널러지: "208860",
+    엔지켐생명과학: "183490",
+    엔케이맥스: "182400",
+    엔텔스: "069410",
+    엘디티: "096870",
+    엘컴텍: "037950",
+    영림원소프트랩: "060850",
+    오리엔트정공: "065500",
+    오스테오닉: "226400",
+    오텍: "067170",
+    와이즈버즈: "273060",
+    원익머트리얼즈: "104830",
+    원풍: "008370",
+    웹젠: "069080",
+    위닉스: "044340",
+    위메이드: "112040",
+    유비벨록스: "089850",
+    유비쿼스: "264450",
+    유안타제4호스팩: "313750",
+    유진테크: "084370",
+    이건홀딩스: "039020",
+    이노와이어리스: "073490",
+    이녹스첨단소재: "272290",
+    이디티: "215090",
+    이랜텍: "054210",
+    이수앱지스: "086890",
+    인산가: "277410",
+    인성정보: "033230",
+    인탑스: "049070",
+    인터파크: "035080",
+    인텔리안테크: "189300",
+    인트로메딕: "150840",
+    자이언트스텝: "289220",
+    재영솔루텍: "049630",
+    제낙스: "065620",
+    제이시스메디칼: "287410",
+    제이앤티씨: "204270",
+    제이티: "089790",
+    좋은사람들: "033340",
+    진바이오텍: "086060",
+    진성티이씨: "036890",
+    청보산업: "013720",
+    초록뱀미디어: "047820",
+    카이노스메드: "284620",
+    캠시스: "050110",
+    케이비제18호스팩: "323940",
+    케이엠더블유: "032500",
+    케이피에프: "024880",
+    코디엠: "224060",
+    코리아에셋투자증권: "190650",
+    코미코: "183300",
+    코스맥스엔비티: "222040",
+    코스메카코리아: "241710",
+    코아시아옵틱스: "196450",
+    코이즈: "121850",
+    키이스트: "054780",
+    태웅로직스: "124560",
+    텔콘RF제약: "200230",
+    토비스: "051360",
+    티라유텍: "322180",
+    티비씨: "033830",
+    티엘비: "356860",
+    파나진: "046210",
+    파버나인: "177830",
+    파워넷: "037030",
+    판타지오: "032800",
+    프로텍: "053610",
+    피에스케이: "319660",
+    피에이치씨: "057880",
+    피에이치에이: "043370",
+    필옵틱스: "161580",
+    하나금융14호스팩: "332710",
+    하나금융16호스팩: "343510",
+    한국제8호스팩: "310870",
+    한국캐피탈: "023760",
+    한일네트웍스: "046110",
+    한화플러스제1호스팩: "340440",
+    헬릭스미스: "084990",
+    현우산업: "092300",
+    휴먼엔: "032860",
+    DSC인베스트먼트: "241520",
+    EG: "037370",
+    GST: "083450",
+    IBKS제15호스팩: "373200",
+    KD: "044180",
+    KMH: "122450",
+    SDN: "099220",
+    SK4호스팩: "307070",
+    SK머티리얼즈: "036490",
+    SNK: "950180",
+    가비아: "079940",
+    감성코퍼레이션: "036620",
+    경남스틸: "039240",
+    광진윈텍: "090150",
+    글로벌텍스프리: "204620",
+    글로본: "019660",
+    나노: "187790",
+    내츄럴엔도텍: "168330",
+    네오셈: "253590",
+    네오위즈홀딩스: "042420",
+    네이블커뮤니케이션즈: "153460",
+    넥스턴바이오: "089140",
+    넥스트BT: "065170",
+    노바렉스: "194700",
+    뉴프라이드: "900100",
+    뉴프렉스: "085670",
+    대성엘텍: "025440",
+    대신밸런스제7호스팩: "332290",
+    대양전기공업: "108380",
+    대원: "007680",
+    대한뉴팜: "054670",
+    덕산테코피아: "317330",
+    덕산하이메탈: "077360",
+    동국제약: "086450",
+    동진쎄미켐: "005290",
+    디바이스이엔지: "187870",
+    디알젬: "263690",
+    디에스티: "033430",
+    디엔에이링크: "127120",
+    라이온켐텍: "171120",
+    레이크머티리얼즈: "281740",
+    레인보우로보틱스: "277810",
+    로지시스: "067730",
+    루멘스: "038060",
+    링네트: "042500",
+    마이크로프랜드: "147760",
+    매직마이크로: "127160",
+    메가스터디교육: "215200",
+    메드팩토: "235980",
+    모바일리더: "100030",
+    모베이스전자: "012860",
+    모헨즈: "006920",
+    미코: "059090",
+    민앤지: "214180",
+    바른손: "018700",
+    바른손이앤에이: "035620",
+    바이브컴퍼니: "301300",
+    바이온: "032980",
+    박셀바이오: "323990",
+    베노홀딩스: "206400",
+    "비보존 헬스케어": "082800",
+    비에이치아이: "083650",
+    새로닉스: "042600",
+    서연탑메탈: "019770",
+    서울반도체: "046890",
+    서울전자통신: "027040",
+    서원인텍: "093920",
+    서진오토모티브: "122690",
+    선데이토즈: "123420",
+    세중: "039310",
+    세틀뱅크: "234340",
+    센코: "347000",
+    슈프리마에이치큐: "094840",
+    스타플렉스: "115570",
+    시그네틱스: "033170",
+    시노펙스: "025320",
+    신라젠: "215600",
+    신원종합개발: "017000",
+    신한제7호스팩: "366330",
+    신흥에스이씨: "243840",
+    씨앤지하이테크: "264660",
+    씨티씨바이오: "060590",
+    아시아종묘: "154030",
+    아우딘퓨쳐스: "227610",
+    아이엘사이언스: "307180",
+    아이큐어: "175250",
+    아이크래프트: "052460",
+    안트로젠: "065660",
+    알에스오토메이션: "140670",
+    알톤스포츠: "123750",
+    알파홀딩스: "117670",
+    액션스퀘어: "205500",
+    앤씨앤: "092600",
+    에스디생명공학: "217480",
+    에스씨엠생명과학: "298060",
+    에스앤씨엔진그룹: "900080",
+    에스엔유: "080000",
+    에스텍파마: "041910",
+    에이스테크: "088800",
+    에이치엘사이언스: "239610",
+    에이치엠씨제4호스팩: "353070",
+    에이티세미콘: "089530",
+    에이팩트: "200470",
+    "에이프로젠 H&G": "109960",
+    엔시스: "333620",
+    엔에스: "217820",
+    엔피디: "198080",
+    엘앤씨바이오: "290650",
+    엘오티베큠: "083310",
+    엠브레인: "169330",
+    엠투아이: "347890",
+    엠플러스: "259630",
+    연이비앤티: "090740",
+    예스24: "053280",
+    오가닉티코스메틱: "900300",
+    오하임아이엔티: "309930",
+    옵트론텍: "082210",
+    옵티팜: "153710",
+    와이솔: "122990",
+    와이아이케이: "232140",
+    와이어블: "065530",
+    우노앤컴퍼니: "114630",
+    우리산업홀딩스: "072470",
+    우양: "103840",
+    우진비앤지: "018620",
+    원바이오젠: "307280",
+    원익: "032940",
+    원익홀딩스: "030530",
+    위메이드맥스: "101730",
+    유성티엔에스: "024800",
+    유에스티: "263770",
+    유진스팩6호: "373340",
+    이루온: "065440",
+    이엔에프테크놀로지: "102710",
+    이엘피: "063760",
+    이엠앤아이: "083470",
+    이지홀딩스: "035810",
+    이트론: "096040",
+    인터엠: "017250",
+    자안바이오: "221610",
+    제너셈: "217190",
+    제노레이: "122310",
+    제로투세븐: "159580",
+    제룡전기: "033100",
+    조광ILI: "044060",
+    칩스앤미디어: "094360",
+    컴퍼니케이: "307930",
+    케이사인: "192250",
+    케이씨에스: "115500",
+    케이아이엔엑스: "093320",
+    켐온: "217600",
+    코렌: "078650",
+    코세스: "089890",
+    코엔텍: "029960",
+    코텍: "052330",
+    콜마비앤에이치: "200130",
+    쿠콘: "294570",
+    큐캐피탈: "016600",
+    크리스에프앤씨: "110790",
+    타이거일렉: "219130",
+    태광: "023160",
+    티로보틱스: "117730",
+    티엘아이: "062860",
+    파라다이스: "034230",
+    파인디앤씨: "049120",
+    파인텍: "131760",
+    펩트론: "087010",
+    "포스코 ICT": "022100",
+    폴라리스웍스: "123010",
+    풍국주정: "023900",
+    퓨쳐스트림네트웍스: "214270",
+    퓨쳐켐: "220100",
+    프리시젼바이오: "335810",
+    피씨디렉트: "051380",
+    피에스케이홀딩스: "031980",
+    피엔에이치테크: "239890",
+    피엔케이피부임상연구센타: "347740",
+    피플바이오: "304840",
+    하이로닉: "149980",
+    하이소닉: "106080",
+    한국유니온제약: "080720",
+    한국컴퓨터: "054040",
+    한송네오텍: "226440",
+    한일사료: "005860",
+    헝셩그룹: "900270",
+    화일약품: "061250",
+    효성오앤비: "097870",
+    휴온스: "243070",
+    휴젤: "145020",
+    CJ프레시웨이: "051500",
+    CNH: "023460",
+    DMS: "068790",
+    GH신소재: "130500",
+    IBKS제14호스팩: "351320",
+    KBI메탈: "024840",
+    KG모빌리언스: "046440",
+    KMH하이텍: "052900",
+    KPX생명과학: "114450",
+    KT서브마린: "060370",
+    MP그룹: "065150",
+    SBS콘텐츠허브: "046140",
+    "SG&G": "040610",
+    SV인베스트먼트: "289080",
+    TPC: "048770",
+    TS인베스트먼트: "246690",
+    YBM넷: "057030",
+    iMBC: "052220",
+    가온미디어: "078890",
+    게임빌: "063080",
+    경동제약: "011040",
+    골든센츄리: "900280",
+    광림: "014200",
+    국보디자인: "066620",
+    나무기술: "242040",
+    나스미디어: "089600",
+    나이스정보통신: "036800",
+    남화산업: "111710",
+    네오오토: "212560",
+    네오크레마: "311390",
+    넷게임즈: "225570",
+    노랑풍선: "104620",
+    노바텍: "285490",
+    뉴보텍: "060260",
+    뉴지랩파마: "214870",
+    다날: "064260",
+    대원미디어: "048910",
+    대한과학: "131220",
+    대호특수강: "021040",
+    대화제약: "067080",
+    동아화성: "041930",
+    동양파일: "228340",
+    디앤씨미디어: "263720",
+    디이엔티: "079810",
+    디지탈옵틱: "106520",
+    라닉스: "317120",
+    라온피플: "300120",
+    랩지노믹스: "084650",
+    로스웰: "900260",
+    리메드: "302550",
+    린드먼아시아: "277070",
+    마니커에프앤지: "195500",
+    마이더스AI: "222810",
+    메가엠디: "133750",
+    메이슨캐피탈: "021880",
+    메카로: "241770",
+    모베이스: "101330",
+    모아텍: "033200",
+    바이오다인: "314930",
+    바이오스마트: "038460",
+    보광산업: "225530",
+    본느: "226340",
+    브릿지바이오: "288330",
+    비엠티: "086670",
+    비츠로셀: "082920",
+    삼보모터스: "053700",
+    삼보산업: "009620",
+    삼성스팩4호: "377630",
+    삼영엠텍: "054540",
+    삼천당제약: "000250",
+    상상인: "038540",
+    샘코: "263540",
+    서울바이오시스: "092190",
+    서울옥션: "063170",
+    서울제약: "018680",
+    성도이엔지: "037350",
+    세원: "234100",
+    세원물산: "024830",
+    셀리버리: "268600",
+    소룩스: "290690",
+    소프트캠프: "258790",
+    수성이노베이션: "084180",
+    스카이문스테크놀로지: "033790",
+    스킨앤스킨: "159910",
+    시너지이노베이션: "048870",
+    신성델타테크: "065350",
+    신화인터텍: "056700",
+    싸이버원: "356890",
+    싸이토젠: "217330",
+    씨엔플러스: "115530",
+    아이엠텍: "226350",
+    아이컴포넌트: "059100",
+    아즈텍WB: "032080",
+    안랩: "053800",
+    알서포트: "131370",
+    액트: "131400",
+    에너토크: "019990",
+    에스넷: "038680",
+    에스에이엠티: "031330",
+    에스티큐브: "052020",
+    에스피지: "058610",
+    에이비프로바이오: "195990",
+    에이아이비트: "039230",
+    에이치엔티: "176440",
+    에이치엘비: "028300",
+    에이프로: "262260",
+    에이피티씨: "089970",
+    에코마케팅: "230360",
+    에코바이오: "038870",
+    에코캡: "128540",
+    에프앤가이드: "064850",
+    에프엔에스테크: "083500",
+    엑사이엔씨: "054940",
+    엔바이오니아: "317870",
+    엔에이치스팩13호: "310840",
+    엘엠에스: "073110",
+    엠아이텍: "179290",
+    엠에스오토텍: "123040",
+    엠케이전자: "033160",
+    오르비텍: "046120",
+    오이솔루션: "138080",
+    올리패스: "244460",
+    와이엠씨: "155650",
+    와이엠티: "251370",
+    와이제이엠게임즈: "193250",
+    와이팜: "332570",
+    와토스코리아: "079000",
+    우리넷: "115440",
+    원익IPS: "240810",
+    위세아이텍: "065370",
+    유니슨: "018000",
+    유니크: "011320",
+    유아이디: "069330",
+    유아이엘: "049520",
+    유틸렉스: "263050",
+    이미지스: "115610",
+    이상네트웍스: "080010",
+    이에스에이: "052190",
+    이엠네트웍스: "087730",
+    이엠코리아: "095190",
+    이오플로우: "294090",
+    이큐셀: "160600",
+    이퓨쳐: "134060",
+    이화공영: "001840",
+    이화전기: "024810",
+    인피니트헬스케어: "071200",
+    일신바이오: "068330",
+    잉글우드랩: "950140",
+    자안코스메틱: "219550",
+    장원테크: "174880",
+    정원엔시스: "045510",
+    제노코: "361390",
+    제이씨케미칼: "137950",
+    제이웨이: "058420",
+    젬백스링크: "064800",
+    줌인터넷: "239340",
+    중앙백신: "072020",
+    지놈앤컴퍼니: "314130",
+    지트리비앤티: "115450",
+    카스: "016920",
+    카카오게임즈: "293490",
+    카페24: "042000",
+    케이비17호스팩: "317030",
+    케이에스피: "073010",
+    코너스톤네트웍스: "033110",
+    코다코: "046070",
+    코디: "080530",
+    큐로홀딩스: "051780",
+    큐리언트: "115180",
+    크리스탈신소재: "900250",
+    크린앤사이언스: "045520",
+    클래시스: "214150",
+    토박스코리아: "215480",
+    투비소프트: "079970",
+    티케이케미칼: "104480",
+    팅크웨어: "084730",
+    파마리서치: "214450",
+    팜스토리: "027710",
+    펄어비스: "263750",
+    포인트모바일: "318020",
+    폴라리스오피스: "041020",
+    푸드나무: "290720",
+    푸른저축은행: "007330",
+    프리엠스: "053160",
+    피제이메탈: "128660",
+    하나머스트7호스팩: "372290",
+    하나머티리얼즈: "166090",
+    한국전자인증: "041460",
+    한국큐빅: "021650",
+    한독크린텍: "256150",
+    한탑: "002680",
+    한프: "066110",
+    해성산업: "034810",
+    현대에버다임: "041440",
+    홈캐스트: "064240",
+    휴메딕스: "200670",
+    휴온스글로벌: "084110",
+    흥구석유: "024060",
+    "3S": "060310",
+    "JYP Ent.": "035900",
+    RFHIC: "218410",
+    강원: "114190",
+    경남제약: "053950",
+    고려신용정보: "049720",
+    고바이오랩: "348150",
+    골드퍼시픽: "038530",
+    광진실업: "026910",
+    그린플러스: "186230",
+    기산텔레콤: "035460",
+    나노씨엠에스: "247660",
+    나이스디앤비: "130580",
+    네패스: "033640",
+    네패스아크: "330860",
+    녹원씨엔아이: "065560",
+    누리플렉스: "040160",
+    대동금속: "020400",
+    대동기어: "008830",
+    대림제지: "017650",
+    대신정보통신: "020180",
+    동방선기: "099410",
+    동우팜투테이블: "088910",
+    동운아나텍: "094170",
+    드림시큐리티: "203650",
+    드림씨아이에스: "223250",
+    드림어스컴퍼니: "060570",
+    디아이티: "110990",
+    디에이치피코리아: "131030",
+    디케이락: "105740",
+    디케이앤디: "263020",
+    디케이티: "290550",
+    라온시큐어: "042510",
+    라파스: "214260",
+    리노스: "039980",
+    마이크로컨텍솔: "098120",
+    마크로젠: "038290",
+    멀티캠퍼스: "067280",
+    메지온: "140410",
+    모비릭스: "348030",
+    미디어젠: "279600",
+    미래나노텍: "095500",
+    "미래에셋대우스팩 5호": "353490",
+    미래테크놀로지: "213090",
+    미투젠: "950190",
+    바이오리더스: "142760",
+    바텍: "043150",
+    베스파: "299910",
+    뷰웍스: "100120",
+    블루콤: "033560",
+    비덴트: "121800",
+    비에이치: "090460",
+    비올: "335890",
+    비츠로테크: "042370",
+    비피도: "238200",
+    빅텍: "065450",
+    삼강엠앤티: "100090",
+    상상인이안1호스팩: "307870",
+    상아프론테크: "089980",
+    서린바이오: "038070",
+    "서부T&D": "006730",
+    석경에이티: "357550",
+    선광: "003100",
+    성호전자: "043260",
+    세진티에스: "067770",
+    세화피앤씨: "252500",
+    센트럴바이오: "051980",
+    셀레믹스: "331920",
+    셀리드: "299660",
+    소마젠: "950200",
+    수젠텍: "253840",
+    스맥: "099440",
+    신라섬유: "001000",
+    신화콘텍: "187270",
+    쎄니트: "037760",
+    씨씨에스: "066790",
+    씨앤티85: "056730",
+    씨젠: "096530",
+    아시아경제: "127710",
+    아이디스홀딩스: "054800",
+    아이쓰리시스템: "214430",
+    아주IB투자: "027360",
+    안국약품: "001540",
+    알테오젠: "196170",
+    압타바이오: "293780",
+    에스맥: "097780",
+    에스에이티: "060540",
+    에스엠코어: "007820",
+    에스코넥: "096630",
+    에스티오: "098660",
+    에이테크솔루션: "071670",
+    에코마이스터: "064510",
+    에프엔씨엔터: "173940",
+    엔에프씨: "265740",
+    엘비세미콘: "061970",
+    엘이티: "297890",
+    엠에스씨: "009780",
+    엠젠플러스: "032790",
+    연우: "115960",
+    오디텍: "080520",
+    오킨스전자: "080580",
+    와이엔텍: "067900",
+    와이오엠: "066430",
+    와이지엔터테인먼트: "122870",
+    우리기술투자: "041190",
+    우리이앤엘: "153490",
+    우리조명: "037400",
+    우주일렉트로: "065680",
+    웨이브일렉트로: "095270",
+    웹케시: "053580",
+    위니아딤채: "071460",
+    위더스제약: "330350",
+    위드텍: "348350",
+    위지윅스튜디오: "299900",
+    윈스: "136540",
+    윈텍: "320000",
+    유라테크: "048430",
+    율호: "072770",
+    이그잭스: "060230",
+    이니텍: "053350",
+    이더블유케이: "258610",
+    인지디스플레: "037330",
+    인콘: "083640",
+    인크로스: "216050",
+    일지테크: "019540",
+    제넥신: "095700",
+    제이에스티나: "026040",
+    제이엠아이: "033050",
+    제일전기공업: "199820",
+    지엔원에너지: "270520",
+    진로발효: "018120",
+    체리부로: "066360",
+    캐리소프트: "317530",
+    케이디켐: "221980",
+    케이씨티: "089150",
+    케이피에스: "256940",
+    코리아에스이: "101670",
+    코맥스: "036690",
+    코아스템: "166480",
+    큐렉소: "060280",
+    큐로컴: "040350",
+    태양: "053620",
+    태웅: "044490",
+    테크윙: "089030",
+    티씨케이: "064760",
+    티앤엘: "340570",
+    티움바이오: "321550",
+    파루: "043200",
+    파인테크닉스: "106240",
+    팜스빌: "318010",
+    팬스타엔터프라이즈: "054300",
+    포메탈: "119500",
+    플레이위드: "023770",
+    피씨엘: "241820",
+    피피아이: "062970",
+    하이제6호스팩: "377400",
+    한국파마: "032300",
+    한창산업: "079170",
+    한화에스비아이스팩: "317320",
+    해성티피씨: "059270",
+    핸디소프트: "220180",
+    현대공업: "170030",
+    화신정공: "126640",
+    휴마시스: "205470",
+    휴비츠: "065510",
+    흥국: "010240",
+    "CJ ENM": "035760",
+    CMG제약: "058820",
+    COWON: "056000",
+    GV: "045890",
+    HB테크놀러지: "078150",
+    IBKS제12호스팩: "335870",
+    ISC: "095340",
+    KG이니시스: "035600",
+    KNN: "058400",
+    NE능률: "053290",
+    NHN한국사이버결제: "060250",
+    SBI인베스트먼트: "019550",
+    SG: "255220",
+    고려제약: "014570",
+    구영테크: "053270",
+    금강철강: "053260",
+    기가레인: "049080",
+    나노캠텍: "091970",
+    나라엠앤디: "051490",
+    나우IB: "293580",
+    네오펙트: "290660",
+    녹십자엠에스: "142280",
+    대륙제관: "004780",
+    대모: "317850",
+    대보마그네틱: "290670",
+    대성창투: "027830",
+    대정화금: "120240",
+    대창스틸: "140520",
+    덕우전자: "263600",
+    동성화인텍: "033500",
+    동양이엔피: "079960",
+    동일철강: "023790",
+    디스플레이텍: "066670",
+    디에스케이: "109740",
+    디와이피엔에프: "104460",
+    디자인: "227100",
+    디젠스: "113810",
+    러셀: "217500",
+    레이: "228670",
+    매일유업: "267980",
+    메가스터디: "072870",
+    명성티엔에스: "257370",
+    모다이노칩: "080420",
+    모바일어플라이언스: "087260",
+    미투온: "201490",
+    바이오솔루션: "086820",
+    바이오톡스텍: "086040",
+    베뉴지: "019010",
+    뷰노: "338220",
+    비나텍: "126340",
+    빅솔론: "093190",
+    삼목에스폼: "018310",
+    삼성스팩2호: "291230",
+    상신전자: "263810",
+    서진시스템: "178320",
+    서플러스글로벌: "140070",
+    서한: "011370",
+    서희건설: "035890",
+    선익시스템: "171090",
+    성광벤드: "014620",
+    소프트센: "032680",
+    신진에스엠: "138070",
+    심텍홀딩스: "036710",
+    쎌바이오텍: "049960",
+    씨유메디칼: "115480",
+    씨티케이코스메틱스: "260930",
+    아모그린텍: "125210",
+    아미노로직스: "074430",
+    아바텍: "149950",
+    아이디스: "143160",
+    아이앤씨: "052860",
+    아이에스이커머스: "069920",
+    아이엠: "101390",
+    아진엑스텍: "059120",
+    아톤: "158430",
+    알엔투테크놀로지: "148250",
+    압타머사이언스: "291650",
+    액토즈소프트: "052790",
+    에스디시스템: "121890",
+    에스엠: "041510",
+    에스제이케이: "080440",
+    에스티아이: "039440",
+    에이치엘비제약: "047920",
+    에이치케이: "044780",
+    에이텍: "045660",
+    에코프로: "086520",
+    에코프로비엠: "247540",
+    에프앤리퍼블릭: "064090",
+    엑스큐어: "070300",
+    엔비티: "236810",
+    엔에스엔: "031860",
+    엔에이치스팩17호: "359090",
+    엔에이치스팩18호: "365590",
+    엘앤에프: "066970",
+    엘앤케이바이오: "156100",
+    오로스테크놀로지: "322310",
+    오리엔탈정공: "014940",
+    오리콤: "010470",
+    오스템: "031510",
+    우리기술: "032820",
+    우리바이오: "082850",
+    우정바이오: "215380",
+    원풍물산: "008290",
+    월덱스: "101160",
+    웰크론한텍: "076080",
+    웹스: "196700",
+    윙입푸드: "900340",
+    유니셈: "036200",
+    유니트론텍: "142210",
+    유일에너테크: "340930",
+    유진기업: "023410",
+    유진로봇: "056080",
+    이노와이즈: "086250",
+    이노인스트루먼트: "215790",
+    이라이콤: "041520",
+    이베스트투자증권: "078020",
+    이엠텍: "091120",
+    이원컴포텍: "088290",
+    이즈미디어: "181340",
+    이크레더블: "092130",
+    인트론바이오: "048530",
+    인포마크: "175140",
+    일승: "333430",
+    일야: "058450",
+    일진파워: "094820",
+    제넨바이오: "072520",
+    제노포커스: "187420",
+    제닉: "123330",
+    제룡산업: "147830",
+    젠큐릭스: "229000",
+    중앙에너비스: "000440",
+    지더블유바이텍: "036180",
+    지스마트글로벌: "114570",
+    지엘팜텍: "204840",
+    진매트릭스: "109820",
+    창해에탄올: "004650",
+    컬러레이: "900310",
+    컴투스: "078340",
+    케어랩스: "263700",
+    케어젠: "214370",
+    케이엔제이: "272110",
+    케이엠: "083550",
+    케이엠제약: "225430",
+    케이프: "064820",
+    켐트로닉스: "089010",
+    켐트로스: "220260",
+    코리아에프티: "123410",
+    코센: "009730",
+    코퍼스코리아: "322780",
+    탑엔지니어링: "065130",
+    티사이언티픽: "057680",
+    티피씨글로벌: "130740",
+    파크시스템스: "140860",
+    파트론: "091700",
+    팬젠: "222110",
+    포티스: "141020",
+    플랜티넷: "075130",
+    피앤씨테크: "237750",
+    하나머스트제6호스팩: "307160",
+    하림지주: "003380",
+    하이제5호스팩: "340120",
+    하이텍팜: "106190",
+    한국가구: "004590",
+    한국정밀기계: "101680",
+    한국팩키지: "037230",
+    한빛소프트: "047080",
+    한스바이오메드: "042520",
+    한양이엔지: "045100",
+    한일진공: "123840",
+    현대에이치티: "039010",
+    현대이지웰: "090850",
+    휘닉스소재: "050090",
+    휴림로봇: "090710",
+    AP시스템: "265520",
+    AP위성: "211270",
+    GRT: "900290",
+    "ITX-AI": "099520",
+    "KH E&T": "226360",
+    "KH 일렉트론": "111870",
+    OQP: "078590",
+    PI첨단소재: "178920",
+    "S&K폴리텍": "091340",
+    SCI평가정보: "036120",
+    SFA반도체: "036540",
+    SGA: "049470",
+    SGC이테크건설: "016250",
+    "THE E&M": "089230",
+    "THE MIDONG": "161570",
+    TJ미디어: "032540",
+    UCI: "038340",
+    YTN: "040300",
+    골프존뉴딘홀딩스: "121440",
+    교보10호기업인수목적: "355150",
+    글로벌에스엠: "900070",
+    금화피에스시: "036190",
+    까스텔바작: "308100",
+    네오이뮨텍: "950220",
+    네온테크: "306620",
+    녹십자랩셀: "144510",
+    녹십자웰빙: "234690",
+    누리플랜: "069140",
+    뉴트리: "270870",
+    다나와: "119860",
+    다믈멀티미디어: "093640",
+    다우데이타: "032190",
+    대동스틸: "048470",
+    대신밸런스제8호스팩: "336570",
+    더네이쳐홀딩스: "298540",
+    데이타솔루션: "263800",
+    덱스터: "206560",
+    도이치모터스: "067990",
+    동양에스텍: "060380",
+    동원개발: "013120",
+    동일금속: "109860",
+    동화기업: "025900",
+    드래곤플라이: "030350",
+    디지캡: "197140",
+    라이프시맨틱스: "347700",
+    레드로버: "060300",
+    로보티즈: "108490",
+    로체시스템즈: "071280",
+    리노공업: "058470",
+    마이크로디지탈: "305090",
+    맘스터치: "220630",
+    매커스: "093520",
+    메디아나: "041920",
+    미래생명자원: "218150",
+    바른전자: "064520",
+    배럴: "267790",
+    "백금T&A": "046310",
+    버킷스튜디오: "066410",
+    보성파워텍: "006910",
+    브이원텍: "251630",
+    브이티지엠피: "018290",
+    "블루베리 NFT": "044480",
+    비비씨: "318410",
+    비씨월드제약: "200780",
+    비아트론: "141000",
+    비츠로시스: "054220",
+    빛샘전자: "072950",
+    삼기: "122350",
+    삼영이엔씨: "065570",
+    상상인이안제2호스팩: "329560",
+    상상인인더스트리: "101000",
+    서남: "294630",
+    서울리거: "043710",
+    서전기전: "189860",
+    성우전자: "081580",
+    세동: "053060",
+    셀트리온헬스케어: "091990",
+    솔트룩스: "304100",
+    쇼박스: "086980",
+    슈프리마아이디: "317770",
+    신신제약: "002800",
+    신영스팩6호: "344050",
+    신일제약: "012790",
+    싸이맥스: "160980",
+    쏠리드: "050890",
+    씨아이에스: "222080",
+    씨앤씨인터내셔널: "352480",
+    씨에스베어링: "297090",
+    아난티: "025980",
+    아바코: "083930",
+    아세아텍: "050860",
+    아스트: "067390",
+    아이스크림에듀: "289010",
+    아이텍: "119830",
+    아이티엠반도체: "084850",
+    알로이스: "297570",
+    알리코제약: "260660",
+    야스: "255440",
+    양지사: "030960",
+    얼라인드: "238120",
+    에스씨디: "042110",
+    에스아이리소스: "065420",
+    에스에프에이: "056190",
+    에스와이: "109610",
+    에스텍: "069510",
+    에스폴리텍: "050760",
+    에스피시스템스: "317830",
+    에이디테크놀로지: "200710",
+    에이에프더블류: "312610",
+    에이치시티: "072990",
+    에이치엘비생명과학: "067630",
+    에이치엠씨제5호스팩: "353060",
+    에이트원: "230980",
+    에치에프알: "230240",
+    엔에이치스팩16호: "353190",
+    엔젠바이오: "354200",
+    엔투텍: "227950",
+    엔피케이: "048830",
+    엘티씨: "170920",
+    엠투엔: "033310",
+    영우디에스피: "143540",
+    영풍정밀: "036560",
+    예선테크: "250930",
+    오로라: "039830",
+    오상자이엘: "053980",
+    오스코텍: "039200",
+    오파스넷: "173130",
+    올릭스: "226950",
+    옴니시스템: "057540",
+    우리산업: "215360",
+    우원개발: "046940",
+    원익피앤이: "131390",
+    위즈코프: "038620",
+    윈팩: "097800",
+    유비케어: "032620",
+    유안타제6호스팩: "340360",
+    유앤아이: "056090",
+    유진스팩4호: "321260",
+    이노메트리: "302430",
+    이노테라피: "246960",
+    이루다: "164060",
+    이베스트이안스팩1호: "323210",
+    이씨에스: "067010",
+    이엔드디: "101360",
+    이오테크닉스: "039030",
+    인바이오: "352940",
+    인터로조: "119610",
+    인터플렉스: "051370",
+    인피니티엔티: "016670",
+    인화정공: "101930",
+    자연과환경: "043910",
+    정산애강: "022220",
+    제이브이엠: "054950",
+    제이스텍: "090470",
+    제이엔케이히터: "126880",
+    제일테크노스: "038010",
+    제테마: "216080",
+    젬백스: "082270",
+    지노믹트리: "228760",
+    지어소프트: "051160",
+    지에스이: "053050",
+    진양제약: "007370",
+    차바이오텍: "085660",
+    천랩: "311690",
+    청담러닝: "096240",
+    캔서롭: "180400",
+    케이맥: "043290",
+    케이엘넷: "039420",
+    코나아이: "052400",
+    코렌텍: "104540",
+    코리아나: "027050",
+    코오롱티슈진: "950160",
+    코윈테크: "282880",
+    코콤: "015710",
+    퀀타매트릭스: "317690",
+    큐에스아이: "066310",
+    클라우드에어: "036170",
+    테스: "095610",
+    텔레칩스: "054450",
+    텔레필드: "091440",
+    톱텍: "108230",
+    티플랙스: "081150",
+    파이오링크: "170790",
+    포스코엠텍: "009520",
+    포시에스: "189690",
+    푸른기술: "094940",
+    퓨전: "195440",
+    프럼파스트: "035200",
+    프레스티지바이오로직스: "334970",
+    플리토: "300080",
+    하림: "136480",
+    하이록코리아: "013030",
+    하이비젼시스템: "126700",
+    하츠: "066130",
+    한국9호스팩: "368770",
+    한국알콜: "017890",
+};
+
+let kospi = {
+    "": "",
+    DRB동일: "004840",
+    DSR: "155660",
+    GS글로벌: "001250",
+    HDC현대산업개발: "294870",
+    KEC: "092220",
+    KG동부제철: "016380",
+    KG케미칼: "001390",
+    KTis: "058860",
+    LG이노텍: "011070",
+    LG전자: "066570",
+    LG헬로비전: "037560",
+    OCI: "010060",
+    SK이노베이션: "096770",
+    STX: "011810",
+    WISCOM: "024070",
+    갤럭시아에스엠: "011420",
+    경농: "002100",
+    경동인베스트: "012320",
+    국도화학: "007690",
+    국동: "005320",
+    극동유화: "014530",
+    기아: "000270",
+    까뮤이앤씨: "013700",
+    대덕전자: "353200",
+    대웅: "003090",
+    덴티움: "145720",
+    두산인프라코어: "042670",
+    두산중공업: "034020",
+    디피씨: "026890",
+    락앤락: "115390",
+    롯데정보통신: "286940",
+    마니커: "027740",
+    메리츠증권: "008560",
+    명문제약: "017180",
+    모두투어리츠: "204210",
+    부국증권: "001270",
+    삼성SDI: "006400",
+    삼성엔지니어링: "028050",
+    삼성출판사: "068290",
+    삼성화재해상보험: "000810",
+    삼영화학공업: "003720",
+    삼호개발: "010960",
+    상상인증권: "001290",
+    선도전기: "007610",
+    선진: "136490",
+    세기상사: "002420",
+    세방전지: "004490",
+    세아제강지주: "003030",
+    신한알파리츠: "293940",
+    신한지주: "055550",
+    쌍용자동차: "003620",
+    쎌마테라퓨틱스: "015540",
+    영화금속: "012280",
+    오뚜기: "007310",
+    윌비스: "008600",
+    유나이티드: "033270",
+    이월드: "084680",
+    인지컨트롤스: "023800",
+    인터지스: "129260",
+    일성건설: "013360",
+    일진다이아: "081000",
+    자화전자: "033240",
+    제일약품: "271980",
+    제일파마홀딩스: "002620",
+    조비: "001550",
+    조흥: "002600",
+    종근당홀딩스: "001630",
+    지역난방공사: "071320",
+    코오롱인더: "120110",
+    키다리스튜디오: "020120",
+    태경산업: "015890",
+    태양금속공업: "004100",
+    포스코: "005490",
+    한국공항: "005430",
+    한국종합기술: "023350",
+    한국패러랠: "168490",
+    한솔로지스틱스: "009180",
+    한일철강: "002220",
+    한창제지: "009460",
+    한화생명: "088350",
+    현대건설: "000720",
+    현대건설기계: "267270",
+    현대비앤지스틸: "004560",
+    현대엘리베이터: "017800",
+    현대차증권: "001500",
+    호전실업: "111110",
+    CJ대한통운: "000120",
+    CJ제일제당: "097950",
+    KB금융: "105560",
+    KC코트렐: "119650",
+    KPX케미칼: "025000",
+    KR모터스: "000040",
+    KTcs: "058850",
+    LS전선아시아: "229640",
+    SK렌터카: "068400",
+    강원랜드: "035250",
+    교보증권: "030610",
+    금강공업: "014280",
+    금호건설: "002990",
+    금호전기: "001210",
+    기업은행: "024110",
+    남성: "004270",
+    넥스트사이언스: "003580",
+    넷마블: "251270",
+    대구백화점: "006370",
+    대영포장: "014160",
+    대우건설: "047040",
+    대원제약: "003220",
+    대한방직: "001070",
+    대한제당: "001790",
+    대한해운: "005880",
+    덕양산업: "024900",
+    "동원F&B": "049770",
+    동원금속: "018500",
+    디씨엠: "024090",
+    디티알오토모티브: "007340",
+    롯데제과: "280360",
+    롯데하이마트: "071840",
+    백산: "035150",
+    보락: "002760",
+    사조대림: "003960",
+    사조동아원: "008040",
+    삼양식품: "003230",
+    삼진제약: "005500",
+    서원: "021050",
+    세방: "004360",
+    세아홀딩스: "058650",
+    세우글로벌: "013000",
+    "세이브존I&C": "067830",
+    솔루스첨단소재: "336370",
+    신송홀딩스: "006880",
+    신일전자: "002700",
+    신풍제약: "019170",
+    아이마켓코리아: "122900",
+    아이에이치큐: "003560",
+    엔씨소프트: "036570",
+    영보화학: "014440",
+    영진약품: "003520",
+    영풍: "000670",
+    우리금융캐피탈: "033660",
+    유니온머티리얼: "047400",
+    유유제약: "000220",
+    이마트: "139480",
+    이수화학: "005950",
+    이스타코: "015020",
+    인천도시가스: "034590",
+    일동홀딩스: "000230",
+    지엠비코리아: "013870",
+    케이씨텍: "281820",
+    코리아써키트: "007810",
+    코스모화학: "005420",
+    코아스: "071950",
+    코오롱: "002020",
+    코오롱플라스틱: "138490",
+    쿠쿠홀딩스: "192400",
+    큐로: "015590",
+    티비에이치글로벌: "084870",
+    포스코강판: "058430",
+    포스코케미칼: "003670",
+    한국금융지주: "071050",
+    한국전자홀딩스: "006200",
+    한국주철관공업: "000970",
+    한국타이어앤테크놀로지: "161390",
+    한국토지신탁: "034830",
+    한국프랜지공업: "010100",
+    한온시스템: "018880",
+    한올바이오파마: "009420",
+    해태제과식품: "101530",
+    현대에너지솔루션: "322000",
+    호텔신라: "008770",
+    화승알앤에이: "378850",
+    화승인더스트리: "006060",
+    화천기공: "000850",
+    환인제약: "016580",
+    효성: "004800",
+    효성화학: "298000",
+    흥아해운: "003280",
+    BGF리테일: "282330",
+    BNK금융지주: "138930",
+    GS건설: "006360",
+    HDC아이콘트롤스: "039570",
+    LG상사: "001120",
+    MH에탄올: "023150",
+    SBS: "034120",
+    SBS미디어홀딩스: "101060",
+    SG글로벌: "001380",
+    SH에너지화학: "002360",
+    SK: "034730",
+    SK가스: "018670",
+    SK텔레콤: "017670",
+    "YG PLUS": "037270",
+    국제약품: "002720",
+    금양: "001570",
+    금호타이어: "073240",
+    넥센타이어: "002350",
+    녹십자홀딩스: "005250",
+    농심홀딩스: "072710",
+    다스코: "058730",
+    대웅제약: "069620",
+    대한유화: "006650",
+    더존비즈온: "012510",
+    덕성: "004830",
+    도화엔지니어링: "002150",
+    동방아그로: "007590",
+    동서: "026960",
+    동양: "001520",
+    동양생명: "082640",
+    동원산업: "006040",
+    디아이: "003160",
+    디와이: "013570",
+    롯데정밀화학: "004000",
+    롯데푸드: "002270",
+    만도: "204320",
+    맥쿼리인프라: "088980",
+    메타랩스: "090370",
+    모토닉: "009680",
+    미래에셋맵스리츠: "357250",
+    미원화학: "134380",
+    범양건영: "002410",
+    베트남개발1: "096300",
+    빙그레: "005180",
+    삼성바이오로직스: "207940",
+    삼성에스디에스: "018260",
+    삼성증권: "016360",
+    삼성카드: "029780",
+    삼양통상: "002170",
+    삼영무역: "002810",
+    삼일제약: "000520",
+    삼정펄프: "009770",
+    샘표식품: "248170",
+    서연이화: "200880",
+    성보화학: "003080",
+    세아제강: "306200",
+    센트랄모텍: "308170",
+    송원산업: "004430",
+    수산중공업: "017550",
+    신도리코: "029530",
+    신성이엔지: "011930",
+    신세계인터내셔날: "031430",
+    신세계푸드: "031440",
+    신화실업: "001770",
+    쌍용씨앤이: "003410",
+    씨아이테크: "004920",
+    아모레퍼시픽그룹: "002790",
+    아이에스동서: "010780",
+    애경산업: "018250",
+    에스엘: "005850",
+    엔에이치엔: "181710",
+    유니켐: "011330",
+    유양디앤유: "011690",
+    유화증권: "003460",
+    이구산업: "025820",
+    일성신약: "003120",
+    일정실업: "008500",
+    제이에스코퍼레이션: "194370",
+    제이준코스메틱: "025620",
+    조선선재: "120030",
+    종근당바이오: "063160",
+    지누스: "013890",
+    진도: "088790",
+    진양화학: "051630",
+    케이탑리츠: "145270",
+    코스모신소재: "005070",
+    태평양물산: "007980",
+    테이팩스: "055490",
+    텔코웨어: "078000",
+    티와이홀딩스: "363280",
+    팜스코: "036580",
+    하이스틸: "071090",
+    하이트진로: "000080",
+    한국석유공업: "004090",
+    한국수출포장공업: "002200",
+    한국자산신탁: "123890",
+    한국주강: "025890",
+    한국콜마홀딩스: "024720",
+    한국항공우주: "047810",
+    한라홀딩스: "060980",
+    한미사이언스: "008930",
+    한샘: "009240",
+    한솔홀딩스: "004150",
+    한신공영: "004960",
+    한신기계공업: "011700",
+    한화에어로스페이스: "012450",
+    현대퓨처넷: "126560",
+    "효성 ITX": "094280",
+    휴니드테크놀러지스: "005870",
+    AJ네트웍스: "095570",
+    DL건설: "001880",
+    DSR제강: "069730",
+    ESR켄달스퀘어리츠: "365550",
+    GKL: "114090",
+    JW중외제약: "001060",
+    KPX홀딩스: "092230",
+    KSS해운: "044450",
+    LG하우시스: "108670",
+    LG화학: "051910",
+    LIG넥스원: "079550",
+    LS: "006260",
+    NAVER: "035420",
+    NICE: "034310",
+    NI스틸: "008260",
+    SK증권: "001510",
+    SNT에너지: "100840",
+    경인양행: "012610",
+    경인전자: "009140",
+    국보: "001140",
+    기신정기: "092440",
+    녹십자: "006280",
+    대덕: "008060",
+    대동전자: "008110",
+    대림비앤코: "005750",
+    대양금속: "009190",
+    대원강업: "000430",
+    대창: "012800",
+    동국제강: "001230",
+    동화약품: "000020",
+    두산: "000150",
+    두산밥캣: "241560",
+    디아이동일: "001530",
+    디아이씨: "092200",
+    롯데관광개발: "032350",
+    롯데칠성음료: "005300",
+    롯데케미칼: "011170",
+    맵스리얼티1: "094800",
+    명신산업: "009900",
+    무학: "033920",
+    미래아이앤지: "007120",
+    바다로19호: "155900",
+    부산산업: "011390",
+    부산주공: "005030",
+    사조산업: "007160",
+    사조씨푸드: "014710",
+    삼성전자: "005930",
+    삼성제약: "001360",
+    삼원강재: "023000",
+    삼익THK: "004380",
+    삼화왕관: "004450",
+    서연: "007860",
+    성신양회: "004980",
+    세아특수강: "019440",
+    세원정공: "021820",
+    세진중공업: "075580",
+    세화아이엠씨: "145210",
+    셀트리온: "068270",
+    신성통상: "005390",
+    신세계: "004170",
+    써니전자: "004770",
+    아모레퍼시픽: "090430",
+    아세아: "002030",
+    에넥스: "011090",
+    에스제이엠: "123700",
+    엔케이: "085310",
+    엔피씨: "004250",
+    영원무역: "111770",
+    영원무역홀딩스: "009970",
+    용평리조트: "070960",
+    우리들휴브레인: "118000",
+    우신시스템: "017370",
+    우진: "105840",
+    우진플라임: "049800",
+    유니드: "014830",
+    유안타증권: "003470",
+    유진증권: "001200",
+    이건산업: "008250",
+    이노션: "214320",
+    이연제약: "102460",
+    인스코비: "006490",
+    조광페인트: "004910",
+    조선내화: "000480",
+    진에어: "272450",
+    참엔지니어링: "009310",
+    케이씨씨글라스: "344820",
+    코오롱글로벌: "003070",
+    태경케미컬: "006890",
+    토니모리: "214420",
+    퍼시스: "016800",
+    페이퍼코리아: "001020",
+    폴루스바이오팜: "007630",
+    하나제약: "293480",
+    한국내화: "010040",
+    한국철강: "104700",
+    한국화장품제조: "003350",
+    한미글로벌: "053690",
+    한솔피엔에스: "010420",
+    한양증권: "001750",
+    한진중공업: "097230",
+    한진중공업홀딩스: "003480",
+    한화: "000880",
+    현대일렉트릭: "267260",
+    현대제철: "004020",
+    황금에스티: "032560",
+    AK홀딩스: "006840",
+    CJ: "001040",
+    CJ씨푸드: "011150",
+    DB금융투자: "016610",
+    DGB금융지주: "139130",
+    DL: "000210",
+    KISCO홀딩스: "001940",
+    KTB투자증권: "030210",
+    LG: "003550",
+    LG디스플레이: "034220",
+    NH프라임리츠: "338100",
+    "S-Oil": "010950",
+    SK네트웍스: "001740",
+    SK바이오사이언스: "302440",
+    SK케미칼: "285130",
+    SK하이닉스: "000660",
+    SNT모티브: "064960",
+    계룡건설산업: "013580",
+    고려아연: "010130",
+    남양유업: "003920",
+    남해화학: "025860",
+    노루페인트: "090350",
+    대상: "001680",
+    대성에너지: "117580",
+    대성홀딩스: "016710",
+    대한제강: "084010",
+    두산퓨얼셀: "336260",
+    만호제강: "001080",
+    모나미: "005360",
+    문배철강: "008420",
+    미창석유공업: "003650",
+    백광산업: "001340",
+    벽산: "007210",
+    부국철강: "026940",
+    부산도시가스: "015350",
+    비비안: "002070",
+    비상교육: "100220",
+    삼부토건: "001470",
+    삼성공조: "006660",
+    삼성생명: "032830",
+    삼성전기: "009150",
+    삼양패키징: "272550",
+    삼일씨엔에스: "004440",
+    삼화전기: "009470",
+    삼화페인트공업: "000390",
+    샘표: "007540",
+    서흥: "008490",
+    성안: "011300",
+    세아베스틸: "001430",
+    세하: "027970",
+    센트럴인사이트: "012600",
+    신라교역: "004970",
+    신세계건설: "034300",
+    신영와코루: "005800",
+    신영증권: "001720",
+    신원: "009270",
+    신풍제지: "002870",
+    아시아나IDT: "267850",
+    에쓰씨엔지니어링: "023960",
+    에어부산: "298690",
+    에이블씨엔씨: "078520",
+    "에이프로젠 KIC": "007460",
+    엘브이엠씨: "900140",
+    오리온: "271560",
+    우리금융지주: "316140",
+    우성사료: "006980",
+    웰바이오텍: "010600",
+    유니온: "000910",
+    일진전기: "103590",
+    제일연마: "001560",
+    조광피혁: "004700",
+    조일알미늄: "018470",
+    카카오: "035720",
+    케이씨티시: "009070",
+    케이티: "030200",
+    코리안리: "003690",
+    코오롱머티리얼: "144620",
+    쿠쿠홈시스: "284740",
+    크라운제과: "264900",
+    크라운해태홀딩스: "005740",
+    키움증권: "039490",
+    태광산업: "003240",
+    태림포장: "011280",
+    태원물산: "001420",
+    티에이치엔: "019180",
+    팬오션: "028670",
+    퍼스텍: "010820",
+    평화산업: "090080",
+    하나투어: "039130",
+    하이골드12호: "172580",
+    한독: "002390",
+    한세엠케이: "069640",
+    한솔제지: "213500",
+    한솔케미칼: "014680",
+    한솔테크닉스: "004710",
+    한전기술: "052690",
+    한진: "002320",
+    해성디에스: "195870",
+    현대리바트: "079430",
+    현대백화점: "069960",
+    형지엘리트: "093240",
+    혜인: "003010",
+    화성산업: "002460",
+    화승코퍼레이션: "013520",
+    효성첨단소재: "298050",
+    휴비스: "079980",
+    BGF: "027410",
+    CS홀딩스: "000590",
+    DB: "012030",
+    E1: "017940",
+    "F&F 홀딩스": "007700",
+    GS리테일: "007070",
+    HDC: "012630",
+    KC그린홀딩스: "009440",
+    LG유플러스: "032640",
+    SGC에너지: "005090",
+    SNT중공업: "003570",
+    SNT홀딩스: "036530",
+    SPC삼립: "005610",
+    STX엔진: "077970",
+    경동도시가스: "267290",
+    경방: "000050",
+    고려제강: "002240",
+    광동제약: "009290",
+    광주신세계: "037710",
+    교촌에프앤비: "339770",
+    금비: "008870",
+    금호석유화학: "011780",
+    대림통상: "006570",
+    대신증권: "003540",
+    대원전선: "006340",
+    대원화성: "024890",
+    대유에이텍: "002880",
+    더블유게임즈: "192080",
+    동부건설: "005960",
+    동성제약: "002210",
+    동성케미컬: "102260",
+    동아에스티: "170900",
+    동양고속: "084670",
+    동양철관: "008970",
+    동원수산: "030720",
+    동일제강: "002690",
+    롯데쇼핑: "023530",
+    메리츠화재: "000060",
+    미래에셋생명: "085620",
+    미원에스씨: "268280",
+    부광약품: "003000",
+    삼성중공업: "010140",
+    삼양홀딩스: "000070",
+    삼익악기: "002450",
+    삼천리: "004690",
+    서울식품공업: "004410",
+    성창기업지주: "000180",
+    세원이앤씨: "091090",
+    세종공업: "033530",
+    솔루엠: "248070",
+    시디즈: "134790",
+    아세아시멘트: "183190",
+    알루코: "001780",
+    에스제이엠홀딩스: "025530",
+    엔에스쇼핑: "138250",
+    유성기업: "002920",
+    유한양행: "000100",
+    이리츠코크렙: "088260",
+    이수페타시스: "007660",
+    이아이디: "093230",
+    인디에프: "014990",
+    일진홀딩스: "015860",
+    자이에스앤디: "317400",
+    전방: "000950",
+    제이알글로벌리츠: "348950",
+    제이콘텐트리: "036420",
+    제일기획: "030000",
+    지투알: "035000",
+    진양폴리우레탄: "010640",
+    컨버즈: "109070",
+    케이씨씨: "002380",
+    코람코에너지리츠: "357120",
+    코스맥스: "192820",
+    코스맥스비티아이: "044820",
+    코웨이: "021240",
+    콤텍시스템: "031820",
+    태경비케이: "014580",
+    티웨이항공: "091810",
+    팜젠사이언스: "004720",
+    포스코인터내셔널: "047050",
+    하이골드3호: "153360",
+    한국ANKOR유전: "152550",
+    한국화장품: "123690",
+    한라: "014790",
+    한미반도체: "042700",
+    한섬: "020000",
+    한세실업: "105630",
+    한솔홈데코: "025750",
+    한전산업: "130660",
+    한화손해보험: "000370",
+    한화솔루션: "009830",
+    핸즈코퍼레이션: "143210",
+    현대모비스: "012330",
+    현대자동차: "005380",
+    화승엔터프라이즈: "241590",
+    화인베스틸: "133820",
+    화천기계: "010660",
+    후성: "093370",
+    휠라홀딩스: "081660",
+    휴스틸: "005010",
+    "CJ CGV": "079160",
+    DB하이텍: "000990",
+    DL이앤씨: "375500",
+    HDC현대EP: "089470",
+    HSD엔진: "082740",
+    LF: "093050",
+    LG생활건강: "051900",
+    SG세계물산: "004060",
+    SIMPAC: "009160",
+    SKC: "011790",
+    SK디앤디: "210980",
+    SK아이이테크놀로지: "361610",
+    STX중공업: "071970",
+    "SUN&L": "002820",
+    TCC스틸: "002710",
+    TYM: "002900",
+    가온전선: "000500",
+    경보제약: "214390",
+    고려산업: "002140",
+    광전자: "017900",
+    남광토건: "001260",
+    넥센: "005720",
+    농심: "004370",
+    다우기술: "023590",
+    대교: "019680",
+    대성산업: "128820",
+    대유플러스: "000300",
+    대한전선: "001440",
+    대한제분: "001130",
+    대한항공: "003490",
+    대한화섬: "003830",
+    대호에이엘: "069460",
+    동남합성: "023450",
+    동방: "004140",
+    동아타이어: "282690",
+    동양피스톤: "092780",
+    동원시스템즈: "014820",
+    디와이파워: "210540",
+    롯데리츠: "330590",
+    롯데손해보험: "000400",
+    메리츠금융지주: "138040",
+    "무림P&P": "009580",
+    미원상사: "002840",
+    방림: "003610",
+    보령제약: "003850",
+    사조오양: "006090",
+    삼아알미늄: "006110",
+    삼영전자공업: "005680",
+    삼화전자공업: "011230",
+    새론오토모티브: "075180",
+    성문전자: "014910",
+    신대양제지: "016590",
+    "신세계I&C": "035510",
+    쌍방울: "102280",
+    아남전자: "008700",
+    아세아제지: "002310",
+    애경유화: "161000",
+    에스원: "012750",
+    에이엔피: "015260",
+    엔케이물산: "009810",
+    영흥: "012160",
+    오리엔트바이오: "002630",
+    오리온홀딩스: "001800",
+    웅진: "016880",
+    원림: "005820",
+    유니퀘스트: "077500",
+    이엔플러스: "074610",
+    이지스밸류플러스리츠: "334890",
+    인바이오젠: "101140",
+    일동제약: "249420",
+    일신석재: "007110",
+    일양약품: "007570",
+    일진머티리얼즈: "020150",
+    주연테크: "044380",
+    지코: "010580",
+    케이비아이동국실업: "001620",
+    케이씨: "029460",
+    케이티스카이라이프: "053210",
+    티웨이홀딩스: "004870",
+    파미셀: "005690",
+    평화홀딩스: "010770",
+    풀무원: "017810",
+    풍산홀딩스: "005810",
+    프레스티지바이오파마: "950210",
+    하이브: "352820",
+    하이트진로홀딩스: "000140",
+    한국단자공업: "025540",
+    한국앤컴퍼니: "000240",
+    한국조선해양: "009540",
+    한국카본: "017960",
+    한농화성: "011500",
+    한미약품: "128940",
+    한익스프레스: "014130",
+    한일현대시멘트: "006390",
+    한화시스템: "272210",
+    한화투자증권: "003530",
+    현대글로비스: "086280",
+    현대약품: "004310",
+    현대오토에버: "307950",
+    현대중공업지주: "267250",
+    현대해상: "001450",
+    현대홈쇼핑: "057050",
+    효성중공업: "298040",
+    효성티앤씨: "298020",
+    BYC: "001460",
+    DB손해보험: "005830",
+    "F&F": "383220",
+    GS: "078930",
+    HMM: "011200",
+    JB금융지주: "175330",
+    JW생명과학: "234080",
+    JW홀딩스: "096760",
+    "KH 필룩스": "033180",
+    LS네트웍스: "000680",
+    NH투자증권: "005940",
+    SK디스커버리: "006120",
+    강남제비스코: "000860",
+    경동나비엔: "009450",
+    계양전기: "012200",
+    광명전기: "017040",
+    그린케미칼: "083420",
+    금호에이치티: "214330",
+    깨끗한나라: "004540",
+    남선알미늄: "008350",
+    노루홀딩스: "000320",
+    대동: "000490",
+    대상홀딩스: "084690",
+    대우부품: "009320",
+    대우조선해양: "042660",
+    대창단조: "015230",
+    대현: "016090",
+    동아쏘시오홀딩스: "000640",
+    동아지질: "028100",
+    동일고무벨트: "163560",
+    동일산업: "004890",
+    두올: "016740",
+    드림텍: "192650",
+    롯데지주: "004990",
+    모나리자: "012690",
+    무림페이퍼: "009200",
+    미래산업: "025560",
+    미래에셋증권: "006800",
+    미원홀딩스: "107590",
+    보해양조: "000890",
+    비케이탑스: "030790",
+    삼성물산: "028260",
+    삼양사: "145990",
+    삼화콘덴서공업: "001820",
+    상신브레이크: "041650",
+    서울도시가스: "017390",
+    신흥: "004080",
+    씨에스윈드: "112610",
+    아센디오: "012170",
+    아시아나항공: "020560",
+    에스케이바이오팜: "326030",
+    에이리츠: "140910",
+    에이프로젠제약: "003060",
+    에이플러스에셋: "244920",
+    엔에이치스팩19호: "380440",
+    엘에스일렉트릭: "010120",
+    영풍제지: "006740",
+    예스코홀딩스: "015360",
+    우리종금: "010050",
+    우진아이엔에스: "010400",
+    웅진씽크빅: "095720",
+    유수홀딩스: "000700",
+    유엔젤: "072130",
+    율촌화학: "008730",
+    이지스레지던스리츠: "350520",
+    이화산업: "000760",
+    인팩: "023810",
+    일신방직: "003200",
+    일진디스플: "020760",
+    잇츠한불: "226320",
+    제주은행: "006220",
+    제주항공: "089590",
+    종근당: "185750",
+    진양산업: "003780",
+    진양홀딩스: "100250",
+    진원생명과학: "011000",
+    진흥기업: "002780",
+    천일고속: "000650",
+    체시스: "033250",
+    카프로: "006380",
+    케이티앤지: "033780",
+    태영건설: "009410",
+    풍산: "103140",
+    하나금융지주: "086790",
+    하이트론씨스템즈: "019490",
+    한국가스공사: "036460",
+    한국쉘석유: "002960",
+    한국전력공사: "015760",
+    한국콜마: "161890",
+    한국특강: "007280",
+    한성기업: "003680",
+    한세예스24홀딩스: "016450",
+    한일시멘트: "300720",
+    한일홀딩스: "003300",
+    한전KPS: "051600",
+    한진칼: "180640",
+    한창: "005110",
+    현대그린푸드: "005440",
+    현대로템: "064350",
+    현대미포조선: "010620",
+    현대위아: "011210",
+    현대코퍼레이션: "011760",
+    현대코퍼레이션홀딩스: "227840",
+    화신: "010690",
+    휴켐스: "069260",
+    흥국화재: "000540",
+};
+
+function getCode(stockname) {
+    if (stockname in kosdaq) return kosdaq[stockname];
+    else if (stockname in kospi) return kospi[stockname];
+    else return "";
+}
+
+console.log(getCode("삼성전자"));
+
+module.exports = { getCode };
+
 },{}],103:[function(require,module,exports){
 /* crawl_copinfo v1.0.0 */
-
 const axios = require("axios");
 const cheerio = require("cheerio");
 
@@ -29508,7 +31830,7 @@ getOtherFinance("035420").then((ret) => {
 });
 */
 
-},{"axios":12,"cheerio":40}],104:[function(require,module,exports){
+},{"axios":11,"cheerio":39}],104:[function(require,module,exports){
 const axios = require("axios");
 const cheerio = require("cheerio");
 
@@ -29583,7 +31905,7 @@ getWorldIndex().then((ret) => {
     console.log(ret);
 });
 
-},{"axios":12,"cheerio":40}],105:[function(require,module,exports){
+},{"axios":11,"cheerio":39}],105:[function(require,module,exports){
 const axios = require("axios");
 
 async function getHtml(url, code) {
@@ -29625,67 +31947,4 @@ getNews("035420").then((ret) => {
     console.log(ret);
 });
 
-},{"axios":12}],106:[function(require,module,exports){
-const fs = require("fs");
-
-function getCode2NameDict() {
-    const file_csv = fs.readFileSync("./data/stock_code_data.csv");
-    const stock_code = file_csv.toString();
-    const rows = stock_code.split("\n");
-
-    const code2name = [];
-    for (let i = 1; i < rows.length; i++) {
-        row = rows[i].split(",");
-        const code = "0".repeat(6 - row[0].length) + row[0];
-
-        if (code && row[1]) code2name[code] = row[1];
-        if (code === "005930") code2name[code] = "삼성전자";
-    }
-    // console.log(code2name);
-    return code2name;
-}
-
-function getName2CodeDict() {
-    let file_csv = fs.readFileSync("./data/stock_code_data.csv");
-    let stock_code = file_csv.toString();
-    let rows = stock_code.split("\n");
-
-    let name2code = [];
-    for (let i = 1; i < rows.length; i++) {
-        row = rows[i].split(",");
-        const code = "0".repeat(6 - row[0].length) + row[0];
-
-        if (code && row[1]) name2code[row[1].split("\r")[0]] = code;
-        if (code === "005930") name2code["삼성전자"] = "005930";
-    }
-
-    return name2code;
-}
-
-function getCodeWithName(stockName) {
-    const Name2CodeDict = getName2CodeDict();
-    if (stockName in Name2CodeDict) return Name2CodeDict[stockName];
-    else return -1;
-}
-
-function getNameWithCode(stockCode, path) {
-    const Code2NameDict = getCode2NameDict(path); // 먼저 Dictionary를 불러온다.
-    if (stockCode in Code2NameDict) return Code2NameDict[stockCode];
-    else return -1;
-}
-
-module.exports = { getCodeWithName, getNameWithCode };
-
-// 주식 이름 입력시 주식 코드값 얻는 방법
-
-/*
-console.log(getCodeWithName("토니모리"));
-
-console.log(getCodeWithName("한진칼우"));
-
-// 주식 코드값 입력시 주식 이름 얻는 방법
-console.log(getNameWithCode("035420"));
-console.log(getNameWithCode("18064K"));
-*/
-
-},{"fs":1}]},{},[11]);
+},{"axios":11}]},{},[10]);

@@ -1,7 +1,8 @@
 const index = require("./scripts/crawl_index.js");
 const coinfo = require("./scripts/crawl_coinfo.js");
-const code = require("./scripts/stock_code.js");
+const code = require("./scripts/crawl_code.js");
 const news = require("./scripts/crawl_news.js");
+//console.log(code.getCodeWithName("삼성전자"));
 
 /* 1. 버튼 클릭 -> index 값 반환 */
 /* 현재 클릭된 버튼 타입(KOREA/WORLD) */
@@ -77,7 +78,12 @@ search.addEventListener("click", () => {
 
     if (String(text).length === 0) return;
 
-    let co_code = String(text);
+    let co_code = "";
+
+    co_code = code.getCode(text);
+    if (co_code.length < 6) {
+        co_code = text;
+    }
 
     coinfo.getPrice(co_code).then((ret) => {
         if (ret.name === "") {
