@@ -3178,7 +3178,7 @@ search.addEventListener("click", () => {
     let flag = true;
 
     co_code = code.getCode(text);
-    if (co_code.length < 6) {
+    if (co_code === "000000") {
         co_code = text;
     }
 
@@ -3272,7 +3272,7 @@ search.addEventListener("click", () => {
         }
     });
     /* 오른쪽 테이블 변경 */
-        
+
     coinfo.getTradeCompare(co_code).then((ret) => {
         let cop1 = document.getElementById("co1");
         cop1.innerHTML = ret[0].name;
@@ -3311,7 +3311,6 @@ search.addEventListener("click", () => {
         cop4_ROE.innerHTML = ret[3].ROE;
         cop4_PBR.innerHTML = ret[3].PBR;
     });
-    
 
     coinfo.getFinance(co_code).then((ret) => {
         if (ret.ROE.length != 0) {
@@ -3346,7 +3345,6 @@ search.addEventListener("click", () => {
             let PBR_211 = document.getElementById("PBR_21.1");
             PBR_211.innerHTML = ret.PBR[9];
         }
-        
     });
 
     news.getNews(co_code).then((ret) => {
@@ -3361,11 +3359,6 @@ search.addEventListener("click", () => {
             );
         }
     });
-        
-        
-    
-
-   
 
     input.value = "";
 });
@@ -7045,39 +7038,31 @@ exports.isHtml = function(str) {
 
 },{"./parse":46,"dom-serializer":58}],49:[function(require,module,exports){
 module.exports={
-  "_from": "cheerio@^0.22.0",
-  "_id": "cheerio@0.22.0",
-  "_inBundle": false,
-  "_integrity": "sha1-qbqoYKP5tZWmuBsahocxIe06Jp4=",
-  "_location": "/cheerio",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "cheerio@^0.22.0",
-    "name": "cheerio",
-    "escapedName": "cheerio",
-    "rawSpec": "^0.22.0",
-    "saveSpec": null,
-    "fetchSpec": "^0.22.0"
-  },
-  "_requiredBy": [
-    "#USER",
-    "/"
+  "name": "cheerio",
+  "version": "0.22.0",
+  "description": "Tiny, fast, and elegant implementation of core jQuery designed specifically for the server",
+  "author": "Matt Mueller <mattmuelle@gmail.com> (mat.io)",
+  "license": "MIT",
+  "keywords": [
+    "htmlparser",
+    "jquery",
+    "selector",
+    "scraper",
+    "parser",
+    "html"
   ],
-  "_resolved": "https://registry.npmjs.org/cheerio/-/cheerio-0.22.0.tgz",
-  "_shasum": "a9baa860a3f9b595a6b81b1a86873121ed3a269e",
-  "_spec": "cheerio@^0.22.0",
-  "_where": "C:\\Users\\최장섭\\Desktop\\test\\2021_OSP_Stock_Insight",
-  "author": {
-    "name": "Matt Mueller",
-    "email": "mattmuelle@gmail.com",
-    "url": "mat.io"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cheeriojs/cheerio.git"
   },
-  "bugs": {
-    "url": "https://github.com/cheeriojs/cheerio/issues"
+  "main": "./index.js",
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "engines": {
+    "node": ">= 0.6"
   },
-  "bundleDependencies": false,
   "dependencies": {
     "css-select": "~1.2.0",
     "dom-serializer": "~0.1.0",
@@ -7096,46 +7081,20 @@ module.exports={
     "lodash.reject": "^4.4.0",
     "lodash.some": "^4.4.0"
   },
-  "deprecated": false,
-  "description": "Tiny, fast, and elegant implementation of core jQuery designed specifically for the server",
   "devDependencies": {
     "benchmark": "^2.1.0",
     "coveralls": "^2.11.9",
     "expect.js": "~0.3.1",
     "istanbul": "^0.4.3",
-    "jquery": "^3.0.0",
     "jsdom": "^9.2.1",
+    "jquery": "^3.0.0",
     "jshint": "^2.9.2",
     "mocha": "^2.5.3",
     "xyz": "~0.5.0"
   },
-  "engines": {
-    "node": ">= 0.6"
-  },
-  "files": [
-    "index.js",
-    "lib"
-  ],
-  "homepage": "https://github.com/cheeriojs/cheerio#readme",
-  "keywords": [
-    "htmlparser",
-    "jquery",
-    "selector",
-    "scraper",
-    "parser",
-    "html"
-  ],
-  "license": "MIT",
-  "main": "./index.js",
-  "name": "cheerio",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cheeriojs/cheerio.git"
-  },
   "scripts": {
     "test": "make test"
-  },
-  "version": "0.22.0"
+  }
 }
 
 },{}],50:[function(require,module,exports){

@@ -1,29 +1,64 @@
 {
-  "name": "osp_stock_insight",
-  "version": "2.0.1",
-  "description": "With the stock market gaining attention these days, A lot of people started investing in stocks. Naturally, many people try to get information about investing , but it is very difficult. As a result, many people make speculative investments only by looking at stock price charts , not value oriented investments.\r To solve these problems our service intuitively provides the basic information necessary for stock investment. This allows beginners of stock investment to make rational investments using the entity's information.",
-  "main": "main.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Lijuet/2021_OSP_Stock_Insight.git"
-  },
-  "author": "osp_group1",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Lijuet/2021_OSP_Stock_Insight/issues"
-  },
-  "homepage": "https://github.com/Lijuet/2021_OSP_Stock_Insight#readme",
-  "dependencies": {
-    "axios": "^0.21.1",
-    "cheerio": "^0.22.0",
-    "esm": "^3.2.25",
-    "iconv-lite": "^0.6.3"
-  },
-  "devDependencies": {
-    "electron": "^12.0.9"
-  }
+    "name": "osp_stock_insight",
+    "version": "2.0.2",
+    "description": "With the stock market gaining attention these days, A lot of people started investing in stocks. Naturally, many people try to get information about investing , but it is very difficult. As a result, many people make speculative investments only by looking at stock price charts , not value oriented investments.\r To solve these problems our service intuitively provides the basic information necessary for stock investment. This allows beginners of stock investment to make rational investments using the entity's information.",
+    "main": "main.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "electron-forge start",
+        "package": "electron-forge package",
+        "make": "electron-forge make"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Lijuet/2021_OSP_Stock_Insight.git"
+    },
+    "author": "osp_group1",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Lijuet/2021_OSP_Stock_Insight/issues"
+    },
+    "homepage": "https://github.com/Lijuet/2021_OSP_Stock_Insight#readme",
+    "dependencies": {
+        "axios": "^0.21.1",
+        "cheerio": "^0.22.0",
+        "electron-squirrel-startup": "^1.0.0",
+        "esm": "^3.2.25",
+        "iconv-lite": "^0.6.3"
+    },
+    "devDependencies": {
+        "@electron-forge/cli": "^6.0.0-beta.57",
+        "@electron-forge/maker-deb": "^6.0.0-beta.57",
+        "@electron-forge/maker-rpm": "^6.0.0-beta.57",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
+        "@electron-forge/maker-zip": "^6.0.0-beta.57",
+        "electron": "^12.0.9"
+    },
+    "config": {
+        "forge": {
+            "packagerConfig": {},
+            "makers": [
+                {
+                    "name": "@electron-forge/maker-squirrel",
+                    "config": {
+                        "name": "osp_stock_insight"
+                    }
+                },
+                {
+                    "name": "@electron-forge/maker-zip",
+                    "platforms": [
+                        "darwin"
+                    ]
+                },
+                {
+                    "name": "@electron-forge/maker-deb",
+                    "config": {}
+                },
+                {
+                    "name": "@electron-forge/maker-rpm",
+                    "config": {}
+                }
+            ]
+        }
+    }
 }
