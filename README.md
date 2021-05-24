@@ -24,7 +24,7 @@ StockInsight
 1. Show Head News
     - Show news with title, summary and link.
 2. Update search company
-    - Can choose to search company name or code.
+    - Can search either company name or code.
 3. Show financial indicators of the same industry
     - Show financial indicators 
     - ROE, PER, PBR
@@ -46,13 +46,10 @@ StockInsight
     - if you click the refresh button, you can see the recent information.
 
 2. Watch the stock information
-    1. Choose the search method
-        - if you want to search company name, click the radio button 'company name'.
-        - if you want to search company code, click the radio button 'company code'. 
         
-    2. Type the company name or code exactly and click search button
+    1. Type the company name or code exactly and click search button
 
-    3. You can see the stock information of searched company
+    2. You can see the stock information of searched company
         - stock price and date of today
         - stock price of the past and the figure compared to today
         - financial indicators organized quarterly
