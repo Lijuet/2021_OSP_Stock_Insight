@@ -3096,7 +3096,7 @@ function simpleEnd(buf) {
 const index = require("./scripts/crawl_index.js");
 const coinfo = require("./scripts/crawl_coinfo.js");
 const code = require("./scripts/crawl_code.js");
-const news = require("./scripts/crawl_news.js");
+const news = require("./scripts/crawl_head.js");
 //console.log(code.getCodeWithName("삼성전자"));
 
 /* 1. 버튼 클릭 -> index 값 반환 */
@@ -3174,6 +3174,7 @@ search.addEventListener("click", () => {
     if (String(text).length === 0) return;
 
     let co_code = "";
+    let flag = true;
 
     co_code = code.getCode(text);
     if (co_code.length < 6) {
@@ -3187,6 +3188,7 @@ search.addEventListener("click", () => {
 
             let today_date = document.getElementById("today_date");
             today_date.innerHTML = ret.date;
+            falg = fault;
         } else {
             let today_price = document.getElementById("today_price");
             let today_date = document.getElementById("today_date");
@@ -3344,15 +3346,24 @@ search.addEventListener("click", () => {
             PBR_211.innerHTML = ret.PBR[9];
         }
     });
-    let head1 = document.getElementById("head_news1");
-    head1.innerHTML = "ret[0].head;";
 
-    news.getNews(co_code).then((ret) => {});
+    news.getNews(co_code).then((ret) => {
+        let root = ret[0].link;
+        for (let i = 1; i < 11; ++i) {
+            let idx = String(i);
+            let head = document.getElementById("news" + idx + "_list");
+            head.innerHTML = ret[i].head;
+            head.setAttribute(
+                "onclick",
+                'window.open("' + root + ret[i].link + '")'
+            );
+        }
+    });
 
     input.value = "";
 });
 
-},{"./scripts/crawl_code.js":102,"./scripts/crawl_coinfo.js":103,"./scripts/crawl_index.js":104,"./scripts/crawl_news.js":105}],11:[function(require,module,exports){
+},{"./scripts/crawl_code.js":102,"./scripts/crawl_coinfo.js":103,"./scripts/crawl_head.js":104,"./scripts/crawl_index.js":105}],11:[function(require,module,exports){
 module.exports = require('./lib/axios');
 },{"./lib/axios":13}],12:[function(require,module,exports){
 'use strict';
@@ -31834,6 +31845,116 @@ getOtherFinance("035420").then((ret) => {
 const axios = require("axios");
 const cheerio = require("cheerio");
 
+async function getHTML(url) {
+    try {
+        return await axios.get(url, {
+            headers: {
+                "User-Agent":
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+            },
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function parsingTitle(str) {
+    let flag = true;
+    let pos = 0;
+    let ret = "";
+
+    let element = "";
+    while (flag) {
+        if (str[pos] == "\t" || str[pos] == "\n") {
+            if (element.length != 0) {
+                ret = element;
+                flag = false;
+            }
+            pos++;
+            continue;
+        }
+        element += str[pos];
+        pos++;
+    }
+
+    return ret;
+}
+
+async function getNews(code) {
+    let url = "https://finance.naver.com/item/main.nhn?code=" + code;
+
+    let result = [];
+
+    for (let i = 0; i < 11; ++i) {
+        let news = {
+            head: "",
+            link: "",
+        };
+
+        result.push(news);
+    }
+
+    await getHTML(url).then((html) => {
+        const $ = cheerio.load(html.data);
+
+        result[0].link = "https://finance.naver.com";
+
+        for (let i = 1; i < 6; ++i) {
+            let idx = String(i);
+            let tmp = $(".sub_section.news_section")
+                .children("ul:nth-child(2)")
+                .children("li:nth-child(" + idx + ")")
+                .children("span.txt")
+                .text();
+            result[i].head = parsingTitle(tmp);
+        }
+
+        for (let i = 1; i < 6; ++i) {
+            let idx = String(i);
+            result[i].link = $(".sub_section.news_section")
+                .children("ul:nth-child(2)")
+                .children("li:nth-child(" + idx + ")")
+                .children("span.txt")
+                .children("a")
+                .attr("href");
+        }
+
+        for (let j = 6; j < 11; ++j) {
+            let idx = String(j - 5);
+            let tmp = $(".sub_section.news_section")
+                .children("ul.line_dot")
+                .children("li:nth-child(" + idx + ")")
+                .children("span.txt")
+                .text();
+            result[j].head = parsingTitle(tmp);
+        }
+
+        for (let j = 6; j < 11; ++j) {
+            let idx = String(j - 5);
+            result[j].link = $(".sub_section.news_section")
+                .children("ul.line_dot")
+                .children("li:nth-child(" + idx + ")")
+                .children("span.txt")
+                .children("a")
+                .attr("href");
+        }
+    });
+
+    return new Promise((resolve) => {
+        resolve(result);
+    });
+}
+
+module.exports = { getNews };
+
+getNews("000000").then((ret) => {
+    console.log(ret);
+});
+
+},{"axios":11,"cheerio":39}],105:[function(require,module,exports){
+const axios = require("axios");
+const cheerio = require("cheerio");
+
 async function getHtml(url) {
     try {
         return await axios.get(url);
@@ -31905,46 +32026,4 @@ getWorldIndex().then((ret) => {
     console.log(ret);
 });
 
-},{"axios":11,"cheerio":39}],105:[function(require,module,exports){
-const axios = require("axios");
-
-async function getHtml(url, code) {
-    try {
-        return await axios.get(url, {
-            headers: {
-                Referer: "https://finance.daum.net/quotes/A" + code,
-                "User-Agent":
-                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
-            },
-        });
-    } catch (error) {
-        console.log("FAIL TO LOAD HTML");
-    }
-}
-async function getNews(code) {
-    const searchURL =
-        "https://finance.daum.net/content/news?perPage=5&category=economy&searchType=all&keyword=A" +
-        code;
-    let newsList = [];
-
-    let html = await getHtml(searchURL, code);
-    let news = html.data["data"];
-
-    news.filter((_news) => _news["title"] && _news["imageUrl"]).map((_news) => {
-        newsList.push({
-            head: _news["title"],
-            link: _news["imageUrl"],
-            summary: _news["summary"],
-        });
-    });
-
-    return newsList;
-}
-
-module.exports = { getNews };
-
-getNews("035420").then((ret) => {
-    console.log(ret);
-});
-
-},{"axios":11}]},{},[10]);
+},{"axios":11,"cheerio":39}]},{},[10]);

@@ -1,7 +1,7 @@
 const index = require("./scripts/crawl_index.js");
 const coinfo = require("./scripts/crawl_coinfo.js");
 const code = require("./scripts/crawl_code.js");
-const news = require("./scripts/crawl_news.js");
+const news = require("./scripts/crawl_head.js");
 //console.log(code.getCodeWithName("삼성전자"));
 
 /* 1. 버튼 클릭 -> index 값 반환 */
@@ -79,6 +79,7 @@ search.addEventListener("click", () => {
     if (String(text).length === 0) return;
 
     let co_code = "";
+    let flag = true;
 
     co_code = code.getCode(text);
     if (co_code.length < 6) {
@@ -92,6 +93,7 @@ search.addEventListener("click", () => {
 
             let today_date = document.getElementById("today_date");
             today_date.innerHTML = ret.date;
+            falg = fault;
         } else {
             let today_price = document.getElementById("today_price");
             let today_date = document.getElementById("today_date");
@@ -249,10 +251,19 @@ search.addEventListener("click", () => {
             PBR_211.innerHTML = ret.PBR[9];
         }
     });
-    let head1 = document.getElementById("head_news1");
-    head1.innerHTML = "ret[0].head;";
 
-    news.getNews(co_code).then((ret) => {});
+    news.getNews(co_code).then((ret) => {
+        let root = ret[0].link;
+        for (let i = 1; i < 11; ++i) {
+            let idx = String(i);
+            let head = document.getElementById("news" + idx + "_list");
+            head.innerHTML = ret[i].head;
+            head.setAttribute(
+                "onclick",
+                'window.open("' + root + ret[i].link + '")'
+            );
+        }
+    });
 
     input.value = "";
 });

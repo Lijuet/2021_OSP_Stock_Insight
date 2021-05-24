@@ -17,7 +17,7 @@
             font-family: 'Roboto Condensed', sans-serif;
         }
         .container{
-            width: 800px;
+            width: 1000px;
             background-color: white;
             border-color: lightgray;
         }
@@ -29,6 +29,7 @@
         .stock_index{
             margin: 10px auto;
             border: 4px;
+            font-size: large;
         }
         .TodayInfo{
             margin: 10px;
@@ -81,12 +82,12 @@
             <div class="search_bar">
                 <h3>Search company(Name or Code)</h3>
                 <input type="text" id = "company_input" placeholder="기업명은 한글 또는 영어 대문자로 입력해주세요" 
-                style = "width: 650px; height: 40px; font-size: 20px; font-weight: bold;">
+                style = "width: 850px; height: 40px; font-size: 20px; font-weight: bold;">
                 <button type="button" id="search" class="btn btn-primary">Search</button>
             </div>
             <div class="TodayInfo">
-                <a style = "font-size: xx-large; font-weight: bold;" id = "today_price">Today's stockprice</a>
-                <a sytle = "font-size: x-large" id = "today_date">real-time</a>
+                <a style = "font-size: 60px; font-weight: bold;" id = "today_price">Today's stockprice</a>
+                <a sytle = "font-size: 20px;" id = "today_date">real-time</a>
             </div>
             <div class="row">
 
@@ -121,26 +122,52 @@
                     <div class = "news">
                         <h4>News</h4>
                         <div class="list-group">
-                            <a class="list-group-item" id = "news1_list">
+                            <a onclick="" class="list-group-item" id = "news1_list">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1" id = "head_news1">HEAD</h5>
                                 </div>
-                                <p class="mb-1" id = "summary_news1">summary</p>
-                                <small class="text-muted" id = "link_news1">link</small>
                             </a>
 
-                            <a class="list-group-item" id = "news2_list">
+                            <a herf="" class="list-group-item" id = "news2_list">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1" id = "head_news2">HEAD</h5>
                                 </div>
-                                <p class="mb-1" id = "summary_news2">summary</p>
-                                <small class="text-muted" id = "link_news2">link</small>
+                            </a>
+                            <a herf="" class="list-group-item" id = "news3_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news3">HEAD</h5>
+                                </div>
+                            </a>
+                            <a herf="" class="list-group-item" id = "news4_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news4">HEAD</h5>
+                                </div>
+                            </a>
+                            <a herf="" class="list-group-item" id = "news5_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news5">HEAD</h5>
+                                </div>
+                            </a>
+
+                            <a herf="" class="list-group-item" id = "news6_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news6">HEAD</h5>
+                                </div>
+                            </a>
+
+                            <a herf="" class="list-group-item" id = "news7_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news7">HEAD</h5>
+                                </div>
                             </a>
                         </div>
                     </div>
                 </div>
 
+                    
+
                 <div class="col">
+
                     <div class="information">
                         <!-- 분기별 정보 값 -->
                         <table class="table table-bordered">
@@ -182,6 +209,7 @@
                             </tr>
                         </table>
                     </div>
+                    
 
                      <!-- 동종 업계 비교 -->
                      <div class = "coCompare">
@@ -214,6 +242,7 @@
                         </table>
                     </div>
 
+                    
                 </div>
                 
             </div>
