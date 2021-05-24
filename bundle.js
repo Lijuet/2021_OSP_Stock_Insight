@@ -3170,6 +3170,7 @@ let search = document.getElementById("search");
 search.addEventListener("click", () => {
     let input = document.querySelector("#company_input");
     let text = input.value;
+    let falg = true;
 
     if (String(text).length === 0) return;
 
@@ -3188,7 +3189,6 @@ search.addEventListener("click", () => {
 
             let today_date = document.getElementById("today_date");
             today_date.innerHTML = ret.date;
-            falg = fault;
         } else {
             let today_price = document.getElementById("today_price");
             let today_date = document.getElementById("today_date");
@@ -3272,7 +3272,7 @@ search.addEventListener("click", () => {
         }
     });
     /* 오른쪽 테이블 변경 */
-
+        
     coinfo.getTradeCompare(co_code).then((ret) => {
         let cop1 = document.getElementById("co1");
         cop1.innerHTML = ret[0].name;
@@ -3311,6 +3311,7 @@ search.addEventListener("click", () => {
         cop4_ROE.innerHTML = ret[3].ROE;
         cop4_PBR.innerHTML = ret[3].PBR;
     });
+    
 
     coinfo.getFinance(co_code).then((ret) => {
         if (ret.ROE.length != 0) {
@@ -3345,6 +3346,7 @@ search.addEventListener("click", () => {
             let PBR_211 = document.getElementById("PBR_21.1");
             PBR_211.innerHTML = ret.PBR[9];
         }
+        
     });
 
     news.getNews(co_code).then((ret) => {
@@ -3359,6 +3361,11 @@ search.addEventListener("click", () => {
             );
         }
     });
+        
+        
+    
+
+   
 
     input.value = "";
 });
@@ -6761,8 +6768,8 @@ exports.update = function(arr, parent) {
 
 // module.exports = $.extend(exports);
 
-}).call(this)}).call(this,{"isBuffer":require("../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
-},{"../../../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":6,"htmlparser2":85}],47:[function(require,module,exports){
+}).call(this)}).call(this,{"isBuffer":require("../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js")})
+},{"../../../../../../AppData/Roaming/npm/node_modules/browserify/node_modules/is-buffer/index.js":6,"htmlparser2":85}],47:[function(require,module,exports){
 /**
  * Module dependencies
  */
@@ -7038,31 +7045,39 @@ exports.isHtml = function(str) {
 
 },{"./parse":46,"dom-serializer":58}],49:[function(require,module,exports){
 module.exports={
-  "name": "cheerio",
-  "version": "0.22.0",
-  "description": "Tiny, fast, and elegant implementation of core jQuery designed specifically for the server",
-  "author": "Matt Mueller <mattmuelle@gmail.com> (mat.io)",
-  "license": "MIT",
-  "keywords": [
-    "htmlparser",
-    "jquery",
-    "selector",
-    "scraper",
-    "parser",
-    "html"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/cheeriojs/cheerio.git"
+  "_from": "cheerio@^0.22.0",
+  "_id": "cheerio@0.22.0",
+  "_inBundle": false,
+  "_integrity": "sha1-qbqoYKP5tZWmuBsahocxIe06Jp4=",
+  "_location": "/cheerio",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "range",
+    "registry": true,
+    "raw": "cheerio@^0.22.0",
+    "name": "cheerio",
+    "escapedName": "cheerio",
+    "rawSpec": "^0.22.0",
+    "saveSpec": null,
+    "fetchSpec": "^0.22.0"
   },
-  "main": "./index.js",
-  "files": [
-    "index.js",
-    "lib"
+  "_requiredBy": [
+    "#USER",
+    "/"
   ],
-  "engines": {
-    "node": ">= 0.6"
+  "_resolved": "https://registry.npmjs.org/cheerio/-/cheerio-0.22.0.tgz",
+  "_shasum": "a9baa860a3f9b595a6b81b1a86873121ed3a269e",
+  "_spec": "cheerio@^0.22.0",
+  "_where": "C:\\Users\\최장섭\\Desktop\\test\\2021_OSP_Stock_Insight",
+  "author": {
+    "name": "Matt Mueller",
+    "email": "mattmuelle@gmail.com",
+    "url": "mat.io"
   },
+  "bugs": {
+    "url": "https://github.com/cheeriojs/cheerio/issues"
+  },
+  "bundleDependencies": false,
   "dependencies": {
     "css-select": "~1.2.0",
     "dom-serializer": "~0.1.0",
@@ -7081,20 +7096,46 @@ module.exports={
     "lodash.reject": "^4.4.0",
     "lodash.some": "^4.4.0"
   },
+  "deprecated": false,
+  "description": "Tiny, fast, and elegant implementation of core jQuery designed specifically for the server",
   "devDependencies": {
     "benchmark": "^2.1.0",
     "coveralls": "^2.11.9",
     "expect.js": "~0.3.1",
     "istanbul": "^0.4.3",
-    "jsdom": "^9.2.1",
     "jquery": "^3.0.0",
+    "jsdom": "^9.2.1",
     "jshint": "^2.9.2",
     "mocha": "^2.5.3",
     "xyz": "~0.5.0"
   },
+  "engines": {
+    "node": ">= 0.6"
+  },
+  "files": [
+    "index.js",
+    "lib"
+  ],
+  "homepage": "https://github.com/cheeriojs/cheerio#readme",
+  "keywords": [
+    "htmlparser",
+    "jquery",
+    "selector",
+    "scraper",
+    "parser",
+    "html"
+  ],
+  "license": "MIT",
+  "main": "./index.js",
+  "name": "cheerio",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cheeriojs/cheerio.git"
+  },
   "scripts": {
     "test": "make test"
-  }
+  },
+  "version": "0.22.0"
 }
 
 },{}],50:[function(require,module,exports){
@@ -31524,7 +31565,7 @@ let kospi = {
 function getCode(stockname) {
     if (stockname in kosdaq) return kosdaq[stockname];
     else if (stockname in kospi) return kospi[stockname];
-    else return "";
+    else return "000000";
 }
 
 console.log(getCode("삼성전자"));
@@ -31898,46 +31939,52 @@ async function getNews(code) {
         const $ = cheerio.load(html.data);
 
         result[0].link = "https://finance.naver.com";
-
-        for (let i = 1; i < 6; ++i) {
-            let idx = String(i);
-            let tmp = $(".sub_section.news_section")
-                .children("ul:nth-child(2)")
-                .children("li:nth-child(" + idx + ")")
-                .children("span.txt")
-                .text();
-            result[i].head = parsingTitle(tmp);
+        
+        // valid test
+        if ($(".sub_section.news_section").text() != "")
+        {
+            for (let i = 1; i < 6; ++i) {
+                let idx = String(i);
+                let tmp = $(".sub_section.news_section")
+                    .children("ul:nth-child(2)")
+                    .children("li:nth-child(" + idx + ")")
+                    .children("span.txt")
+                    .text();
+                result[i].head = parsingTitle(tmp);
+            }
+    
+            for (let i = 1; i < 6; ++i) {
+                let idx = String(i);
+                result[i].link = $(".sub_section.news_section")
+                    .children("ul:nth-child(2)")
+                    .children("li:nth-child(" + idx + ")")
+                    .children("span.txt")
+                    .children("a")
+                    .attr("href");
+            }
+    
+            for (let j = 6; j < 11; ++j) {
+                let idx = String(j - 5);
+                let tmp = $(".sub_section.news_section")
+                    .children("ul.line_dot")
+                    .children("li:nth-child(" + idx + ")")
+                    .children("span.txt")
+                    .text();
+                result[j].head = parsingTitle(tmp);
+            }
+    
+            for (let j = 6; j < 11; ++j) {
+                let idx = String(j - 5);
+                result[j].link = $(".sub_section.news_section")
+                    .children("ul.line_dot")
+                    .children("li:nth-child(" + idx + ")")
+                    .children("span.txt")
+                    .children("a")
+                    .attr("href");
+            }
         }
 
-        for (let i = 1; i < 6; ++i) {
-            let idx = String(i);
-            result[i].link = $(".sub_section.news_section")
-                .children("ul:nth-child(2)")
-                .children("li:nth-child(" + idx + ")")
-                .children("span.txt")
-                .children("a")
-                .attr("href");
-        }
-
-        for (let j = 6; j < 11; ++j) {
-            let idx = String(j - 5);
-            let tmp = $(".sub_section.news_section")
-                .children("ul.line_dot")
-                .children("li:nth-child(" + idx + ")")
-                .children("span.txt")
-                .text();
-            result[j].head = parsingTitle(tmp);
-        }
-
-        for (let j = 6; j < 11; ++j) {
-            let idx = String(j - 5);
-            result[j].link = $(".sub_section.news_section")
-                .children("ul.line_dot")
-                .children("li:nth-child(" + idx + ")")
-                .children("span.txt")
-                .children("a")
-                .attr("href");
-        }
+        
     });
 
     return new Promise((resolve) => {

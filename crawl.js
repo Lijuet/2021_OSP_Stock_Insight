@@ -75,6 +75,7 @@ let search = document.getElementById("search");
 search.addEventListener("click", () => {
     let input = document.querySelector("#company_input");
     let text = input.value;
+    let falg = true;
 
     if (String(text).length === 0) return;
 
@@ -93,7 +94,6 @@ search.addEventListener("click", () => {
 
             let today_date = document.getElementById("today_date");
             today_date.innerHTML = ret.date;
-            falg = fault;
         } else {
             let today_price = document.getElementById("today_price");
             let today_date = document.getElementById("today_date");
@@ -177,7 +177,7 @@ search.addEventListener("click", () => {
         }
     });
     /* 오른쪽 테이블 변경 */
-
+        
     coinfo.getTradeCompare(co_code).then((ret) => {
         let cop1 = document.getElementById("co1");
         cop1.innerHTML = ret[0].name;
@@ -216,6 +216,7 @@ search.addEventListener("click", () => {
         cop4_ROE.innerHTML = ret[3].ROE;
         cop4_PBR.innerHTML = ret[3].PBR;
     });
+    
 
     coinfo.getFinance(co_code).then((ret) => {
         if (ret.ROE.length != 0) {
@@ -250,6 +251,7 @@ search.addEventListener("click", () => {
             let PBR_211 = document.getElementById("PBR_21.1");
             PBR_211.innerHTML = ret.PBR[9];
         }
+        
     });
 
     news.getNews(co_code).then((ret) => {
@@ -264,6 +266,11 @@ search.addEventListener("click", () => {
             );
         }
     });
+        
+        
+    
+
+   
 
     input.value = "";
 });

@@ -2309,7 +2309,7 @@ let kospi = {
 function getCode(stockname) {
     if (stockname in kosdaq) return kosdaq[stockname];
     else if (stockname in kospi) return kospi[stockname];
-    else return "";
+    else return "000000";
 }
 
 console.log(getCode("삼성전자"));
