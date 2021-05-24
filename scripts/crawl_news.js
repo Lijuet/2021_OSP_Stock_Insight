@@ -35,6 +35,6 @@ async function getNews(code) {
 
 module.exports = { getNews };
 
-getNews("000660").then((ret) => {
+getNews("035420").then((ret) => {
     console.log(ret);
 });

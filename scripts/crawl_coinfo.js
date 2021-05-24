@@ -2,14 +2,15 @@
 
 const axios = require("axios");
 const cheerio = require("cheerio");
-const iconv = require("iconv-lite");
 
 async function getHTML(url) {
     try {
         return await axios.get(url, {
             headers: {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36"    },
-    });
+                "User-Agent":
+                    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36",
+            },
+        });
     } catch (error) {
         console.log(error);
     }
@@ -39,21 +40,18 @@ function parsingTable(str) {
     return ret;
 }
 
-function getRate(today, prev)
-{
-    let today_split = today.split(',');
-    let prev_split = prev.split(',');
+function getRate(today, prev) {
+    let today_split = today.split(",");
+    let prev_split = prev.split(",");
 
     let today_num = "";
     let prev_num = "";
 
-    for (let i=0; i<today_split.length; ++i)
-    {
+    for (let i = 0; i < today_split.length; ++i) {
         today_num = today_num + today_split[i];
     }
 
-    for (let i=0; i<prev_split.length; ++i)
-    {
+    for (let i = 0; i < prev_split.length; ++i) {
         prev_num = prev_num + prev_split[i];
     }
 
@@ -96,8 +94,7 @@ async function getPrice(code) {
                 .text();
         }
 
-        if (result.price === "")
-        {
+        if (result.price === "") {
             result.price = $(".rate_info", "#chart_area")
                 .children(".today")
                 .children(".no_today")
@@ -157,13 +154,11 @@ async function getFinance(code) {
             .text();
 
         // parsing tmp to make array
-        if (tmp1 != "")
-        {
+        if (tmp1 != "") {
             result.ROE = parsingTable(tmp1);
             result.PER = parsingTable(tmp2);
             result.PBR = parsingTable(tmp3);
         }
- 
     });
 
     return new Promise((resolve) => {
@@ -223,49 +218,48 @@ async function getPrevPrice(code) {
             .children("tr:nth-child(4)")
             .children("td:nth-child(2)")
             .text();
-        
     });
 
     return new Promise((resolve) => {
-
         result.day_rate = getRate(result.today, result.prev_day);
         result.week_rate = getRate(result.today, result.prev_week);
         result.mon_rate = getRate(result.today, result.prev_mon);
         result.year_rate = getRate(result.today, result.prev_year);
-        
+
         resolve(result);
     });
 }
 
-async function getOtherFinance(code) {
+async function getTradeCompare(code) {
     let url = "https://finance.naver.com/item/main.nhn?code=" + code;
 
     // return valuce
     let result = [];
 
+    for (let i = 0; i < 4; ++i) {
+        let finance = {
+            name: "",
+            PER: "",
+            ROE: "",
+            PBR: "",
+        };
+        result.push(finance);
+    }
+
     await getHTML(url).then((html) => {
-        const content = iconv.decode(html.data, "EUC-KR").toString();
-        const $ = cheerio.load(content);
+        const $ = cheerio.load(html.data);
 
         for (let i = 0; i < 4; ++i) {
             let idx = String(i + 3);
 
-            let finance = {
-                name: "",
-                PER: "",
-                ROE: "",
-                PBR: "",
-            };
-            result.push(finance);
-
             // need to encoding to Korean
-            tmp = $("div.section.trade_compare")
+            let tmp = $("div.section.trade_compare")
                 .children("table.tb_type1.tb_num")
                 .children("thead")
                 .children("tr")
                 .children("th:nth-child(" + idx + ")")
                 .text();
-            result[i].name = tmp.split("*")[0];
+            result[i].name = String(tmp).split("*")[0];
 
             result[i].ROE = $("div.section.trade_compare")
                 .children("table.tb_type1.tb_num")
@@ -295,19 +289,21 @@ async function getOtherFinance(code) {
     });
 }
 
-module.exports = { getPrice, getFinance, getPrevPrice };
+module.exports = { getPrice, getFinance, getPrevPrice, getTradeCompare };
 // test functions
-getPrice("000").then((ret) => {
+/*
+getPrice("005930").then((ret) => {
     console.log(ret);
 });
-getFinance("000").then((ret) => {
+getFinance("035420").then((ret) => {
     console.log(ret);
 });
 
-getPrevPrice("000").then((ret) => {
+getPrevPrice("035420").then((ret) => {
     console.log(ret);
 });
 
 getOtherFinance("035420").then((ret) => {
-    console.log(ret);
+    console.log(ret[0]);
 });
+*/
