@@ -33,7 +33,7 @@ StockInsight
 ## How to Install
 
 1. npm install --save-dev @electron-forge/cli
-2. npm electron-froge import
+2. npx electron-forge import
 3. npm run make
 
 - - - 
