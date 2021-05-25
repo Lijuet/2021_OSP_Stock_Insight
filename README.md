@@ -5,9 +5,11 @@ StockInsight
 - - -
 ## Features
 
---image--
+![image](https://user-images.githubusercontent.com/79784618/119445667-2500f400-bd68-11eb-9c7e-7ece5fb49a68.png)
 
---link--
+
+### Demo link
+https://youtu.be/kd1oBAB685Q
 
 ### V1
 
@@ -22,7 +24,7 @@ StockInsight
 ### V2
 
 1. Show Head News
-    - Show news with title, summary and link.
+    - Show news with head line.
 2. Update search company
     - Can search either company name or code.
 3. Show financial indicators of the same industry
@@ -53,5 +55,5 @@ StockInsight
         - stock price and date of today
         - stock price of the past and the figure compared to today
         - financial indicators organized quarterly
-        - head news with title, summary and link
+        - head news with head line
         - financial indicators of the same industry
