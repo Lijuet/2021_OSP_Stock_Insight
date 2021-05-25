@@ -2309,9 +2309,17 @@ let kospi = {
 function getCode(stockname) {
     if (stockname in kosdaq) return kosdaq[stockname];
     else if (stockname in kospi) return kospi[stockname];
-    else return "000000";
+    else {
+        if (Object.values(kospi).indexOf(stockname) >= 0) {
+            return stockname;
+        } else if (Object.values(kosdaq).indexOf(stockname) >= 0) {
+            return stockname;
+        } else {
+            return "000000";
+        }
+    }
 }
 
-console.log(getCode("삼성전자"));
+console.log(getCode("005390"));
 
 module.exports = { getCode };

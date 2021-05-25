@@ -3178,9 +3178,6 @@ search.addEventListener("click", () => {
     let flag = true;
 
     co_code = code.getCode(text);
-    if (co_code === "000000") {
-        co_code = text;
-    }
 
     coinfo.getPrice(co_code).then((ret) => {
         if (ret.name === "") {
@@ -31524,10 +31521,18 @@ let kospi = {
 function getCode(stockname) {
     if (stockname in kosdaq) return kosdaq[stockname];
     else if (stockname in kospi) return kospi[stockname];
-    else return "000000";
+    else {
+        if (Object.values(kospi).indexOf(stockname) >= 0) {
+            return stockname;
+        } else if (Object.values(kosdaq).indexOf(stockname) >= 0) {
+            return stockname;
+        } else {
+            return "000000";
+        }
+    }
 }
 
-console.log(getCode("삼성전자"));
+console.log(getCode("005390"));
 
 module.exports = { getCode };
 
@@ -31898,10 +31903,9 @@ async function getNews(code) {
         const $ = cheerio.load(html.data);
 
         result[0].link = "https://finance.naver.com";
-        
+
         // valid test
-        if ($(".sub_section.news_section").text() != "")
-        {
+        if ($(".sub_section.news_section").text() != "") {
             for (let i = 1; i < 6; ++i) {
                 let idx = String(i);
                 let tmp = $(".sub_section.news_section")
@@ -31911,7 +31915,7 @@ async function getNews(code) {
                     .text();
                 result[i].head = parsingTitle(tmp);
             }
-    
+
             for (let i = 1; i < 6; ++i) {
                 let idx = String(i);
                 result[i].link = $(".sub_section.news_section")
@@ -31921,7 +31925,7 @@ async function getNews(code) {
                     .children("a")
                     .attr("href");
             }
-    
+
             for (let j = 6; j < 11; ++j) {
                 let idx = String(j - 5);
                 let tmp = $(".sub_section.news_section")
@@ -31931,7 +31935,7 @@ async function getNews(code) {
                     .text();
                 result[j].head = parsingTitle(tmp);
             }
-    
+
             for (let j = 6; j < 11; ++j) {
                 let idx = String(j - 5);
                 result[j].link = $(".sub_section.news_section")
@@ -31942,8 +31946,6 @@ async function getNews(code) {
                     .attr("href");
             }
         }
-
-        
     });
 
     return new Promise((resolve) => {

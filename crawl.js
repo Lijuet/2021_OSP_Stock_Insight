@@ -83,9 +83,6 @@ search.addEventListener("click", () => {
     let flag = true;
 
     co_code = code.getCode(text);
-    if (co_code === "000000") {
-        co_code = text;
-    }
 
     coinfo.getPrice(co_code).then((ret) => {
         if (ret.name === "") {

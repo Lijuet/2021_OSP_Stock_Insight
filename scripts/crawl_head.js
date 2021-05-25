@@ -54,10 +54,9 @@ async function getNews(code) {
         const $ = cheerio.load(html.data);
 
         result[0].link = "https://finance.naver.com";
-        
+
         // valid test
-        if ($(".sub_section.news_section").text() != "")
-        {
+        if ($(".sub_section.news_section").text() != "") {
             for (let i = 1; i < 6; ++i) {
                 let idx = String(i);
                 let tmp = $(".sub_section.news_section")
@@ -67,7 +66,7 @@ async function getNews(code) {
                     .text();
                 result[i].head = parsingTitle(tmp);
             }
-    
+
             for (let i = 1; i < 6; ++i) {
                 let idx = String(i);
                 result[i].link = $(".sub_section.news_section")
@@ -77,7 +76,7 @@ async function getNews(code) {
                     .children("a")
                     .attr("href");
             }
-    
+
             for (let j = 6; j < 11; ++j) {
                 let idx = String(j - 5);
                 let tmp = $(".sub_section.news_section")
@@ -87,7 +86,7 @@ async function getNews(code) {
                     .text();
                 result[j].head = parsingTitle(tmp);
             }
-    
+
             for (let j = 6; j < 11; ++j) {
                 let idx = String(j - 5);
                 result[j].link = $(".sub_section.news_section")
@@ -98,8 +97,6 @@ async function getNews(code) {
                     .attr("href");
             }
         }
-
-        
     });
 
     return new Promise((resolve) => {
