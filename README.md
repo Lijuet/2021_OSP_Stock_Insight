@@ -34,9 +34,10 @@ https://youtu.be/kd1oBAB685Q
 
 ## How to Install
 
-1. npm install --save-dev @electron-forge/cli
-2. npx electron-forge import
-3. npm run make
+1. npm install 
+2. npm install --save-dev @electron-forge/cli
+3. npx electron-forge import
+4. npm run make
 
 - - - 
 
