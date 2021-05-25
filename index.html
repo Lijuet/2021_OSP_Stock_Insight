@@ -17,7 +17,7 @@
             font-family: 'Roboto Condensed', sans-serif;
         }
         .container{
-            width: 800px;
+            width: 1000px;
             background-color: white;
             border-color: lightgray;
         }
@@ -29,6 +29,7 @@
         .stock_index{
             margin: 10px auto;
             border: 4px;
+            font-size: large;
         }
         .TodayInfo{
             margin: 10px;
@@ -65,7 +66,7 @@
             <button type="button" id="refresh"><i class="bi bi-arrow-counterclockwise"></i></button>
         </div>
            
-            <!-- 버튼 클릭시 3가지 정보 나오는.. 크롤링 값 -->
+        <!-- 버튼 클릭시 나오는 3가지 정보 -->
         <div class="stock_index">
             <table class = "table table-bordered" id = "index_info">
                 <tr style="text-align: center">
@@ -79,21 +80,20 @@
         <div class="p-3 mb-2 bg-light text-dark">
             <!-- 기업 검색바 -->
             <div class="search_bar">
-                <h3>Search company</h3>
-                <input type="text" id = "company_input" placeholder="Enter a company here" 
-                style = "width: 650px; height: 40px; font-size: 20px">
+                <h3>Search company(Name or Code)</h3>
+                <input type="text" id = "company_input" placeholder="기업명은 한글 또는 영어 대문자로 입력해주세요" 
+                style = "width: 850px; height: 40px; font-size: 20px; font-weight: bold;">
                 <button type="button" id="search" class="btn btn-primary">Search</button>
-                <!-- 크롱링 값 -->
             </div>
             <div class="TodayInfo">
-                <a style = "font-size: xx-large; font-weight: bold;" id = "today_price">Today's stockprice</a>
-                <a sytle = "font-size: x-large" id = "today_date">real-time</a>
+                <a style = "font-size: 60px; font-weight: bold;" id = "today_price">Today's stockprice</a>
+                <a sytle = "font-size: 20px;" id = "today_date">real-time</a>
             </div>
             <div class="row">
 
                 <div class="col">
                     <div class="information">
-                        <!-- 왼쪽 테이블 -->
+                        <!-- 과거 정보 값 -->
                         <table class="table table-bordered" style="text-align: right;">
                             <tr>
                                 <td class = "table-primary" style="text-align: center;">yesterday</td>
@@ -117,58 +117,134 @@
                             </tr>
                         </table>
                     </div>
+
+                    <!-- 뉴스 -->
+                    <div class = "news">
+                        <h4>News</h4>
+                        <div class="list-group">
+                            <a onclick="" class="list-group-item" id = "news1_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news1">HEAD</h5>
+                                </div>
+                            </a>
+
+                            <a herf="" class="list-group-item" id = "news2_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news2">HEAD</h5>
+                                </div>
+                            </a>
+                            <a herf="" class="list-group-item" id = "news3_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news3">HEAD</h5>
+                                </div>
+                            </a>
+                            <a herf="" class="list-group-item" id = "news4_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news4">HEAD</h5>
+                                </div>
+                            </a>
+                            <a herf="" class="list-group-item" id = "news5_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news5">HEAD</h5>
+                                </div>
+                            </a>
+
+                            <a herf="" class="list-group-item" id = "news6_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news6">HEAD</h5>
+                                </div>
+                            </a>
+
+                            <a herf="" class="list-group-item" id = "news7_list">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1" id = "head_news7">HEAD</h5>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
+                    
 
                 <div class="col">
+
                     <div class="information">
-                        <!-- 오른쪽 테이블 -->
+                        <!-- 분기별 정보 값 -->
                         <table class="table table-bordered">
                             <tr class = "table-primary" style="text-align: center;">
-                                <td></td>
-                                <td>20.1</td>
-                                <td>20.2</td>
-                                <td>20.3</td>
-                                <td>20.4</td>
-                                <td>21.1</td>
+                                <td style="width: 25%">Quarter</td>
+                                <td style="width: 25%">ROE</td>
+                                <td style="width: 25%">PER</td>
+                                <td style="width: 25%">PBR</td>
                             </tr>
-                        
-                            <!--  크롤링 값 가져오기 !! -->
                             <tr style="text-align: right;">
-                                <td style="text-align: center;">ROE</td>
+                                <td style="text-align: center;">20.1</td>
                                 <td id = "ROE_20.1"></td>
-                                <td id = "ROE_20.2"></td>
-                                <td id = "ROE_20.3"></td>
-                                <td id = "ROE_20.4"></td>
-                                <td id = "ROE_21.1"></td>
-                            </tr>
-                            <tr style="text-align: right;">
-                                <td style="text-align: center;">PER</td>
                                 <td id = "PER_20.1"></td>
-                                <td id = "PER_20.2"></td>
-                                <td id = "PER_20.3"></td>
-                                <td id = "PER_20.4"></td>
-                                <td id = "PER_21.1"></td>
+                                <td id = "PBR_20.1"></td>
                             </tr>
                             <tr style="text-align: right;">
-                                <td style="text-align: center;">PBR</td>
-                                <td id = "PBR_20.1"></td>
+                                <td style="text-align: center;">20.2</td>
+                                <td id = "ROE_20.2"></td>
+                                <td id = "PER_20.2"></td>
                                 <td id = "PBR_20.2"></td>
+                            </tr>
+                            <tr style="text-align: right;">
+                                <td style="text-align: center;">20.3</td>
+                                <td id = "ROE_20.3"></td>
+                                <td id = "PER_20.3"></td>
                                 <td id = "PBR_20.3"></td>
+                            </tr>
+                            <tr style="text-align: right;">
+                                <td style="text-align: center;">20.4</td>
+                                <td id = "ROE_20.4"></td>
+                                <td id = "PER_20.4"></td>
                                 <td id = "PBR_20.4"></td>
+                            </tr>
+                            <tr style="text-align: right;">
+                                <td style="text-align: center;">21.1</td>
+                                <td id = "ROE_21.1"></td>
+                                <td id = "PER_21.1"></td>
                                 <td id = "PBR_21.1"></td>
                             </tr>
                         </table>
                     </div>
+                    
+
+                     <!-- 동종 업계 비교 -->
+                     <div class = "coCompare">
+                        <h6>Other company</h6>
+                        <table class="table table-bordered">
+                            <tr style="text-align: right;">
+                                <td id = "co1" class = "table-primary" style="width: 25%; text-align: center; font-weight: bold;">company1</td>
+                                <td id = "ROE_co1" style="width: 25%;"></td>
+                                <td id = "PER_co1" style="width: 25%;"></td>
+                                <td id = "PBR_co1" style="width: 25%;"></td>
+                            </tr>
+                            <tr style="text-align: right;">
+                                <td id = "co2" class = "table-primary" style="text-align: center; font-weight: bold;">company2</td>
+                                <td id = "ROE_co2"></td>
+                                <td id = "PER_co2"></td>
+                                <td id = "PBR_co2"></td>
+                            </tr>
+                            <tr style="text-align: right;">
+                                <td id = "co3" class = "table-primary" style="text-align: center; font-weight: bold;">company3</td>
+                                <td id = "ROE_co3"></td>
+                                <td id = "PER_co3"></td>
+                                <td id = "PBR_co3"></td>
+                            </tr>
+                            <tr style="text-align: right;">
+                                <td id = "co4" class = "table-primary" style="text-align: center; font-weight: bold;">company4</td>
+                                <td id = "ROE_co4"></td>
+                                <td id = "PER_co4"></td>
+                                <td id = "PBR_co4"></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    
                 </div>
                 
-            </div>
-        </div>
-
-        <div class="p-3 mb-2 bg-light text-dark">
-            <!-- 뉴스 -->
-            <div class = "news">
-                <h3>News</h3>
             </div>
         </div>
     </div>
